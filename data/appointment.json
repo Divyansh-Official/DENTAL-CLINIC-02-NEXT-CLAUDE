@@ -1,0 +1,84 @@
+{
+  "hero": {
+    "eyebrow": "Book Appointment",
+    "title": "Talk to a Dentist,",
+    "titleSecondLine": "Not a Form.",
+    "italicWord": "Dentist",
+    "intro": "There is no booking form here on purpose. Call or message the clinic and a real person confirms your slot in under a minute, with the doctor you actually need."
+  },
+  "primaryChannels": [
+    {
+      "id": "call",
+      "icon": "phone",
+      "label": "Call the clinic",
+      "value": "+91 98765 43210",
+      "href": "tel:+919876543210",
+      "note": "Fastest between 9:00 AM and 8:00 PM",
+      "action": "Call now",
+      "featured": true
+    },
+    {
+      "id": "whatsapp",
+      "icon": "whatsapp",
+      "label": "WhatsApp",
+      "value": "+91 98765 43210",
+      "href": "https://wa.me/919876543210?text=Hello%2C%20I%27d%20like%20to%20book%20an%20appointment.",
+      "note": "Send your preferred day and time",
+      "action": "Open WhatsApp",
+      "featured": true
+    },
+    {
+      "id": "email",
+      "icon": "mail",
+      "label": "Email",
+      "value": "hello@lumieredental.com",
+      "href": "mailto:hello@lumieredental.com?subject=Appointment%20Request",
+      "note": "Replies within one working day",
+      "action": "Write an email",
+      "featured": false
+    },
+    {
+      "id": "visit",
+      "icon": "pin",
+      "label": "Walk in",
+      "value": "123, Smile Street, Koramangala, Bangalore 560034",
+      "href": "https://maps.google.com/?q=Koramangala+Bangalore",
+      "note": "Free parking behind the building",
+      "action": "Get directions",
+      "featured": false
+    }
+  ],
+  "emergency": {
+    "icon": "emergency",
+    "title": "Dental emergency?",
+    "text": "Severe pain, swelling, a knocked-out tooth or bleeding that will not stop. Call the emergency line at any hour, including Sundays.",
+    "phone": "+91 98765 43211",
+    "href": "tel:+919876543211",
+    "action": "Call emergency line"
+  },
+  "whatToSay": {
+    "title": "What to mention when you call",
+    "items": [
+      "The problem in your own words, or 'routine checkup' if there is none",
+      "Whether you are in pain right now, and for how long",
+      "Days and times that suit you, including any you cannot do",
+      "Whether you have visited us before, and under which name"
+    ]
+  },
+  "responseTimes": [
+    {
+      "channel": "Phone",
+      "time": "Answered in under 30 seconds"
+    },
+    {
+      "channel": "WhatsApp",
+      "time": "Replied within 15 minutes"
+    },
+    {
+      "channel": "Email",
+      "time": "Replied within 1 working day"
+    }
+  ],
+  "note": "This page connects you directly to the clinic. No details are stored on this website and nothing is submitted anywhere.",
+  "$comment": "The booking page. Channels here are the site's main conversion path — check every href after a rebrand."
+}

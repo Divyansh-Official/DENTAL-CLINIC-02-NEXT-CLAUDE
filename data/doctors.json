@@ -1,0 +1,113 @@
+{
+  "$comment": "The team. `founder.id` must match one of the ids in `items`.",
+  "section": {
+    "eyebrow": "Meet The Team",
+    "title": "The Hands Behind Your Smile",
+    "italicWord": "Smile",
+    "intro": "Every specialist here is board certified and treats within their own discipline. You are never handed to a generalist for specialist work."
+  },
+  "founder": {
+    "id": "aanya-mehta",
+    "name": "Dr. Aanya Mehta",
+    "role": "Founder & Chief Dentist",
+    "signatureName": "Dr. Aanya Mehta"
+  },
+  "items": [
+    {
+      "id": "aanya-mehta",
+      "name": "Dr. Aanya Mehta",
+      "role": "Founder & Chief Dentist",
+      "specialty": "Cosmetic & Restorative Dentistry",
+      "qualification": "BDS, MDS (Prosthodontics)",
+      "experience": "16 years",
+      "languages": [
+        "English",
+        "Hindi",
+        "Kannada"
+      ],
+      "availability": "Mon – Sat, 10:00 AM – 6:00 PM",
+      "phone": "+91 98765 43210",
+      "phoneHref": "tel:+919876543210",
+      "whatsappHref": "https://wa.me/919876543210",
+      "email": "dr.aanya@lumieredental.com",
+      "emailHref": "mailto:dr.aanya@lumieredental.com",
+      "bio": "Dr. Aanya founded Lumière after a decade in hospital practice, with a simple standard: no treatment starts until the patient can explain it back in their own words.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=900&q=80",
+        "alt": "Dr. Aanya Mehta"
+      }
+    },
+    {
+      "id": "kabir-shah",
+      "name": "Dr. Kabir Shah",
+      "role": "Implantologist",
+      "specialty": "Oral Surgery & Implants",
+      "qualification": "BDS, MDS (Oral & Maxillofacial Surgery)",
+      "experience": "12 years",
+      "languages": [
+        "English",
+        "Hindi",
+        "Gujarati"
+      ],
+      "availability": "Mon, Wed, Fri – 11:00 AM – 7:00 PM",
+      "phone": "+91 98765 43212",
+      "phoneHref": "tel:+919876543212",
+      "whatsappHref": "https://wa.me/919876543212",
+      "email": "dr.kabir@lumieredental.com",
+      "emailHref": "mailto:dr.kabir@lumieredental.com",
+      "bio": "Over 2,400 implants placed, all under CBCT-guided planning. Dr. Kabir also handles complex extractions and bone grafting cases referred from other clinics.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=900&q=80",
+        "alt": "Dr. Kabir Shah"
+      }
+    },
+    {
+      "id": "meera-krishnan",
+      "name": "Dr. Meera Krishnan",
+      "role": "Orthodontist",
+      "specialty": "Braces & Clear Aligners",
+      "qualification": "BDS, MDS (Orthodontics)",
+      "experience": "10 years",
+      "languages": [
+        "English",
+        "Tamil",
+        "Kannada"
+      ],
+      "availability": "Tue, Thu, Sat – 10:00 AM – 5:00 PM",
+      "phone": "+91 98765 43213",
+      "phoneHref": "tel:+919876543213",
+      "whatsappHref": "https://wa.me/919876543213",
+      "email": "dr.meera@lumieredental.com",
+      "emailHref": "mailto:dr.meera@lumieredental.com",
+      "bio": "A certified aligner provider who has finished more than 900 orthodontic cases, with a particular interest in adult relapse correction.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=900&q=80",
+        "alt": "Dr. Meera Krishnan"
+      }
+    },
+    {
+      "id": "rahul-menon",
+      "name": "Dr. Rahul Menon",
+      "role": "Endodontist",
+      "specialty": "Root Canal & Microscopic Dentistry",
+      "qualification": "BDS, MDS (Conservative Dentistry)",
+      "experience": "9 years",
+      "languages": [
+        "English",
+        "Malayalam",
+        "Hindi"
+      ],
+      "availability": "Mon – Fri, 12:00 PM – 8:00 PM",
+      "phone": "+91 98765 43214",
+      "phoneHref": "tel:+919876543214",
+      "whatsappHref": "https://wa.me/919876543214",
+      "email": "dr.rahul@lumieredental.com",
+      "emailHref": "mailto:dr.rahul@lumieredental.com",
+      "bio": "Works entirely under a dental operating microscope, which is why difficult re-treatment cases are usually routed to his chair.",
+      "image": {
+        "src": "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=900&q=80",
+        "alt": "Dr. Rahul Menon"
+      }
+    }
+  ]
+}

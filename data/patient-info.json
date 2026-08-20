@@ -1,0 +1,113 @@
+{
+  "$comment": "First visit, payments, hygiene standards, FAQ and policies. The FAQ here is emitted as FAQPage structured data.",
+  "section": {
+    "eyebrow": "Patient Info",
+    "title": "Everything Before You Arrive",
+    "italicWord": "Arrive",
+    "intro": "Visit preparation, payment options, insurance and the answers we are asked most often."
+  },
+  "firstVisit": {
+    "title": "Your First Visit",
+    "steps": [
+      {
+        "icon": "clipboard",
+        "title": "Bring your records",
+        "text": "Any previous X-rays, prescriptions and a list of current medication."
+      },
+      {
+        "icon": "clock",
+        "title": "Arrive ten minutes early",
+        "text": "Enough time for the medical history form without rushing the appointment."
+      },
+      {
+        "icon": "chat",
+        "title": "Ask everything",
+        "text": "You will see your own images on screen. Nothing is booked before you agree to it."
+      },
+      {
+        "icon": "wallet",
+        "title": "Written estimate",
+        "text": "You leave with a printed plan and cost. The figure does not change mid-treatment."
+      }
+    ]
+  },
+  "payments": {
+    "title": "Payments & Insurance",
+    "icon": "wallet",
+    "methods": [
+      "Cash",
+      "UPI",
+      "Credit & debit cards",
+      "Net banking",
+      "No-cost EMI on treatments above ₹15,000"
+    ],
+    "insurance": {
+      "icon": "insurance",
+      "text": "We are empanelled with major Indian health insurers for surgical dental procedures and provide fully itemised invoices for reimbursement claims.",
+      "partners": [
+        "Star Health",
+        "HDFC Ergo",
+        "Niva Bupa",
+        "ICICI Lombard",
+        "Care Health"
+      ]
+    }
+  },
+  "safety": {
+    "title": "Hygiene & Safety",
+    "icon": "sanitizer",
+    "points": [
+      "Class B autoclave sterilisation with cycle logging for every instrument tray",
+      "Single-use disposables for gloves, suction tips, bibs and needles",
+      "Fumigation of operatories at the close of every working day",
+      "HEPA-filtered air with negative pressure in the surgical operatory",
+      "Separate biomedical waste handling under BBMP authorisation"
+    ]
+  },
+  "faq": [
+    {
+      "q": "Do I need an appointment or can I walk in?",
+      "a": "Walk-ins are accepted when a chair is free, but appointments are always seen first. Calling ahead saves you an hourly wait, particularly on weekends."
+    },
+    {
+      "q": "How much will my treatment cost?",
+      "a": "You receive a written, itemised estimate after examination. The figure quoted is the figure billed. Anything unforeseen is discussed and approved before it is done."
+    },
+    {
+      "q": "Is dental treatment covered by health insurance in India?",
+      "a": "Routine dentistry usually is not. Surgical procedures arising from accident or medical necessity often are. We issue documentation formatted for claim submission."
+    },
+    {
+      "q": "Do you treat children?",
+      "a": "Yes, from the first birthday onwards. Early visits are deliberately kept short and uneventful so the child associates the chair with nothing unpleasant."
+    },
+    {
+      "q": "What do I do in a dental emergency?",
+      "a": "Call the emergency line at any hour. For a knocked-out permanent tooth, hold it by the crown, keep it in milk or saliva and reach us within sixty minutes."
+    },
+    {
+      "q": "Are payment plans available?",
+      "a": "No-cost EMI is available on treatments above ₹15,000 through most major credit cards, spread over three to twelve months."
+    },
+    {
+      "q": "How long does a dental implant take?",
+      "a": "Three to six months from placement to final crown, because the bone needs time to integrate with the fixture. Immediate-loading cases are shorter where bone quality permits."
+    },
+    {
+      "q": "Do you follow up after treatment?",
+      "a": "Yes. Surgical cases are reviewed within a week, and every patient receives a recall reminder at six months."
+    }
+  ],
+  "policies": [
+    {
+      "id": "privacy",
+      "title": "Privacy Policy",
+      "body": "Clinical records, radiographs and photographs are stored on encrypted systems and are never shared without written consent, except where disclosure is required by law. Website enquiries reach the clinic by phone or email only; this site stores no data on a server."
+    },
+    {
+      "id": "terms",
+      "title": "Terms & Conditions",
+      "body": "Content on this site is general information and is not a substitute for a clinical examination. Prices are indicative and confirmed only in a written estimate issued after examination. Appointments cancelled with less than four hours' notice may be subject to a rescheduling fee."
+    }
+  ]
+}

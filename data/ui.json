@@ -1,0 +1,159 @@
+{
+  "$comment": "Interface microcopy. Every word the components used to hardcode now lives here, so the site can be reworded — or translated — without opening a .jsx file.",
+
+  "common": {
+    "skipToContent": "Skip to content",
+    "home": "Home",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "close": "Close",
+    "breadcrumbLabel": "Breadcrumb",
+    "readMore": "Read more",
+    "viewDetails": "View details",
+    "getDirections": "Get directions",
+    "callTheClinic": "Call the clinic",
+    "openingHours": "Opening hours",
+    "contactHeading": "Contact Us",
+    "hoursHeading": "Opening Hours",
+    "from": "From",
+    "copyLabel": "Copy number for",
+    "copiedLabel": "Copied",
+    "previousLabel": "Previous",
+    "nextLabel": "Next",
+    "mapTitlePrefix": "Map to"
+  },
+
+  "stickyBar": {
+    "$comment": "The mobile action bar pinned to the bottom edge. Set features.stickyMobileBar in site.json.",
+    "call": "Call",
+    "whatsapp": "WhatsApp",
+    "book": "Book"
+  },
+
+  "floatingWhatsapp": {
+    "label": "Chat on WhatsApp"
+  },
+
+  "notFound": {
+    "eyebrow": "404",
+    "title": "This page has moved on",
+    "italicWord": "moved on",
+    "body": "The link is broken or the page was renamed. Head back to the homepage, or call the clinic and someone will point you to what you were looking for.",
+    "cta": { "label": "Back to homepage", "href": "/" }
+  },
+
+  "error": {
+    "eyebrow": "Something went wrong",
+    "title": "This page could not load",
+    "italicWord": "not load",
+    "body": "The page hit an unexpected error. Try again, and if it keeps happening call the clinic directly — the phone always works.",
+    "retry": "Try again",
+    "cta": { "label": "Back to homepage", "href": "/" }
+  },
+
+  "hero": {
+    "storyCtaLabel": "Read our full story"
+  },
+
+  "testimonials": {
+    "previousLabel": "Previous reviews",
+    "nextLabel": "Next reviews",
+    "pageLabel": "Go to review page"
+  },
+
+  "about": {
+    "promise": {
+      "eyebrow": "Our Promise",
+      "title": "Dentistry you can understand",
+      "italicWord": "understand",
+      "paragraphs": [
+        "Nothing is treated until it has been explained. You see your own radiographs and intra-oral photographs on screen, you hear what is urgent and what can wait, and you leave with a written estimate that does not change halfway through.",
+        "That standard has held since {established}, across every patient we have treated, and it is the reason most of our new appointments come from someone we have already treated."
+      ]
+    },
+    "standards": { "eyebrow": "Standards", "italicWord": "Safety" },
+    "team": { "qualificationLabel": "Qualification", "languagesLabel": "Speaks" }
+  },
+
+  "services": {
+    "pricingLink": "See indicative pricing for every procedure",
+    "detail": {
+      "eyebrow": "Service",
+      "bookCta": "Book this treatment",
+      "includesTitle": "What the treatment includes",
+      "faqTitle": "Questions patients ask",
+      "aside": {
+        "title": "Talk to a dentist before you decide",
+        "text": "No forms, no callbacks queued for tomorrow. Call the clinic and a dentist confirms whether this is the right treatment for you.",
+        "whatsappLabel": "WhatsApp the clinic"
+      },
+      "alsoOffered": "Also offered",
+      "relatedTitle": "Explore other treatments"
+    }
+  },
+
+  "treatments": {
+    "payments": {
+      "eyebrow": "Paying for treatment",
+      "italicWord": "Insurance",
+      "intro": "Transparent figures, several ways to pay, and paperwork prepared for reimbursement where your policy allows it.",
+      "methodsTitle": "Accepted payment methods",
+      "insuranceTitle": "Insurance"
+    }
+  },
+
+  "patientInfo": {
+    "firstVisit": { "eyebrow": "Before you arrive", "italicWord": "Visit" },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Answers to the ones we hear daily",
+      "italicWord": "daily",
+      "helpText": "Not covered here? Call the clinic and ask. There is no charge for a question."
+    }
+  },
+
+  "blog": {
+    "hero": {
+      "title": "Tips, Trends & Expert Advice",
+      "italicWord": "Expert",
+      "intro": "Written by the dentists who treat here, not by a content agency. No listicles, no scare tactics.",
+      "metaDescription": "Dental insights, treatment guides and expert advice from the {clinic} clinical team."
+    },
+    "detail": {
+      "authorLabel": "Written by",
+      "practisingAt": "Practising at {clinic}, {city}.",
+      "disclaimer": "This article is general information and cannot replace an examination. If something in it applies to you, call the clinic and ask.",
+      "bookCta": "Book Appointment",
+      "relatedTitle": "Keep reading"
+    },
+    "allCategory": "All"
+  },
+
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Find Us, Call Us, Visit Us",
+    "italicWord": "Visit",
+    "intro": "We are on {line1} in {line2}.",
+    "bookCta": "Book Appointment",
+    "visitEyebrow": "Visit the clinic",
+    "$channels": "`field` points at a key in clinic.contact — the number itself is never duplicated here.",
+    "channels": [
+      { "icon": "phone", "label": "Phone", "field": "phone", "note": "Front desk, during opening hours" },
+      { "icon": "whatsapp", "label": "WhatsApp", "field": "whatsapp", "note": "Send photographs and reports" },
+      { "icon": "mail", "label": "Email", "field": "email", "note": "Records, invoices and referrals" },
+      { "icon": "emergency", "label": "Emergency", "field": "emergency", "note": "Any hour, including Sundays" }
+    ]
+  },
+
+  "appointment": {
+    "specialists": {
+      "title": "Reach a specialist directly",
+      "italicWord": "specialist",
+      "intro": "Each dentist keeps their own line. If you already know who you need, skip the front desk."
+    },
+    "beforeYouCall": "Before you call",
+    "addressLabel": "Clinic address",
+    "metaDescription": "Call, message or visit {clinic} directly. Every dentist here keeps their own line — no forms, no waiting for a callback."
+  }
+}

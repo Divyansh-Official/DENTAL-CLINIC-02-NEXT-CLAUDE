@@ -1,0 +1,178 @@
+{
+  "$comment": "The clinic itself: who they are, how to reach them, when they open. Start here after site.json.",
+
+  "identity": {
+    "name": "Lumière",
+    "suffix": "Dental Clinic",
+    "legalName": "Lumière Dental Clinic",
+    "tagline": "Expert care. Beautiful smiles.",
+    "shortDescription": "Advanced dental care in a comfortable, relaxing and friendly environment.",
+    "longDescription": "At Lumière Dental Clinic we combine advanced technology with a gentle touch to deliver outstanding dental care in a warm, welcoming environment. Every treatment plan is built around one person: you.",
+    "established": "2009",
+    "registration": "Karnataka Dental Council Reg. No. KDC/2009/4471",
+    "$logo": "Optional. Leave src blank to use the built-in wordmark, which draws the name above from identity.name / identity.suffix.",
+    "logo": { "src": "", "alt": "" }
+  },
+
+  "hero": {
+    "eyebrow": "Expert care. Beautiful smiles.",
+    "titleLines": ["Where Healthy", "Smiles Begin"],
+    "italicWord": "Smiles",
+    "subtitle": "Advanced dental care in a comfortable, relaxing & friendly environment.",
+    "primaryCta": { "label": "Book Appointment", "href": "/book-appointment" },
+    "secondaryCta": { "label": "Watch Our Story", "meta": "1 min" },
+    "image": {
+      "src": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1600&q=80",
+      "alt": "Modern dental treatment room with natural light"
+    },
+    "badge": { "text": "SCROLL TO EXPLORE • SCROLL TO EXPLORE • ", "icon": "arrow-down" },
+    "highlights": [
+      { "icon": "leaf", "title": "Pain-Free", "subtitle": "Experience" },
+      { "icon": "microscope", "title": "Advanced", "subtitle": "Technology" },
+      { "icon": "sanitizer", "title": "Hygienic &", "subtitle": "Safe Clinic" },
+      { "icon": "award", "title": "Experienced", "subtitle": "Specialists" }
+    ],
+    "$story": "Opens from the 'Watch Our Story' button. Put an .mp4 in /public and set video.src to play it inline; leave it blank and the poster image is shown instead.",
+    "story": {
+      "title": "Our Story",
+      "video": { "src": "", "poster": { "src": "", "alt": "" } },
+      "body": [
+        "At Lumière Dental Clinic we combine advanced technology with a gentle touch to deliver outstanding dental care in a warm, welcoming environment. Every treatment plan is built around one person: you.",
+        "We have treated patients from across Bangalore since 2009, and most of our new appointments still come from someone we have already looked after."
+      ],
+      "cta": { "label": "Read our full story", "href": "/about" }
+    }
+  },
+
+  "stats": [
+    { "icon": "user", "value": 10000, "suffix": "+", "label": "Happy Patients" },
+    { "icon": "tooth", "value": 15, "suffix": "+", "label": "Years of Excellence" },
+    { "icon": "users", "value": 20, "suffix": "+", "label": "Dental Specialists" },
+    { "icon": "heart", "value": 98, "suffix": "%", "label": "Patient Satisfaction" }
+  ],
+
+  "about": {
+    "eyebrow": "About Us",
+    "title": "Personalized Care.",
+    "titleSecondLine": "Exceptional Results.",
+    "italicWord": "Results",
+    "body": "At Lumière Dental Clinic, we combine advanced technology with a gentle touch to deliver outstanding dental care in a warm, welcoming environment.",
+    "points": [
+      "Highly Experienced & Certified Dentists",
+      "Advanced Technology & Modern Equipment",
+      "Comfortable & Relaxing Environment",
+      "Affordable & Transparent Pricing",
+      "Strict Hygiene & Safety Protocols"
+    ],
+    "cta": { "label": "More About Us", "href": "/about" },
+    "tourLabel": "Take a Clinic Tour",
+    "tourCaption": "Step inside the clinic",
+    "interiorImage": {
+      "src": "https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=1400&q=80",
+      "alt": "Lumière Dental Clinic reception area"
+    },
+    "portraitImage": {
+      "src": "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=1000&q=80",
+      "alt": "Dr. Aanya Mehta, Founder and Chief Dentist"
+    },
+    "verticalText": "Certified Dental Excellence Since 2009"
+  },
+
+  "contact": {
+    "phone": "+91 98765 43210",
+    "phoneHref": "tel:+919876543210",
+    "whatsapp": "+91 98765 43210",
+    "whatsappHref": "https://wa.me/919876543210",
+    "$whatsappMessage": "Pre-filled text for every WhatsApp link on the site.",
+    "whatsappMessage": "Hello Lumière Dental Clinic, I'd like to book an appointment.",
+    "email": "hello@lumieredental.com",
+    "emailHref": "mailto:hello@lumieredental.com",
+    "emergencyPhone": "+91 98765 43211",
+    "emergencyHref": "tel:+919876543211",
+    "address": {
+      "line1": "123, Smile Street",
+      "line2": "Koramangala, Bangalore 560034",
+      "city": "Bangalore",
+      "state": "Karnataka",
+      "postalCode": "560034",
+      "country": "India",
+      "countryCode": "IN",
+      "$geo": "Used for the LocalBusiness schema and the 'near me' signal Google reads. Right-click the pin in Google Maps to copy the coordinates.",
+      "geo": { "latitude": 12.9352, "longitude": 77.6245 },
+      "mapsUrl": "https://maps.google.com/?q=Koramangala+Bangalore",
+      "embedUrl": "https://www.google.com/maps?q=Koramangala,Bangalore&output=embed",
+      "parkingNote": "Parking is free behind the building."
+    }
+  },
+
+  "$hours": "`days` and `time` are what visitors read. `dayOfWeek`, `opens` and `closes` are what Google reads — keep them in sync, and use 24-hour times.",
+  "hours": [
+    {
+      "days": "Mon – Sat",
+      "time": "9:00 AM – 8:00 PM",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    {
+      "days": "Sunday",
+      "time": "10:00 AM – 2:00 PM",
+      "dayOfWeek": ["Sunday"],
+      "opens": "10:00",
+      "closes": "14:00"
+    }
+  ],
+
+  "emergency": {
+    "icon": "emergency",
+    "title": "Emergency Care Available",
+    "text": "24/7 support for dental emergencies."
+  },
+
+  "socials": [
+    { "icon": "facebook", "label": "Facebook", "href": "https://facebook.com" },
+    { "icon": "instagram", "label": "Instagram", "href": "https://instagram.com" },
+    { "icon": "whatsapp", "label": "WhatsApp", "href": "https://wa.me/919876543210" },
+    { "icon": "youtube", "label": "YouTube", "href": "https://youtube.com" }
+  ],
+
+  "banners": {
+    "smile": {
+      "title": "Your Best Smile",
+      "titleSecondLine": "Is Just One Step Away!",
+      "text": "Book your appointment today and experience world class dental care.",
+      "cta": { "label": "Book Appointment", "href": "/book-appointment" },
+      "image": {
+        "src": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80",
+        "alt": "Patient smiling after dental treatment"
+      }
+    },
+    "ready": {
+      "icon": "calendar",
+      "title": "Ready to Transform",
+      "titleSecondLine": "Your Smile?",
+      "text": "Book your appointment today and take the first step toward a healthier, brighter smile.",
+      "cta": { "label": "Book Appointment", "href": "/book-appointment" }
+    }
+  },
+
+  "footer": {
+    "blurb": "We're committed to providing exceptional dental care in a comfortable and caring environment.",
+    "$copyright": "{year} is replaced with the current year at build time, so this never goes stale.",
+    "copyright": "© {year} {clinic}. All rights reserved.",
+    "legal": [
+      { "label": "Privacy Policy", "href": "/patient-info#privacy" },
+      { "label": "Terms & Conditions", "href": "/patient-info#terms" }
+    ]
+  },
+
+  "seo": {
+    "title": "Lumière Dental Clinic | Where Healthy Smiles Begin",
+    "description": "Advanced dental care in Bangalore — implants, orthodontics, cosmetic dentistry and root canal therapy in a comfortable, hygienic clinic.",
+    "keywords": ["dental clinic Bangalore", "dental implants", "invisalign", "teeth whitening", "root canal"],
+    "$priceRange": "Google shows this on the business panel. One to four currency symbols.",
+    "priceRange": "₹₹",
+    "$aggregateRating": "Only fill this in if the clinic genuinely holds these reviews. Set value to 0 to omit the rating from the structured data entirely.",
+    "aggregateRating": { "value": 4.9, "count": 386 }
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "$comment": "Header and footer menus. Links to a route disabled in site.json are removed automatically.",
+  "primary": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "About Us",
+      "href": "/about"
+    },
+    {
+      "label": "Services",
+      "href": "/services"
+    },
+    {
+      "label": "Treatments",
+      "href": "/treatments"
+    },
+    {
+      "label": "Gallery",
+      "href": "/gallery"
+    },
+    {
+      "label": "Patient Info",
+      "href": "/patient-info"
+    },
+    {
+      "label": "Blog",
+      "href": "/blog"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ],
+  "cta": {
+    "label": "Book Appointment",
+    "href": "/book-appointment",
+    "icon": "arrow-right"
+  },
+  "footerColumns": [
+    {
+      "title": "Quick Links",
+      "links": [
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "About Us",
+          "href": "/about"
+        },
+        {
+          "label": "Services",
+          "href": "/services"
+        },
+        {
+          "label": "Treatments",
+          "href": "/treatments"
+        },
+        {
+          "label": "Gallery",
+          "href": "/gallery"
+        },
+        {
+          "label": "Blog",
+          "href": "/blog"
+        },
+        {
+          "label": "Contact",
+          "href": "/contact"
+        }
+      ]
+    },
+    {
+      "title": "Our Services",
+      "links": [
+        {
+          "label": "General Dentistry",
+          "href": "/services/general-dentistry"
+        },
+        {
+          "label": "Cosmetic Dentistry",
+          "href": "/services/cosmetic-dentistry"
+        },
+        {
+          "label": "Dental Implants",
+          "href": "/services/dental-implants"
+        },
+        {
+          "label": "Orthodontics",
+          "href": "/services/orthodontics"
+        },
+        {
+          "label": "Root Canal Therapy",
+          "href": "/services/root-canal-therapy"
+        },
+        {
+          "label": "Teeth Whitening",
+          "href": "/services/teeth-whitening"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "$comment": "The price table. Categories become the segmented control at the top of /treatments.",
+  "section": {
+    "eyebrow": "Treatments",
+    "title": "Every Procedure, Explained Plainly",
+    "italicWord": "Plainly",
+    "intro": "Indicative pricing, visit counts and recovery times so you can plan before you commit. Final figures are confirmed after your examination."
+  },
+  "note": "Prices are indicative ranges for the Koramangala clinic and exclude diagnostics. Your written estimate is issued after examination and never changes mid-treatment.",
+  "categories": [
+    {
+      "id": "preventive",
+      "name": "Preventive",
+      "icon": "shield",
+      "items": [
+        {
+          "name": "Consultation & full examination",
+          "price": "₹500",
+          "visits": "1 visit",
+          "time": "30 min",
+          "note": "Waived if treatment is booked the same day"
+        },
+        {
+          "name": "Scaling & polishing",
+          "price": "₹1,200 – ₹2,000",
+          "visits": "1 visit",
+          "time": "45 min",
+          "note": "Includes stain removal"
+        },
+        {
+          "name": "Fluoride application",
+          "price": "₹800",
+          "visits": "1 visit",
+          "time": "15 min",
+          "note": "Recommended for children"
+        },
+        {
+          "name": "Pit & fissure sealant",
+          "price": "₹700 per tooth",
+          "visits": "1 visit",
+          "time": "20 min",
+          "note": "Preventive for molars"
+        }
+      ]
+    },
+    {
+      "id": "restorative",
+      "name": "Restorative",
+      "icon": "tooth",
+      "items": [
+        {
+          "name": "Composite filling",
+          "price": "₹1,200 – ₹2,500",
+          "visits": "1 visit",
+          "time": "30 min",
+          "note": "Tooth-coloured, single sitting"
+        },
+        {
+          "name": "Root canal treatment",
+          "price": "₹4,500 – ₹7,500",
+          "visits": "1 – 2 visits",
+          "time": "60 – 90 min",
+          "note": "Rotary, single sitting where possible"
+        },
+        {
+          "name": "Zirconia crown",
+          "price": "₹9,000 – ₹14,000",
+          "visits": "2 visits",
+          "time": "45 min each",
+          "note": "10-year warranty on material"
+        },
+        {
+          "name": "Post & core build-up",
+          "price": "₹2,500",
+          "visits": "1 visit",
+          "time": "45 min",
+          "note": "Precedes crown on treated teeth"
+        }
+      ]
+    },
+    {
+      "id": "surgical",
+      "name": "Surgical",
+      "icon": "implant",
+      "items": [
+        {
+          "name": "Simple extraction",
+          "price": "₹1,500 – ₹2,500",
+          "visits": "1 visit",
+          "time": "30 min",
+          "note": "Local anaesthesia"
+        },
+        {
+          "name": "Surgical wisdom tooth removal",
+          "price": "₹6,000 – ₹12,000",
+          "visits": "1 visit",
+          "time": "45 – 60 min",
+          "note": "48-hour recovery typical"
+        },
+        {
+          "name": "Single dental implant",
+          "price": "₹25,000 – ₹45,000",
+          "visits": "2 – 3 visits",
+          "time": "3 – 6 months total",
+          "note": "Includes abutment and crown"
+        },
+        {
+          "name": "Bone graft / sinus lift",
+          "price": "₹15,000 – ₹35,000",
+          "visits": "1 visit",
+          "time": "60 – 90 min",
+          "note": "Where bone volume is inadequate"
+        }
+      ]
+    },
+    {
+      "id": "orthodontic",
+      "name": "Orthodontic",
+      "icon": "dental-braces",
+      "items": [
+        {
+          "name": "Metal braces (both arches)",
+          "price": "₹35,000 – ₹50,000",
+          "visits": "Monthly reviews",
+          "time": "12 – 24 months",
+          "note": "Includes retainers"
+        },
+        {
+          "name": "Ceramic braces",
+          "price": "₹55,000 – ₹75,000",
+          "visits": "Monthly reviews",
+          "time": "12 – 24 months",
+          "note": "Tooth-coloured brackets"
+        },
+        {
+          "name": "Clear aligners",
+          "price": "₹90,000 – ₹2,20,000",
+          "visits": "6 – 10 reviews",
+          "time": "6 – 18 months",
+          "note": "3D preview before starting"
+        },
+        {
+          "name": "Retainer replacement",
+          "price": "₹4,000 per arch",
+          "visits": "2 visits",
+          "time": "1 week",
+          "note": "Fixed or removable"
+        }
+      ]
+    },
+    {
+      "id": "cosmetic",
+      "name": "Cosmetic",
+      "icon": "spark",
+      "items": [
+        {
+          "name": "In-clinic whitening",
+          "price": "₹8,000 – ₹12,000",
+          "visits": "1 visit",
+          "time": "60 min",
+          "note": "Includes desensitising protocol"
+        },
+        {
+          "name": "Composite veneer",
+          "price": "₹6,000 per tooth",
+          "visits": "1 visit",
+          "time": "60 min",
+          "note": "Same-day result"
+        },
+        {
+          "name": "Porcelain veneer",
+          "price": "₹15,000 – ₹22,000 per tooth",
+          "visits": "2 – 3 visits",
+          "time": "2 weeks",
+          "note": "Trial smile before finalising"
+        },
+        {
+          "name": "Gum contouring",
+          "price": "₹5,000 – ₹15,000",
+          "visits": "1 visit",
+          "time": "45 min",
+          "note": "Soft-tissue laser, minimal downtime"
+        }
+      ]
+    }
+  ]
+}

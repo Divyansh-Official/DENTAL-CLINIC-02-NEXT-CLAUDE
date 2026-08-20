@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --shell-x: clamp(1.25rem, 5vw, 3.5rem);
+    --nav-h: 76px;
+    /* Raised on mobile when the sticky action bar is present, so the last
+       section of every page can still be scrolled clear of it. */
+    --safe-bottom: 0px;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Anchors and :target land below the fixed header rather than under it. */
+    scroll-padding-top: calc(var(--nav-h) + 16px);
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    @apply bg-surface text-ink font-body antialiased;
+    overflow-x: hidden;
+    padding-bottom: var(--safe-bottom);
+  }
+
+  ::selection {
+    background: rgb(var(--c-primary));
+    color: rgb(var(--c-on-primary));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--c-accent));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-primary;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* The map iframe is the one third-party surface on the site; keep it from
+     forcing a horizontal scrollbar on narrow screens. */
+  iframe {
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: theme('maxWidth.shell');
+    margin-inline: auto;
+    padding-inline: var(--shell-x);
+  }
+
+  .eyebrow {
+    @apply font-body text-[11px] uppercase tracking-[0.24em] text-accent;
+  }
+
+  .display-xl {
+    @apply font-display leading-[1.02] tracking-[-0.02em];
+    font-size: clamp(2.75rem, 6.2vw, 5.1rem);
+  }
+
+  .display-lg {
+    @apply font-display leading-[1.06] tracking-[-0.015em];
+    font-size: clamp(2.1rem, 4.4vw, 3.5rem);
+  }
+
+  .display-md {
+    @apply font-display leading-[1.12] tracking-[-0.01em];
+    font-size: clamp(1.6rem, 2.6vw, 2.25rem);
+  }
+
+  .body-lead {
+    @apply text-[15px] md:text-base leading-relaxed text-ink-muted;
+  }
+
+  .rule {
+    @apply h-px w-full bg-line;
+  }
+
+  /* iOS translucent material — the blur behind the nav bar and sheets. */
+  .material {
+    background: rgb(var(--c-surface) / 0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  .material-dark {
+    background: rgb(var(--c-primary) / 0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  .card-surface {
+    @apply bg-card border border-line rounded-card shadow-card;
+  }
+
+  .section-pad {
+    padding-block: clamp(3.5rem, 7vw, 6.5rem);
+  }
+
+  .grain::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Radial brand glow used behind banners and page heads. */
+  .glow {
+    background: radial-gradient(circle, rgb(var(--c-accent)) 0%, transparent 68%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

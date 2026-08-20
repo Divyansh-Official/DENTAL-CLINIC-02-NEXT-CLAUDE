@@ -1,0 +1,40 @@
+{
+  "section": {
+    "eyebrow": "Our Process",
+    "title": "Care That's Simple & Stress-Free",
+    "italicWord": "Stress-Free"
+  },
+  "steps": [
+    {
+      "step": "01",
+      "icon": "calendar",
+      "title": "Book Appointment",
+      "text": "Choose a convenient time for your visit."
+    },
+    {
+      "step": "02",
+      "icon": "chat",
+      "title": "Consultation",
+      "text": "We listen, evaluate & understand your needs."
+    },
+    {
+      "step": "03",
+      "icon": "clipboard",
+      "title": "Personalized Plan",
+      "text": "Tailored treatment plan for your perfect smile."
+    },
+    {
+      "step": "04",
+      "icon": "stethoscope",
+      "title": "Treatment",
+      "text": "Advanced care with comfort & precision."
+    },
+    {
+      "step": "05",
+      "icon": "check-circle",
+      "title": "Follow-Up",
+      "text": "We ensure lasting results & your comfort."
+    }
+  ],
+  "$comment": "The treatment journey. Any number of steps between three and six lays out correctly."
+}

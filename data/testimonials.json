@@ -1,0 +1,83 @@
+{
+  "$comment": "Patient reviews. Use real ones — the aggregate rating in clinic.json should match what you actually hold.",
+  "section": {
+    "eyebrow": "Patients Love Us",
+    "title": "Real Stories. Real Smiles.",
+    "italicWord": "Smiles",
+    "intro": "Verified reviews from patients treated at our Koramangala clinic."
+  },
+  "items": [
+    {
+      "id": "t1",
+      "quote": "The team at Lumière Dental Clinic is amazing! They made my root canal treatment completely painless.",
+      "rating": 5,
+      "name": "Priya Sharma",
+      "location": "Bangalore",
+      "treatment": "Root Canal Therapy",
+      "avatar": {
+        "src": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
+        "alt": "Priya Sharma"
+      }
+    },
+    {
+      "id": "t2",
+      "quote": "Got my invisalign treatment here. The results are beyond my expectations.",
+      "rating": 5,
+      "name": "Rohan Verma",
+      "location": "Bangalore",
+      "treatment": "Orthodontics",
+      "avatar": {
+        "src": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+        "alt": "Rohan Verma"
+      }
+    },
+    {
+      "id": "t3",
+      "quote": "Professional, friendly and hygienic clinic. My whole family trusts them for our dental care.",
+      "rating": 5,
+      "name": "Neha Iyer",
+      "location": "Bangalore",
+      "treatment": "General Dentistry",
+      "avatar": {
+        "src": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80",
+        "alt": "Neha Iyer"
+      }
+    },
+    {
+      "id": "t4",
+      "quote": "I had put off implants for years out of fear. The scan-guided planning meant the surgery was over before I expected it.",
+      "rating": 5,
+      "name": "Arjun Nair",
+      "location": "Indiranagar",
+      "treatment": "Dental Implants",
+      "avatar": {
+        "src": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+        "alt": "Arjun Nair"
+      }
+    },
+    {
+      "id": "t5",
+      "quote": "My eight year old actually asks when her next dental visit is. That says everything about how they handle children.",
+      "rating": 5,
+      "name": "Sanjana Rao",
+      "location": "HSR Layout",
+      "treatment": "Kids Dentistry",
+      "avatar": {
+        "src": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=200&q=80",
+        "alt": "Sanjana Rao"
+      }
+    },
+    {
+      "id": "t6",
+      "quote": "Transparent pricing, no upselling, and they explained every option before I paid a rupee.",
+      "rating": 5,
+      "name": "Vikram Desai",
+      "location": "Jayanagar",
+      "treatment": "Cosmetic Dentistry",
+      "avatar": {
+        "src": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=80",
+        "alt": "Vikram Desai"
+      }
+    }
+  ]
+}

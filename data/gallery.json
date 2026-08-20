@@ -1,0 +1,90 @@
+{
+  "$comment": "Gallery tiles. `span` is \"normal\", \"wide\" or \"tall\" and controls how much grid each photo takes.",
+  "section": {
+    "eyebrow": "Gallery",
+    "title": "Inside the Clinic",
+    "italicWord": "Clinic",
+    "intro": "The rooms, the equipment and a few results our patients agreed to share."
+  },
+  "filters": [
+    "All",
+    "Clinic",
+    "Treatments",
+    "Results",
+    "Team"
+  ],
+  "items": [
+    {
+      "id": "g1",
+      "category": "Clinic",
+      "title": "Reception",
+      "src": "https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Clinic reception area",
+      "span": "wide"
+    },
+    {
+      "id": "g2",
+      "category": "Treatments",
+      "title": "Operatory One",
+      "src": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Dental operatory",
+      "span": "tall"
+    },
+    {
+      "id": "g3",
+      "category": "Results",
+      "title": "Smile Makeover",
+      "src": "https://images.unsplash.com/photo-1445527815219-ecbfec67492e?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Smile after cosmetic treatment",
+      "span": "normal"
+    },
+    {
+      "id": "g4",
+      "category": "Team",
+      "title": "Consultation",
+      "src": "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Dentist consulting with a patient",
+      "span": "normal"
+    },
+    {
+      "id": "g5",
+      "category": "Treatments",
+      "title": "Digital Imaging",
+      "src": "https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Digital dental imaging",
+      "span": "normal"
+    },
+    {
+      "id": "g6",
+      "category": "Results",
+      "title": "Aligner Case",
+      "src": "https://images.unsplash.com/photo-1571772996211-2f02c9727629?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Patient with clear aligners",
+      "span": "tall"
+    },
+    {
+      "id": "g7",
+      "category": "Clinic",
+      "title": "Waiting Lounge",
+      "src": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Clinic waiting lounge",
+      "span": "normal"
+    },
+    {
+      "id": "g8",
+      "category": "Team",
+      "title": "Sterilisation Bay",
+      "src": "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Instrument sterilisation area",
+      "span": "wide"
+    },
+    {
+      "id": "g9",
+      "category": "Results",
+      "title": "Whitening Result",
+      "src": "https://images.unsplash.com/photo-1581585504621-71b2e0b9b013?auto=format&fit=crop&w=1200&q=80",
+      "alt": "Result after whitening",
+      "span": "normal"
+    }
+  ]
+}
