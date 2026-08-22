@@ -73,16 +73,16 @@ export default function AboutPage() {
 
             <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2">
               {clinic.about.points.map((point) => (
-                <RevealItem key={point} className="flex items-start gap-3 rounded-card border border-line bg-card p-4">
+                <RevealItem key={point} className="flex items-start gap-3 rounded-card border border-line bg-card p-8">
                   <Icon name="check-circle" size={16} tone="accent" className="mt-0.5" />
-                  <span className="text-[13px] leading-relaxed text-primary">{point}</span>
+                  <span className="text-[15.5px] leading-relaxed text-primary">{point}</span>
                 </RevealItem>
               ))}
             </RevealGroup>
 
             {clinic.identity.registration ? (
               <Reveal delay={0.2}>
-                <p className="mt-8 text-[12px] tracking-[0.06em] text-ink-faint">{clinic.identity.registration}</p>
+                <p className="mt-8 text-[13px] tracking-[0.06em] text-ink-faint">{clinic.identity.registration}</p>
               </Reveal>
             ) : null}
           </div>
@@ -111,7 +111,7 @@ export default function AboutPage() {
                           fill
                           loading="lazy"
                           sizes="(max-width: 640px) 100vw, 25vw"
-                          className="object-cover transition-transform duration-[1100ms] ease-ios group-hover:scale-[1.06]"
+                          className="object-cover"
                         />
                         {doctor.experience ? (
                           <span className="material absolute bottom-3 left-3 rounded-full px-3 py-1 text-[10.5px] uppercase tracking-[0.14em] text-primary">
@@ -122,9 +122,9 @@ export default function AboutPage() {
                     ) : null}
 
                     <div className="flex flex-1 flex-col p-5">
-                      <h3 className="font-display text-[18px] text-primary">{doctor.name}</h3>
-                      <p className="mt-1 text-[12px] tracking-[0.04em] text-accent">{doctor.role}</p>
-                      <p className="mt-3 text-[12.5px] leading-relaxed text-ink-muted">{doctor.bio}</p>
+                      <h3 className="font-display text-[24px] text-primary">{doctor.name}</h3>
+                      <p className="mt-1 text-[13px] tracking-[0.04em] text-accent">{doctor.role}</p>
+                      <p className="mt-3 text-[15.5px] leading-relaxed text-ink-muted">{doctor.bio}</p>
 
                       <dl className="mt-4 space-y-1.5 border-t border-line pt-4 text-[11.5px] text-ink-faint">
                         <div className="flex gap-2">
@@ -141,7 +141,7 @@ export default function AboutPage() {
 
                       <a
                         href={doctor.phoneHref}
-                        className="mt-4 inline-flex items-center gap-2 text-[12.5px] text-primary transition-colors hover:text-accent"
+                        className="mt-4 inline-flex items-center gap-2 text-[14.5px] text-primary transition-colors hover:text-accent"
                       >
                         <Icon name="phone" size={12} tone="accent" />
                         {doctor.phone}
@@ -166,9 +166,9 @@ export default function AboutPage() {
           </div>
           <RevealGroup className="space-y-3 lg:col-span-7">
             {patientInfo.safety.points.map((point, index) => (
-              <RevealItem key={point} className="flex items-start gap-4 rounded-card border border-line bg-card p-5">
+              <RevealItem key={point} className="flex items-start gap-4 rounded-card border border-line bg-card p-8">
                 <span className="font-display text-[15px] text-accent">{String(index + 1).padStart(2, '0')}</span>
-                <span className="text-[13.5px] leading-relaxed text-primary">{point}</span>
+                <span className="text-[15.5px] leading-relaxed text-primary">{point}</span>
               </RevealItem>
             ))}
           </RevealGroup>

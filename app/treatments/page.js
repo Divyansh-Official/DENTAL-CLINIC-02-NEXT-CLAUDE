@@ -52,12 +52,12 @@ export default function TreatmentsPage() {
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
             <Reveal>
-              <div className="h-full rounded-card border border-line bg-card p-7">
+              <div className="h-full rounded-card border border-line bg-card p-8">
                 <Icon name={patientInfo.payments.icon || 'wallet'} size={26} tone="accent" />
-                <h3 className="mt-5 font-display text-[20px] text-primary">{t('treatments.payments.methodsTitle')}</h3>
+                <h3 className="mt-5 font-display text-[24px] text-primary">{t('treatments.payments.methodsTitle')}</h3>
                 <ul className="mt-5 space-y-2.5">
                   {patientInfo.payments.methods.map((method) => (
-                    <li key={method} className="flex items-center gap-3 text-[13.5px] text-primary">
+                    <li key={method} className="flex items-center gap-3 text-[14.5px] text-primary">
                       <Icon name="check" size={11} tone="accent" />
                       {method}
                     </li>
@@ -67,13 +67,13 @@ export default function TreatmentsPage() {
             </Reveal>
 
             <Reveal delay={0.1}>
-              <div className="h-full rounded-card border border-line bg-card p-7">
+              <div className="h-full rounded-card border border-line bg-card p-8">
                 <Icon name={patientInfo.payments.insurance.icon || 'insurance'} size={26} tone="accent" />
-                <h3 className="mt-5 font-display text-[20px] text-primary">{t('treatments.payments.insuranceTitle')}</h3>
-                <p className="body-lead mt-4 text-[13.5px]">{patientInfo.payments.insurance.text}</p>
+                <h3 className="mt-5 font-display text-[24px] text-primary">{t('treatments.payments.insuranceTitle')}</h3>
+                <p className="body-lead mt-4 text-[14.5px]">{patientInfo.payments.insurance.text}</p>
                 <ul className="mt-5 flex flex-wrap gap-2">
                   {patientInfo.payments.insurance.partners.map((partner) => (
-                    <li key={partner} className="rounded-full border border-line px-3.5 py-1.5 text-[12px] text-ink-muted">
+                    <li key={partner} className="rounded-full border border-line px-3.5 py-1.5 text-[13.5px] text-ink-muted">
                       {partner}
                     </li>
                   ))}

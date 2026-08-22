@@ -51,7 +51,7 @@ export default function ContactPage() {
                 <a
                   href={channel.href}
                   {...linkAttrs(channel.href)}
-                  className="group flex h-full flex-col rounded-card border border-line bg-card p-6 transition-all duration-500 ease-ios hover:-translate-y-1.5 hover:shadow-lift"
+                  className="group flex h-full flex-col rounded-card border border-line bg-card p-8 transition-all duration-500 ease-ios hover:-translate-y-1.5 hover:shadow-lift"
                 >
                   <span className="grid h-12 w-12 place-items-center rounded-full bg-surface-200 text-primary transition-colors duration-500 group-hover:bg-primary group-hover:text-on-primary">
                     <Icon name={channel.icon} size={20} />
@@ -59,10 +59,10 @@ export default function ContactPage() {
                   <span className="mt-6 block text-[11px] uppercase tracking-[0.18em] text-accent">
                     {channel.label}
                   </span>
-                  <span className="mt-2 block font-display text-[18px] leading-snug text-primary">
+                  <span className="mt-2 block font-display text-[24px] leading-snug text-primary">
                     {channel.value}
                   </span>
-                  <span className="mt-auto pt-4 text-[12px] text-ink-faint">{channel.note}</span>
+                  <span className="mt-auto pt-4 text-[13.5px] text-ink-faint">{channel.note}</span>
                 </a>
               </RevealItem>
             ))}
@@ -90,15 +90,15 @@ export default function ContactPage() {
               <Reveal>
                 <p className="eyebrow">{t('contact.visitEyebrow')}</p>
                 <h2 className="display-md mt-4">{address.line1}</h2>
-                <p className="mt-2 text-[14px] text-ink-muted">{address.line2}</p>
+                <p className="mt-2 text-[15px] text-ink-muted">{address.line2}</p>
 
-                <div className="mt-7 rounded-card border border-line bg-card p-6">
+                <div className="mt-7 rounded-card border border-line bg-card p-8">
                   <p className="eyebrow">{t('common.openingHours')}</p>
                   <ul className="mt-4 space-y-3">
                     {clinicHours().map((slot) => (
                       <li
                         key={slot.days}
-                        className="flex items-center justify-between border-b border-line pb-3 text-[13.5px] last:border-0 last:pb-0"
+                        className="flex items-center justify-between border-b border-line pb-3 text-[14.5px] last:border-0 last:pb-0"
                       >
                         <span className="text-primary">{slot.days}</span>
                         <span className="text-ink-muted">{slot.time}</span>

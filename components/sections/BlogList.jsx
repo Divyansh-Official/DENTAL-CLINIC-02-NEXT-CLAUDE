@@ -1,7 +1,8 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useCalmMotion } from '@/lib/hooks';
 import { PostCard } from './BlogPreview';
 import { blogPosts, t } from '@/lib/data';
 import { IOS_SOFT, spring, tap } from '@/lib/motion';
@@ -9,7 +10,7 @@ import { IOS_SOFT, spring, tap } from '@/lib/motion';
 /** Category-filtered article list sharing the segmented control pattern. */
 export default function BlogList() {
   const posts = blogPosts();
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
   const allLabel = t('blog.allCategory') || 'All';
 
   const categories = useMemo(
@@ -35,10 +36,10 @@ export default function BlogList() {
             <motion.button
               key={category}
               type="button"
-              whileTap={reduceMotion ? undefined : tap}
+              whileTap={calm ? undefined : tap}
               onClick={() => setFilter(category)}
               aria-pressed={selected}
-              className="relative whitespace-nowrap rounded-full px-5 py-2.5 text-[13px]"
+              className="relative whitespace-nowrap rounded-full px-6 py-3 text-[15px]"
             >
               {selected ? (
                 <motion.span layoutId="blog-pill" transition={spring.snappy} className="absolute inset-0 rounded-full bg-primary" />
@@ -51,12 +52,12 @@ export default function BlogList() {
         })}
       </div>
 
-      <motion.ul layout={!reduceMotion} className="mt-10 grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.ul layout={!calm} className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {visible.map((post) => (
             <motion.li
               key={post.slug}
-              layout={!reduceMotion}
+              layout={!calm}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96 }}

@@ -24,7 +24,7 @@ export default function Error({ error, reset }) {
       <p className="body-lead mt-5 max-w-md">{t('error.body')}</p>
 
       {process.env.NODE_ENV !== 'production' && error?.message ? (
-        <pre className="mt-6 max-w-xl overflow-x-auto rounded-card border border-line bg-card p-4 text-left text-[12px] text-ink-muted">
+        <pre className="mt-6 max-w-xl overflow-x-auto rounded-card border border-line bg-card p-8 text-left text-[13.5px] text-ink-muted">
           {error.message}
         </pre>
       ) : null}

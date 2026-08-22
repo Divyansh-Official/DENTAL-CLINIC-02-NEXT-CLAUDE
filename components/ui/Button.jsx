@@ -1,35 +1,35 @@
 'use client';
 
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Icon from './Icon';
 import { spring, tap } from '@/lib/motion';
 import { isExternal, isNewTab, linkAttrs } from '@/lib/format';
+import { useCalmMotion } from '@/lib/hooks';
 
 const VARIANTS = {
-  primary: 'bg-primary text-on-primary hover:bg-primary-600 border border-primary',
-  accent: 'bg-accent text-on-accent hover:bg-accent-deep border border-accent',
-  outline: 'bg-transparent text-primary border border-primary/25 hover:border-primary/60 hover:bg-primary/[0.04]',
-  light: 'bg-card text-primary border border-line hover:border-primary/30 shadow-card',
+  primary: 'bg-primary text-on-primary hover:bg-primary-600 border border-primary shadow-float',
+  accent: 'bg-accent text-on-accent hover:bg-accent-deep border border-accent shadow-float',
+  outline: 'bg-transparent text-primary border border-primary/20 hover:border-primary/45 hover:bg-primary/[0.03]',
+  light: 'bg-card text-primary border border-transparent shadow-float hover:bg-surface-50',
   ghost: 'bg-transparent text-primary border border-transparent hover:bg-primary/[0.05]'
 };
 
 const SIZES = {
-  sm: 'h-10 pl-4 pr-2 text-[13px]',
-  md: 'h-12 pl-6 pr-2.5 text-[14px]',
-  lg: 'h-14 pl-8 pr-3 text-[15px]'
+  sm: 'h-11 pl-5 pr-2 text-[14.5px] gap-2.5',
+  md: 'h-[52px] pl-7 pr-2.5 text-[15px] gap-3',
+  lg: 'h-[60px] pl-9 pr-3 text-[16px] gap-4'
 };
 
-const PLATE = {
-  sm: 'h-7 w-7',
-  md: 'h-9 w-9',
-  lg: 'h-10 w-10'
-};
+const PLATE = { sm: 'h-8 w-8', md: 'h-10 w-10', lg: 'h-[46px] w-[46px]' };
 
 /**
- * The pill button, with an iOS press response: scales to 96.5% on tap, and
- * the trailing chevron capsule slides a few pixels on hover the way a
- * UITableView disclosure indicator does.
+ * The pill button.
+ *
+ * Taller and more generously set than a default control, because on a clinic
+ * site this is the thing the whole page exists to get tapped. The trailing
+ * capsule slides on hover the way a UITableView disclosure indicator does, and
+ * the whole button presses to 96.5% on tap.
  */
 export default function Button({
   href,
@@ -44,17 +44,17 @@ export default function Button({
   rel,
   ariaLabel
 }) {
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
   const onFilled = variant === 'primary' || variant === 'accent';
 
   const inner = (
     <>
-      <span className="relative z-10 whitespace-nowrap tracking-[0.01em]">{children}</span>
+      <span className="relative z-10 whitespace-nowrap font-medium tracking-[0.005em]">{children}</span>
       {icon ? (
         <span
           className={`relative z-10 grid place-items-center rounded-full transition-transform duration-500 ease-ios group-hover:translate-x-1 ${
             PLATE[size] || PLATE.md
-          } ${onFilled ? 'bg-white/15' : 'bg-primary/[0.06]'}`}
+          } ${onFilled ? 'bg-white/[0.16]' : 'bg-primary/[0.07]'}`}
         >
           <Icon name={icon} size={size === 'sm' ? 13 : 15} />
         </span>
@@ -62,12 +62,12 @@ export default function Button({
     </>
   );
 
-  const classes = `group relative inline-flex items-center gap-3 rounded-full font-body font-medium transition-colors duration-300 ease-ios ${
+  const classes = `group relative inline-flex items-center justify-between rounded-full font-body transition-colors duration-300 ease-ios ${
     VARIANTS[variant] || VARIANTS.primary
   } ${SIZES[size] || SIZES.md} ${className}`;
 
-  const hover = reduceMotion ? undefined : { y: -2 };
-  const press = reduceMotion ? undefined : tap;
+  const hover = calm ? undefined : { y: -2 };
+  const press = calm ? undefined : tap;
 
   if (href) {
     /* tel: and mailto: must be plain anchors — next/link would try to

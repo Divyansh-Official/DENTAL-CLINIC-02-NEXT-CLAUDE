@@ -17,7 +17,7 @@ export default function TextLink({ href, children, tone = 'accent', className = 
     <Wrapper
       href={href}
       {...linkAttrs(href)}
-      className={`group inline-flex items-center gap-2 text-[13px] font-medium tracking-[0.02em] ${
+      className={`group inline-flex items-center gap-2 text-[14.5px] font-medium tracking-[0.02em] ${
         TONE[tone] || TONE.accent
       } ${className}`}
     >

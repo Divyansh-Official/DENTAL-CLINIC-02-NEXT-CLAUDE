@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { useCalmMotion } from '@/lib/hooks';
 import { pagePush } from '@/lib/motion';
 
 /**
@@ -22,7 +23,7 @@ import { pagePush } from '@/lib/motion';
  */
 export default function PageTransition({ children }) {
   const pathname = usePathname();
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
   const [ready, setReady] = useState(false);
   const firstPath = useRef(pathname);
 
@@ -32,7 +33,7 @@ export default function PageTransition({ children }) {
 
   const isFirstRender = !ready && pathname === firstPath.current;
 
-  if (reduceMotion || isFirstRender) {
+  if (calm || isFirstRender) {
     return <main className="min-h-[60vh]">{children}</main>;
   }
 

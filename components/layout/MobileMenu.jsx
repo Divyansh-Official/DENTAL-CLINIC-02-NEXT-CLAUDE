@@ -3,7 +3,8 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useCalmMotion } from '@/lib/hooks';
 import Icon from '@/components/ui/Icon';
 import Button from '@/components/ui/Button';
 import { clinic, navCta, primaryNav, t } from '@/lib/data';
@@ -16,7 +17,7 @@ import { IOS_EASE, spring, tap } from '@/lib/motion';
  */
 export default function MobileMenu({ open, onClose, containerRef }) {
   const pathname = usePathname();
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
   const items = primaryNav();
 
   /* Close on navigation, but not on the first render — the original ran on
@@ -50,13 +51,13 @@ export default function MobileMenu({ open, onClose, containerRef }) {
             aria-modal="true"
             aria-label={t('common.menu')}
             tabIndex={-1}
-            initial={reduceMotion ? { opacity: 0 } : { x: '100%' }}
-            animate={reduceMotion ? { opacity: 1 } : { x: 0 }}
+            initial={calm ? { opacity: 0 } : { x: '100%' }}
+            animate={calm ? { opacity: 1 } : { x: 0 }}
             exit={
-              reduceMotion ? { opacity: 0 } : { x: '100%', transition: { duration: 0.35, ease: IOS_EASE } }
+              calm ? { opacity: 0 } : { x: '100%', transition: { duration: 0.35, ease: IOS_EASE } }
             }
-            transition={reduceMotion ? { duration: 0.2 } : spring.sheet}
-            drag={reduceMotion ? false : 'x'}
+            transition={calm ? { duration: 0.2 } : spring.sheet}
+            drag={calm ? false : 'x'}
             dragDirectionLock
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={{ left: 0, right: 0.55 }}
@@ -69,7 +70,7 @@ export default function MobileMenu({ open, onClose, containerRef }) {
               <p className="eyebrow">{t('common.menu')}</p>
               <motion.button
                 type="button"
-                whileTap={reduceMotion ? undefined : tap}
+                whileTap={calm ? undefined : tap}
                 onClick={onClose}
                 className="grid h-10 w-10 place-items-center rounded-full bg-primary/[0.07] text-primary"
               >
@@ -84,9 +85,9 @@ export default function MobileMenu({ open, onClose, containerRef }) {
                   return (
                     <motion.li
                       key={item.href}
-                      initial={reduceMotion ? false : { opacity: 0, x: 28 }}
+                      initial={calm ? false : { opacity: 0, x: 28 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: reduceMotion ? 0 : 0.06 + index * 0.045, duration: 0.6, ease: IOS_EASE }}
+                      transition={{ delay: calm ? 0 : 0.06 + index * 0.045, duration: 0.6, ease: IOS_EASE }}
                       className="border-b border-line/70"
                     >
                       <Link
@@ -110,25 +111,25 @@ export default function MobileMenu({ open, onClose, containerRef }) {
               </ul>
 
               <motion.div
-                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
+                initial={calm ? false : { opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: reduceMotion ? 0 : 0.42, duration: 0.6, ease: IOS_EASE }}
+                transition={{ delay: calm ? 0 : 0.42, duration: 0.6, ease: IOS_EASE }}
                 className="mt-9 space-y-4 pb-10"
               >
                 <Button href={navCta.href} className="w-full justify-between" size="md">
                   {navCta.label}
                 </Button>
 
-                <div className="space-y-3 rounded-card border border-line bg-card p-5">
-                  <a href={clinic.contact.phoneHref} className="flex items-center gap-3 text-[14px] text-primary">
+                <div className="space-y-3 rounded-card border border-line bg-card p-8">
+                  <a href={clinic.contact.phoneHref} className="flex items-center gap-3 text-[15px] text-primary">
                     <Icon name="phone" size={15} tone="accent" />
                     {clinic.contact.phone}
                   </a>
-                  <a href={clinic.contact.emailHref} className="flex items-center gap-3 text-[14px] text-primary">
+                  <a href={clinic.contact.emailHref} className="flex items-center gap-3 text-[15px] text-primary">
                     <Icon name="mail" size={15} tone="accent" />
                     {clinic.contact.email}
                   </a>
-                  <p className="flex items-start gap-3 text-[13px] leading-relaxed text-ink-muted">
+                  <p className="flex items-start gap-3 text-[15.5px] leading-relaxed text-ink-muted">
                     <Icon name="pin" size={15} tone="accent" className="mt-0.5" />
                     <span>
                       {clinic.contact.address.line1}

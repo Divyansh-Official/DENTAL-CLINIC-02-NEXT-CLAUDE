@@ -1,27 +1,33 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { fadeUp, stagger, viewportOnce } from '@/lib/motion';
 import { accentWords } from '@/lib/format';
+import { useCalmMotion } from '@/lib/hooks';
 
 /**
  * Scroll-triggered entrance. Content rises, unblurs and settles once.
  *
- * Every variant collapses to a plain fade when the visitor has asked for
- * reduced motion — checked in JavaScript, because the CSS media query cannot
- * reach transforms driven by Framer.
+ * When motion is held back — the visitor asked for reduced motion, or the page
+ * was opened with `?nomotion` — these render as plain elements with no
+ * animation at all. Not a faster fade: none. Someone who has asked their
+ * operating system for less movement should get the content immediately, and
+ * a fade from zero opacity is still movement waiting to happen.
  */
 export default function Reveal({ children, as = 'div', delay = 0, className = '', y = 26, once = true }) {
+  const calm = useCalmMotion();
+  const Tag = as;
   const MotionTag = motion[as] || motion.div;
-  const reduceMotion = useReducedMotion();
+
+  if (calm) return <Tag className={className}>{children}</Tag>;
 
   return (
     <MotionTag
       className={className}
-      initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y, filter: 'blur(6px)' }}
-      whileInView={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={{ opacity: 0, y, filter: 'blur(6px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ ...viewportOnce, once }}
-      transition={{ duration: reduceMotion ? 0.2 : 0.85, ease: [0.16, 1, 0.3, 1], delay: reduceMotion ? 0 : delay }}
+      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay }}
     >
       {children}
     </MotionTag>
@@ -29,7 +35,12 @@ export default function Reveal({ children, as = 'div', delay = 0, className = ''
 }
 
 export function RevealGroup({ children, className = '', gap = 0.08, delay = 0, as = 'div' }) {
+  const calm = useCalmMotion();
+  const Tag = as;
   const MotionTag = motion[as] || motion.div;
+
+  if (calm) return <Tag className={className}>{children}</Tag>;
+
   return (
     <MotionTag
       className={className}
@@ -44,7 +55,12 @@ export function RevealGroup({ children, className = '', gap = 0.08, delay = 0, a
 }
 
 export function RevealItem({ children, className = '', as = 'div' }) {
+  const calm = useCalmMotion();
+  const Tag = as;
   const MotionTag = motion[as] || motion.div;
+
+  if (calm) return <Tag className={className}>{children}</Tag>;
+
   return (
     <MotionTag className={className} variants={fadeUp}>
       {children}
@@ -56,20 +72,20 @@ export function RevealItem({ children, className = '', as = 'div' }) {
  * Word-by-word headline reveal, with the accent phrase set in italic.
  *
  * Matching runs through `accentWords`, which is punctuation-insensitive and
- * understands multi-word phrases — so "Your Family" italicises as a unit and
- * a heading ending in "Smiles." still matches the accent word "Smiles".
+ * understands multi-word phrases — so "Your Family" italicises as a unit and a
+ * heading ending in "Smiles." still matches the accent word "Smiles".
  */
 export function RevealWords({ text, className = '', delay = 0, italicWord }) {
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
   const words = accentWords(text, italicWord);
 
-  if (reduceMotion) {
+  if (calm) {
     return (
       <span className={`inline-block ${className}`}>
         {words.map((entry, i) => (
           <span key={`${entry.word}-${i}`} className={entry.accent ? 'italic text-accent' : ''}>
             {entry.word}
-            {i < words.length - 1 ? ' ' : ''}
+            {i < words.length - 1 ? '\u00A0' : ''}
           </span>
         ))}
       </span>
@@ -94,7 +110,7 @@ export function RevealWords({ text, className = '', delay = 0, italicWord }) {
             }}
           >
             {entry.word}
-            {i < words.length - 1 ? ' ' : ''}
+            {i < words.length - 1 ? '\u00A0' : ''}
           </motion.span>
         </span>
       ))}

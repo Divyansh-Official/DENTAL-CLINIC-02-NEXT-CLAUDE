@@ -42,7 +42,7 @@ export default function BlogPostPage({ params }) {
       <JsonLd schema={[articleSchema(post), breadcrumbSchema(crumbs, t('common.home'))]} />
 
       <PageHero eyebrow={post.category} title={post.title} intro={post.excerpt} breadcrumb={crumbs}>
-        <div className="flex flex-wrap items-center gap-4 text-[12.5px] text-ink-muted">
+        <div className="flex flex-wrap items-center gap-4 text-[14.5px] text-ink-muted">
           <span className="flex items-center gap-2">
             <Icon name="user" size={13} tone="accent" />
             {post.author}
@@ -80,7 +80,7 @@ export default function BlogPostPage({ params }) {
                   <p
                     className={
                       index === 0
-                        ? 'font-display text-[19px] leading-relaxed text-primary'
+                        ? 'font-display text-[21px] leading-relaxed text-primary'
                         : 'text-[15px] leading-[1.85] text-ink-muted'
                     }
                   >
@@ -92,7 +92,7 @@ export default function BlogPostPage({ params }) {
 
             <Reveal>
               <aside className="mt-10 rounded-card border border-line bg-surface-50 p-6">
-                <p className="text-[13px] leading-relaxed text-ink-muted">{t('blog.detail.disclaimer')}</p>
+                <p className="text-[15.5px] leading-relaxed text-ink-muted">{t('blog.detail.disclaimer')}</p>
                 <div className="mt-5">
                   <Button href="/book-appointment">{t('blog.detail.bookCta')}</Button>
                 </div>
@@ -106,13 +106,13 @@ export default function BlogPostPage({ params }) {
                 <p className="text-[11px] uppercase tracking-[0.2em] text-on-primary/45">
                   {t('blog.detail.authorLabel')}
                 </p>
-                <p className="mt-3 font-display text-[22px] text-on-primary">{post.author}</p>
-                <p className="mt-3 text-[13px] leading-relaxed text-on-primary/60">{t('blog.detail.practisingAt')}</p>
+                <p className="mt-3 font-display text-[24px] text-on-primary">{post.author}</p>
+                <p className="mt-3 text-[15.5px] leading-relaxed text-on-primary/60">{t('blog.detail.practisingAt')}</p>
                 <a
                   href={clinic.contact.phoneHref}
                   className="mt-6 flex items-center justify-between rounded-card border border-on-primary/[0.15] px-5 py-4 transition-colors duration-300 hover:border-accent hover:bg-accent/10"
                 >
-                  <span className="flex items-center gap-3 text-[13.5px] text-on-primary">
+                  <span className="flex items-center gap-3 text-[14.5px] text-on-primary">
                     <Icon name="phone" size={15} tone="accent" />
                     {clinic.contact.phone}
                   </span>

@@ -32,7 +32,7 @@ export default function BookAppointmentPage() {
           {(appointment.responseTimes || []).map((item) => (
             <li
               key={item.channel}
-              className="flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[12px] text-ink-muted"
+              className="flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-[13.5px] text-ink-muted"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true" />
               <span className="text-primary">{item.channel}</span>
@@ -60,7 +60,7 @@ export default function BookAppointmentPage() {
                     </span>
                     <div>
                       <h2 className="font-display text-[24px] text-primary">{appointment.emergency.title}</h2>
-                      <p className="mt-2 max-w-lg text-[13.5px] leading-relaxed text-ink-muted">
+                      <p className="mt-2 max-w-lg text-[15.5px] leading-relaxed text-ink-muted">
                         {appointment.emergency.text}
                       </p>
                     </div>
@@ -76,7 +76,7 @@ export default function BookAppointmentPage() {
                         <span className="block text-[11px] uppercase tracking-[0.18em] text-on-primary/45">
                           {appointment.emergency.action}
                         </span>
-                        <span className="mt-1 block font-display text-[20px] text-on-primary">
+                        <span className="mt-1 block font-display text-[24px] text-on-primary">
                           {appointment.emergency.phone}
                         </span>
                       </span>
@@ -97,15 +97,15 @@ export default function BookAppointmentPage() {
 
             <RevealGroup className="mt-8 space-y-3">
               {appointment.whatToSay.items.map((item, index) => (
-                <RevealItem key={item} className="flex items-start gap-4 rounded-card border border-line bg-card p-5">
-                  <span className="font-display text-[14px] text-accent">{String(index + 1).padStart(2, '0')}</span>
-                  <span className="text-[13.5px] leading-relaxed text-primary">{item}</span>
+                <RevealItem key={item} className="flex items-start gap-4 rounded-card border border-line bg-card p-8">
+                  <span className="font-display text-[15px] text-accent">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="text-[15.5px] leading-relaxed text-primary">{item}</span>
                 </RevealItem>
               ))}
             </RevealGroup>
 
             {appointment.note ? (
-              <p className="mt-6 flex items-start gap-2.5 text-[12px] leading-relaxed text-ink-faint">
+              <p className="mt-6 flex items-start gap-2.5 text-[13.5px] leading-relaxed text-ink-faint">
                 <Icon name="shield" size={13} tone="accent" className="mt-0.5" />
                 {appointment.note}
               </p>
@@ -129,7 +129,7 @@ export default function BookAppointmentPage() {
                 <div className="grid gap-6 p-7 sm:grid-cols-2">
                   <div>
                     <p className="eyebrow">{t('appointment.addressLabel')}</p>
-                    <p className="mt-3 text-[14px] leading-relaxed text-primary">
+                    <p className="mt-3 text-[15px] leading-relaxed text-primary">
                       {address.line1}
                       <br />
                       {address.line2}
@@ -139,7 +139,7 @@ export default function BookAppointmentPage() {
                         href={address.mapsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-4 inline-flex items-center gap-2 text-[13px] text-accent transition-opacity hover:opacity-75"
+                        className="mt-4 inline-flex items-center gap-2 text-[14.5px] text-accent transition-opacity hover:opacity-75"
                       >
                         <Icon name="directions" size={13} />
                         {t('common.getDirections')}
@@ -151,7 +151,7 @@ export default function BookAppointmentPage() {
                     <p className="eyebrow">{t('common.openingHours')}</p>
                     <ul className="mt-3 space-y-2">
                       {clinicHours().map((slot) => (
-                        <li key={slot.days} className="flex justify-between text-[13px] text-ink-muted">
+                        <li key={slot.days} className="flex justify-between text-[14.5px] text-ink-muted">
                           <span className="text-primary">{slot.days}</span>
                           <span>{slot.time}</span>
                         </li>

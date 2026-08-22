@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useCalmMotion } from '@/lib/hooks';
 import Icon from '@/components/ui/Icon';
 import Sheet from '@/components/ui/Sheet';
 import { gallery, galleryItems } from '@/lib/data';
@@ -23,7 +24,7 @@ export default function GalleryGrid() {
   const filters = Array.isArray(gallery.filters) && gallery.filters.length ? gallery.filters : ['All'];
   const [filter, setFilter] = useState(filters[0]);
   const [active, setActive] = useState(null);
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
 
   const all = galleryItems();
   const items = filter === filters[0] ? all : all.filter((item) => item.category === filter);
@@ -47,10 +48,10 @@ export default function GalleryGrid() {
             <motion.button
               key={item}
               type="button"
-              whileTap={reduceMotion ? undefined : tap}
+              whileTap={calm ? undefined : tap}
               onClick={() => setFilter(item)}
               aria-pressed={selected}
-              className="relative whitespace-nowrap rounded-full px-5 py-2.5 text-[13px] transition-colors duration-300"
+              className="relative whitespace-nowrap rounded-full px-6 py-3 text-[15px] transition-colors duration-300"
             >
               {selected ? (
                 <motion.span layoutId="gallery-pill" transition={spring.snappy} className="absolute inset-0 rounded-full bg-primary" />
@@ -64,14 +65,14 @@ export default function GalleryGrid() {
       </div>
 
       <motion.ul
-        layout={!reduceMotion}
+        layout={!calm}
         className="mt-8 grid auto-rows-[220px] gap-4 sm:auto-rows-[200px] sm:grid-cols-2 lg:grid-cols-3"
       >
         <AnimatePresence mode="popLayout">
           {items.map((item) => (
             <motion.li
               key={item.id}
-              layout={!reduceMotion}
+              layout={!calm}
               initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.94 }}
@@ -80,11 +81,11 @@ export default function GalleryGrid() {
             >
               <motion.button
                 type="button"
-                whileTap={reduceMotion ? undefined : tap}
+                whileTap={calm ? undefined : tap}
                 onClick={() => setActive(item)}
                 aria-label={`View ${item.title}`}
                 aria-haspopup="dialog"
-                className="group relative block h-full w-full overflow-hidden rounded-card bg-surface-200"
+                className="group img-veil relative block h-full w-full overflow-hidden rounded-card bg-surface-200"
               >
                 <Image
                   src={item.src}
@@ -92,12 +93,13 @@ export default function GalleryGrid() {
                   fill
                   loading="lazy"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-cover transition-transform duration-[1100ms] ease-ios group-hover:scale-[1.06]"
+                  className="object-cover"
                 />
-                <span className="absolute inset-0 bg-gradient-to-t from-primary-900/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                <span className="absolute bottom-4 left-4 flex items-center gap-2 text-[12.5px] text-on-primary opacity-0 transition-all duration-500 ease-ios group-hover:opacity-100">
-                  <Icon name="search" size={13} />
-                  {item.title}
+                <span className="absolute inset-x-0 bottom-0 z-10 flex items-center justify-between gap-3 p-5">
+                  <span className="text-[14.5px] font-medium text-on-primary">{item.title}</span>
+                  <span className="grid h-9 w-9 place-items-center rounded-full bg-on-primary/15 text-on-primary opacity-0 backdrop-blur transition-opacity duration-500 group-hover:opacity-100">
+                    <Icon name="search" size={14} />
+                  </span>
                 </span>
               </motion.button>
             </motion.li>
@@ -111,7 +113,7 @@ export default function GalleryGrid() {
             <div className="relative aspect-[4/3] w-full overflow-hidden rounded-card bg-surface-200">
               <Image src={active.src} alt={active.alt || ''} fill sizes="(max-width: 768px) 100vw, 720px" className="object-cover" />
             </div>
-            <p className="mt-5 text-[13px] text-ink-muted">
+            <p className="mt-5 text-[14.5px] text-ink-muted">
               {[active.category, active.alt].filter(Boolean).join(' · ')}
             </p>
           </>

@@ -3,13 +3,13 @@
 import { useCallback, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, useMotionValueEvent, useReducedMotion, useScroll } from 'framer-motion';
+import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import Logo from './Logo';
 import MobileMenu from './MobileMenu';
 import Button from '@/components/ui/Button';
 import { navCta, primaryNav, t } from '@/lib/data';
 import { IOS_EASE, spring } from '@/lib/motion';
-import { useModalBehaviour } from '@/lib/hooks';
+import { useModalBehaviour , useCalmMotion } from '@/lib/hooks';
 
 /**
  * Navigation bar.
@@ -26,7 +26,7 @@ import { useModalBehaviour } from '@/lib/hooks';
 export default function Navbar() {
   const pathname = usePathname();
   const { scrollY } = useScroll();
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
 
   const [condensed, setCondensed] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -52,10 +52,9 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.header
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: hidden && !reduceMotion ? -110 : 0, opacity: 1 }}
-        transition={{ ...spring.snappy, opacity: { duration: 0.6 } }}
+      <Chrome
+        calm={calm}
+        hidden={hidden}
         className={`fixed inset-x-0 top-0 z-[70] transition-[background-color,box-shadow,backdrop-filter] duration-500 ease-ios ${
           condensed ? 'material shadow-[0_1px_0_rgb(var(--c-line))]' : 'bg-transparent'
         }`}
@@ -63,13 +62,13 @@ export default function Navbar() {
         <nav className="shell flex h-[var(--nav-h)] items-center justify-between gap-6" aria-label="Primary">
           <Logo />
 
-          <ul className="hidden items-center gap-7 lg:flex">
+          <ul className="hidden items-center gap-9 lg:flex">
             {items.map((item) => (
               <li key={item.href} className="relative">
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? 'page' : undefined}
-                  className={`group relative block py-2 text-[13.5px] tracking-[0.01em] transition-colors duration-300 ${
+                  className={`group relative block whitespace-nowrap py-2 text-[14.5px] tracking-[0.005em] transition-colors duration-300 ${
                     isActive(item.href) ? 'text-primary' : 'text-ink-muted hover:text-primary'
                   }`}
                 >
@@ -99,7 +98,7 @@ export default function Navbar() {
               aria-label={t('common.openMenu')}
               aria-expanded={menuOpen}
               aria-haspopup="dialog"
-              className="grid h-11 w-11 place-items-center rounded-full border border-line bg-card/70 transition-colors hover:border-primary/30 active:scale-95"
+              className="grid h-12 w-12 place-items-center rounded-full border border-line bg-card/70 text-primary transition-colors hover:border-primary/30 hover:bg-card active:scale-95"
             >
               <span className="flex flex-col items-end gap-[5px]" aria-hidden="true">
                 <span className="block h-px w-4 bg-primary transition-all duration-500 ease-ios" />
@@ -108,9 +107,29 @@ export default function Navbar() {
             </button>
           </div>
         </nav>
-      </motion.header>
+      </Chrome>
 
       <MobileMenu open={menuOpen} onClose={closeMenu} containerRef={menuRef} />
     </>
+  );
+}
+
+/**
+ * The bar itself. Rendered as a plain <header> when motion is held back —
+ * a motion component with an `initial` opacity of 0 that never receives an
+ * animation frame would leave the navigation permanently invisible.
+ */
+function Chrome({ calm, hidden, className, children }) {
+  if (calm) return <header className={className}>{children}</header>;
+
+  return (
+    <motion.header
+      initial={{ y: -100, opacity: 0 }}
+      animate={{ y: hidden ? -110 : 0, opacity: 1 }}
+      transition={{ ...spring.snappy, opacity: { duration: 0.6 } }}
+      className={className}
+    >
+      {children}
+    </motion.header>
   );
 }

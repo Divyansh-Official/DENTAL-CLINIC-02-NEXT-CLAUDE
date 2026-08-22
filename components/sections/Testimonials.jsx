@@ -2,25 +2,24 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Icon from '@/components/ui/Icon';
 import Rating from '@/components/ui/Rating';
 import Reveal, { RevealWords } from '@/components/ui/Reveal';
 import { t, testimonials, testimonialItems } from '@/lib/data';
-import { IOS_EASE, spring, tap } from '@/lib/motion';
-import { useMediaQuery } from '@/lib/hooks';
+import { IOS_EASE, tap } from '@/lib/motion';
+import { useMediaQuery, useCalmMotion } from '@/lib/hooks';
 
 /**
  * Review carousel.
  *
- * Three cards on desktop, two on tablet and one at a time on a phone. The page
- * size used to be fixed at three regardless of viewport, which meant a phone
- * stacked three cards into one "page" and the pagination dots counted pages
- * that did not exist.
+ * Three cards on desktop, two on tablet, one at a time on a phone. The quote
+ * is set large enough to actually be read — a testimonial in 13px grey is
+ * decoration, not evidence.
  */
 export default function Testimonials() {
   const items = testimonialItems();
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
 
   const isLarge = useMediaQuery('(min-width: 1024px)');
   const isMedium = useMediaQuery('(min-width: 640px)');
@@ -49,12 +48,12 @@ export default function Testimonials() {
   return (
     <section className="section-pad bg-surface-50">
       <div className="shell">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <div>
+        <div className="flex flex-wrap items-end justify-between gap-8">
+          <div className="max-w-2xl">
             <Reveal>
               <p className="eyebrow">{testimonials.section.eyebrow}</p>
             </Reveal>
-            <h2 className="display-lg mt-4">
+            <h2 className="display-lg mt-6">
               <RevealWords text={testimonials.section.title} italicWord={testimonials.section.italicWord} />
             </h2>
           </div>
@@ -63,81 +62,76 @@ export default function Testimonials() {
             <div className="flex items-center gap-3">
               <motion.button
                 type="button"
-                whileTap={reduceMotion ? undefined : tap}
+                whileTap={calm ? undefined : tap}
                 onClick={() => paginate(page - 1)}
-                className="grid h-11 w-11 place-items-center rounded-full border border-line bg-card text-primary transition-colors duration-300 hover:border-primary/40"
+                className="grid h-12 w-12 place-items-center rounded-full border border-line bg-card text-primary transition-colors duration-300 hover:border-primary/40 hover:bg-primary hover:text-on-primary"
               >
-                <Icon name="arrow-left" size={14} label={t('testimonials.previousLabel')} />
+                <Icon name="arrow-left" size={15} label={t('testimonials.previousLabel')} />
               </motion.button>
               <motion.button
                 type="button"
-                whileTap={reduceMotion ? undefined : tap}
+                whileTap={calm ? undefined : tap}
                 onClick={() => paginate(page + 1)}
-                className="grid h-11 w-11 place-items-center rounded-full border border-line bg-card text-primary transition-colors duration-300 hover:border-primary/40"
+                className="grid h-12 w-12 place-items-center rounded-full border border-line bg-card text-primary transition-colors duration-300 hover:border-primary/40 hover:bg-primary hover:text-on-primary"
               >
-                <Icon name="arrow-right" size={14} label={t('testimonials.nextLabel')} />
+                <Icon name="arrow-right" size={15} label={t('testimonials.nextLabel')} />
               </motion.button>
             </div>
           ) : null}
         </div>
 
-        <div className="relative mt-10 overflow-hidden">
+        <div className="relative mt-14 overflow-hidden">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.ul
               key={page}
               custom={direction}
-              initial={reduceMotion ? { opacity: 0 } : { opacity: 0, x: direction * 70 }}
-              animate={reduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
-              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, x: direction * -70 }}
-              transition={{ duration: 0.55, ease: IOS_EASE }}
-              drag={reduceMotion || pages < 2 ? false : 'x'}
+              initial={calm ? false : { opacity: 0, x: direction * 60 }}
+              animate={calm ? false : { opacity: 1, x: 0 }}
+              exit={calm ? undefined : { opacity: 0, x: direction * -60 }}
+              transition={{ duration: 0.5, ease: IOS_EASE }}
+              drag={calm || pages < 2 ? false : 'x'}
               dragConstraints={{ left: 0, right: 0 }}
               dragElastic={0.16}
               onDragEnd={(_, info) => {
                 if (info.offset.x < -80) paginate(page + 1);
                 if (info.offset.x > 80) paginate(page - 1);
               }}
-              className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-3 ${
+              className={`grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${
                 pages > 1 ? 'cursor-grab active:cursor-grabbing' : ''
               }`}
             >
-              {visible.map((item, index) => (
-                <motion.li
-                  key={item.id}
-                  initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ ...spring.gentle, delay: reduceMotion ? 0 : index * 0.07 }}
-                  className="group relative flex flex-col justify-between rounded-card border border-line bg-card p-6 transition-all duration-500 ease-ios hover:-translate-y-1 hover:shadow-lift"
-                >
-                  <div>
-                    <Icon name="quote" size={20} tone="accent" className="opacity-40" />
-                    <blockquote className="mt-4 text-[13.5px] leading-relaxed text-primary">{item.quote}</blockquote>
-                  </div>
+              {visible.map((item) => (
+                <li key={item.id} className="card-surface card-hover flex flex-col p-8">
+                  <Icon name="quote" size={26} className="text-accent/35" />
 
-                  <div className="mt-6">
-                    <Rating value={item.rating} />
-                    <div className="mt-4 flex items-center gap-3">
+                  <blockquote className="mt-6 text-[16.5px] leading-[1.65] text-primary">
+                    {item.quote}
+                  </blockquote>
+
+                  <div className="mt-auto pt-8">
+                    <Rating value={item.rating} size={14} />
+                    <div className="mt-5 flex items-center gap-3.5 border-t border-line pt-5">
                       {item.avatar?.src ? (
-                        <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full bg-surface-200">
-                          <Image src={item.avatar.src} alt={item.avatar.alt || ''} fill sizes="40px" className="object-cover" />
+                        <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full bg-surface-200">
+                          <Image src={item.avatar.src} alt={item.avatar.alt || ''} fill sizes="44px" className="object-cover" />
                         </span>
                       ) : null}
                       <span>
-                        <span className="block text-[13px] font-medium text-primary">{item.name}</span>
-                        <span className="block text-[11.5px] text-ink-faint">
+                        <span className="block text-[14.5px] font-medium text-primary">{item.name}</span>
+                        <span className="block text-[14.5px] text-ink-faint">
                           {[item.location, item.treatment].filter(Boolean).join(' · ')}
                         </span>
                       </span>
                     </div>
                   </div>
-                </motion.li>
+                </li>
               ))}
             </motion.ul>
           </AnimatePresence>
         </div>
 
         {pages > 1 ? (
-          <div className="mt-8 flex items-center justify-center gap-2">
+          <div className="mt-10 flex items-center justify-center gap-2">
             {Array.from({ length: pages }).map((_, i) => (
               <button
                 key={i}
@@ -149,7 +143,7 @@ export default function Testimonials() {
               >
                 <span
                   className={`block h-1.5 rounded-full transition-all duration-500 ease-ios ${
-                    i === page ? 'w-6 bg-accent' : 'w-1.5 bg-primary/20'
+                    i === page ? 'w-7 bg-accent' : 'w-1.5 bg-primary/20'
                   }`}
                 />
               </button>

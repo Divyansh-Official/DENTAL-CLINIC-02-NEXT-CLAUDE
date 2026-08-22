@@ -59,9 +59,10 @@ module.exports = {
         hero: 'var(--r-hero)'
       },
       boxShadow: {
-        card: '0 1px 2px rgb(var(--c-ink) / 0.04), 0 12px 28px -18px rgb(var(--c-ink) / 0.28)',
-        lift: '0 18px 50px -24px rgb(var(--c-primary) / 0.45)',
-        panel: '0 24px 60px -20px rgb(var(--c-primary) / 0.35)'
+        card: '0 1px 2px rgb(var(--c-ink) / 0.03), 0 18px 40px -28px rgb(var(--c-primary) / 0.35)',
+        lift: '0 2px 4px rgb(var(--c-ink) / 0.03), 0 32px 64px -32px rgb(var(--c-primary) / 0.45)',
+        panel: '0 40px 80px -40px rgb(var(--c-primary) / 0.5)',
+        float: '0 20px 48px -20px rgb(var(--c-primary) / 0.28)'
       },
       transitionTimingFunction: {
         ios: 'cubic-bezier(0.32, 0.72, 0, 1)',

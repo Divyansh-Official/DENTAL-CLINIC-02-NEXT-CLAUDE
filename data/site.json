@@ -1,9 +1,7 @@
 {
   "$comment": "Global switchboard. Everything that is not clinic copy lives here: domain, branding, theme, feature toggles, analytics. Edit this file first when you set up a new clinic.",
-
   "url": "https://lumieredental.com",
   "basePath": "",
-
   "locale": {
     "lang": "en",
     "region": "IN",
@@ -14,7 +12,6 @@
     "currencySymbol": "₹",
     "timeZone": "Asia/Kolkata"
   },
-
   "theme": {
     "$comment": "Set these four hex values and the entire site recolours. Every tint, shade, border, icon and shadow is derived from them at runtime — no Tailwind rebuild, no CSS edits.",
     "colors": {
@@ -32,12 +29,11 @@
       "body": "Jost"
     },
     "radius": {
-      "card": "22px",
+      "card": "20px",
       "panel": "32px",
-      "hero": "180px 24px 24px 24px"
+      "hero": "40px"
     }
   },
-
   "features": {
     "$comment": "Turn whole capabilities on or off without deleting code or breaking links. A disabled route is removed from the nav, the sitemap and the footer, and returns 404.",
     "smoothScroll": true,
@@ -54,30 +50,28 @@
     "map": true,
     "announcement": false
   },
-
   "announcement": {
     "$comment": "Thin bar above the header. Set features.announcement to true to show it.",
     "text": "Now open on Sundays, 10:00 AM – 2:00 PM.",
-    "cta": { "label": "Book a slot", "href": "/book-appointment" }
+    "cta": {
+      "label": "Book a slot",
+      "href": "/book-appointment"
+    }
   },
-
   "analytics": {
     "$comment": "Leave blank to load nothing at all. No third-party script is injected unless an id is present.",
     "googleAnalyticsId": "",
     "googleTagManagerId": "",
     "metaPixelId": ""
   },
-
   "verification": {
     "google": "",
     "bing": ""
   },
-
   "images": {
     "$comment": "Remote image hosts must also be listed in next.config.mjs. Local files in /public need no entry.",
     "placeholderColor": "#EFE9E0"
   },
-
   "openGraph": {
     "$comment": "Leave image blank to auto-generate a branded card from the clinic name and tagline.",
     "image": ""

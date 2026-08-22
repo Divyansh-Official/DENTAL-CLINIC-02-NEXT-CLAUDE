@@ -53,7 +53,7 @@ export default function Logo({ tone = 'primary', className = '' }) {
         </svg>
       </span>
       <span className="leading-none">
-        <span className="block font-display text-[19px] tracking-[0.22em]" style={{ color }}>
+        <span className="block font-display text-[21px] tracking-[0.22em]" style={{ color }}>
           {(identity.name || '').toUpperCase()}
         </span>
         {identity.suffix ? (

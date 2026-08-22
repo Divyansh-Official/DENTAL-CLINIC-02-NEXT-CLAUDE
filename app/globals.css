@@ -4,10 +4,9 @@
 
 @layer base {
   :root {
-    --shell-x: clamp(1.25rem, 5vw, 3.5rem);
-    --nav-h: 76px;
-    /* Raised on mobile when the sticky action bar is present, so the last
-       section of every page can still be scrolled clear of it. */
+    --shell-x: clamp(1.25rem, 5vw, 4rem);
+    --nav-h: 84px;
+    /* Raised on mobile when the sticky action bar is present. */
     --safe-bottom: 0px;
   }
 
@@ -17,8 +16,9 @@
 
   html {
     scroll-behavior: smooth;
-    /* Anchors and :target land below the fixed header rather than under it. */
-    scroll-padding-top: calc(var(--nav-h) + 16px);
+    scroll-padding-top: calc(var(--nav-h) + 24px);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   html.lenis,
@@ -31,9 +31,11 @@
   }
 
   body {
-    @apply bg-surface text-ink font-body antialiased;
+    @apply bg-surface text-ink font-body;
     overflow-x: hidden;
     padding-bottom: var(--safe-bottom);
+    font-size: 16px;
+    line-height: 1.7;
   }
 
   ::selection {
@@ -44,7 +46,7 @@
   :focus-visible {
     outline: 2px solid rgb(var(--c-accent));
     outline-offset: 3px;
-    border-radius: 6px;
+    border-radius: 8px;
   }
 
   h1, h2, h3, h4 {
@@ -56,8 +58,6 @@
     text-wrap: pretty;
   }
 
-  /* The map iframe is the one third-party surface on the site; keep it from
-     forcing a horizontal scrollbar on narrow screens. */
   iframe {
     max-width: 100%;
   }
@@ -71,27 +71,75 @@
     padding-inline: var(--shell-x);
   }
 
+  /* ---------- type scale ----------
+     Sizes step by roughly a major third, and every display size sheds
+     letter-spacing as it grows — large serif type set at default tracking
+     is the single most common reason a page reads as a template. */
+
   .eyebrow {
-    @apply font-body text-[11px] uppercase tracking-[0.24em] text-accent;
+    @apply inline-flex items-center gap-2.5 font-body text-[11px] font-medium uppercase tracking-[0.28em] text-accent;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: currentColor;
+    flex: none;
+  }
+
+  .display-2xl {
+    @apply font-display text-primary;
+    font-size: clamp(2.75rem, 5.4vw, 4.75rem);
+    line-height: 1.0;
+    letter-spacing: -0.033em;
   }
 
   .display-xl {
-    @apply font-display leading-[1.02] tracking-[-0.02em];
-    font-size: clamp(2.75rem, 6.2vw, 5.1rem);
+    @apply font-display text-primary;
+    font-size: clamp(2.5rem, 5.2vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
   }
 
   .display-lg {
-    @apply font-display leading-[1.06] tracking-[-0.015em];
-    font-size: clamp(2.1rem, 4.4vw, 3.5rem);
+    @apply font-display text-primary;
+    font-size: clamp(2rem, 3.9vw, 3.1rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
   }
 
   .display-md {
-    @apply font-display leading-[1.12] tracking-[-0.01em];
-    font-size: clamp(1.6rem, 2.6vw, 2.25rem);
+    @apply font-display text-primary;
+    font-size: clamp(1.5rem, 2.3vw, 2.1rem);
+    line-height: 1.16;
+    letter-spacing: -0.018em;
   }
 
+  .display-sm {
+    @apply font-display text-primary;
+    font-size: clamp(1.25rem, 1.6vw, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+  }
+
+  /* Body copy sits at 17px, not 13px. Small text was the other half of why
+     the page felt cheap: premium layouts earn calm from size and leading. */
   .body-lead {
-    @apply text-[15px] md:text-base leading-relaxed text-ink-muted;
+    @apply text-[17px] leading-[1.72] text-ink-muted;
+  }
+
+  .body-base {
+    @apply text-[15.5px] leading-[1.72] text-ink-muted;
+  }
+
+  .body-sm {
+    @apply text-[14px] leading-[1.65] text-ink-muted;
+  }
+
+  .meta {
+    @apply text-[12.5px] uppercase tracking-[0.14em] text-ink-faint;
   }
 
   .rule {
@@ -100,23 +148,41 @@
 
   /* iOS translucent material — the blur behind the nav bar and sheets. */
   .material {
-    background: rgb(var(--c-surface) / 0.72);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: rgb(var(--c-surface) / 0.78);
+    backdrop-filter: saturate(180%) blur(24px);
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
   }
 
   .material-dark {
-    background: rgb(var(--c-primary) / 0.72);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    background: rgb(var(--c-primary) / 0.7);
+    backdrop-filter: saturate(180%) blur(24px);
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
   }
 
+  /* ---------- surfaces ----------
+     Cards read as paper on a warm ground: a near-invisible hairline, a wide
+     soft shadow, and a lift on hover. No heavy borders. */
   .card-surface {
-    @apply bg-card border border-line rounded-card shadow-card;
+    @apply rounded-card bg-card shadow-card;
+    border: 1px solid rgb(var(--c-line) / 0.7);
+  }
+
+  .card-hover {
+    @apply transition-[transform,box-shadow,border-color] duration-500 ease-ios;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: theme('boxShadow.lift');
+    border-color: rgb(var(--c-primary) / 0.14);
   }
 
   .section-pad {
-    padding-block: clamp(3.5rem, 7vw, 6.5rem);
+    padding-block: clamp(4.5rem, 8.5vw, 9rem);
+  }
+
+  .section-pad-sm {
+    padding-block: clamp(3rem, 5.5vw, 5rem);
   }
 
   .grain::before {
@@ -124,7 +190,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.035;
+    opacity: 0.04;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
@@ -140,6 +206,28 @@
   /* Radial brand glow used behind banners and page heads. */
   .glow {
     background: radial-gradient(circle, rgb(var(--c-accent)) 0%, transparent 68%);
+  }
+
+  /* A photograph never sits on bare background: it gets a frame, a hairline
+     and a shadow so it reads as a considered object rather than a dropped file. */
+  .framed {
+    @apply relative overflow-hidden rounded-panel;
+    box-shadow:
+      0 1px 0 rgb(var(--c-line)),
+      0 30px 60px -32px rgb(var(--c-primary) / 0.4);
+  }
+
+  /* Soft darkening at the foot of an image so overlaid text always holds up. */
+  .img-veil::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to top, rgb(var(--c-primary) / 0.42), transparent 46%);
+  }
+
+  .divider-x {
+    @apply border-line;
   }
 }
 

@@ -69,6 +69,12 @@ If one derived tint is wrong for a particular brand, override just that token:
 **Type.** Pick any pair from the menu in `lib/fonts.js` (five display faces,
 five body faces). An unknown name falls back to the default pair and warns.
 
+The scale itself lives in `app/globals.css`: `.display-2xl` down to
+`.display-sm` for headings, `.body-lead` / `.body-base` / `.body-sm` for copy.
+Body text sits at 16–17px with 1.7 line-height, and every display size sheds
+letter-spacing as it grows — large serif type set at default tracking is the
+single most common reason a page reads as a template.
+
 **Feature flags.** Turning one off removes the route from the navigation, the
 footer, the sitemap *and* makes it return 404 — no orphan pages, no dead links.
 Useful when a clinic does not want to publish prices or does not have a blog.
@@ -246,29 +252,47 @@ template being resold. That obligation is gone.)*
 
 ## Motion
 
-All animation shares one vocabulary, defined in `lib/motion.js`:
+Animation is deliberately restrained: things fade and rise into place, and then
+they stop.
 
-- **`IOS_EASE`** `cubic-bezier(0.32, 0.72, 0, 1)` — UIKit's sheet and
-  navigation-push curve, used for anything that slides
-- **`IOS_SOFT`** `cubic-bezier(0.16, 1, 0.3, 1)` — content settling into place
-- **Springs, not durations** — `spring.snappy` for chrome, `gentle` for content,
-  `sheet` for modals, `follow` for pointer tracking
+- **No parallax anywhere.** Nothing moves at a different rate to the page.
+- **No image tracks the pointer**, and no photograph zooms on hover. A
+  thumbnail that scales under the cursor is the most common tell of a bought
+  template; here the veil deepens and the heading takes the accent colour
+  instead.
+- **`IOS_EASE`** `cubic-bezier(0.32, 0.72, 0, 1)` for anything that slides,
+  **`IOS_SOFT`** `cubic-bezier(0.16, 1, 0.3, 1)` for content settling.
+- **Springs, not durations** for interface chrome, sheets and presses.
 
-Reproduced from iOS: translucent blurred nav material, a nav bar that retracts
-on scroll down and returns on scroll up, bottom sheets draggable past a velocity
+Reproduced from iOS: translucent blurred nav material, a bar that retracts on
+scroll down and returns on scroll up, bottom sheets draggable past a velocity
 threshold, segmented controls whose pill slides between segments, and momentum
 scrolling via Lenis.
 
-**Reduced motion is honoured in JavaScript, not just CSS** — every component
-checks `useReducedMotion()`, because a CSS media query cannot reach transforms
-driven by Framer. Smooth scroll is skipped entirely, and re-checked if the
-visitor changes the preference while the page is open.
+### Motion that can actually be switched off
 
-The first page render is deliberately never animated. Animating it would mean
+`components/ui/Appear.jsx` and the `Reveal` family render a **plain element**
+when motion is held back — not a motion component configured to do nothing.
+
+That distinction is load-bearing. Framer writes its `initial` state to the DOM
+as an inline style immediately, and neither removing the props nor passing
+`initial={false}` clears a style it has already written. An element that starts
+at `opacity: 0` and never receives an animation frame stays invisible forever.
+Rendering a plain tag sidesteps the whole class of failure.
+
+Motion is held back when:
+
+- the visitor has asked their system for reduced motion, or
+- the page is opened with **`?nomotion`** (or `localStorage.nomotion = '1'` for
+  a whole session)
+
+That second switch exists so the site can be **screenshotted reliably** — for a
+portfolio, a proposal or a client review — without waiting on scroll-triggered
+reveals or catching a heading mid-flight.
+
+The first page render is never animated either. Animating it would mean
 shipping `opacity: 0` on the element wrapping the entire page, so a JavaScript
 error or a blocked bundle would leave the visitor looking at a blank screen.
-
----
 
 ## Architecture
 

@@ -34,10 +34,10 @@ export default function Accordion({ items = [], defaultOpen = 0, className = '' 
                 onClick={() => setOpen(isOpen ? -1 : index)}
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                className="flex w-full items-center justify-between gap-6 py-5 text-left"
+                className="flex w-full items-center justify-between gap-8 py-7 text-left"
               >
                 <span
-                  className={`font-display text-[17px] leading-snug transition-colors duration-300 sm:text-xl ${
+                  className={`font-display text-[21px] leading-snug transition-colors duration-300 sm:text-[22px] ${
                     isOpen ? 'text-accent' : 'text-primary'
                   }`}
                 >
@@ -46,7 +46,7 @@ export default function Accordion({ items = [], defaultOpen = 0, className = '' 
                 <motion.span
                   animate={{ rotate: isOpen ? 90 : 0 }}
                   transition={{ duration: 0.45, ease: IOS_EASE }}
-                  className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line"
+                  className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line"
                 >
                   <Icon name={isOpen ? 'minus' : 'plus'} size={13} tone={isOpen ? 'accent' : 'primary'} />
                 </motion.span>
@@ -65,7 +65,7 @@ export default function Accordion({ items = [], defaultOpen = 0, className = '' 
                   transition={{ duration: 0.5, ease: IOS_EASE }}
                   className="overflow-hidden"
                 >
-                  <p className="body-lead max-w-3xl pb-6 pr-10">{item.a}</p>
+                  <p className="body-base max-w-3xl pb-8 pr-10">{item.a}</p>
                 </motion.div>
               ) : null}
             </AnimatePresence>

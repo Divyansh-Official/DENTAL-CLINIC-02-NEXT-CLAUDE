@@ -49,7 +49,7 @@ export default function ServicesPage() {
                       fill
                       loading="lazy"
                       sizes="(max-width: 640px) 100vw, 33vw"
-                      className="object-cover transition-transform duration-[1100ms] ease-ios group-hover:scale-[1.06]"
+                      className="object-cover"
                     />
                     <span className="material absolute left-3 top-3 grid h-10 w-10 place-items-center rounded-full text-primary">
                       <Icon name={service.icon} size={18} />
@@ -57,10 +57,10 @@ export default function ServicesPage() {
                   </span>
 
                   <span className="flex flex-1 flex-col p-6">
-                    <h2 className="font-display text-[20px] text-primary transition-colors duration-500 group-hover:text-accent">
+                    <h2 className="font-display text-[24px] text-primary transition-colors duration-500 group-hover:text-accent">
                       {service.title}
                     </h2>
-                    <span className="mt-3 block text-[13px] leading-relaxed text-ink-muted">{service.excerpt}</span>
+                    <span className="mt-3 block text-[15.5px] leading-relaxed text-ink-muted">{service.excerpt}</span>
 
                     <span className="mt-5 flex items-center gap-4 border-t border-line pt-4 text-[11.5px] text-ink-faint">
                       <span className="flex items-center gap-1.5">
@@ -73,7 +73,7 @@ export default function ServicesPage() {
                       </span>
                     </span>
 
-                    <span className="mt-5 inline-flex items-center gap-2 text-[12.5px] text-primary">
+                    <span className="mt-5 inline-flex items-center gap-2 text-[14.5px] text-primary">
                       {t('common.viewDetails')}
                       <Icon name="arrow-right" size={12} tone="accent" className="transition-transform duration-500 ease-ios group-hover:translate-x-1" />
                     </span>

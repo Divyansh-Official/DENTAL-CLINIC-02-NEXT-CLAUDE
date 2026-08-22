@@ -55,13 +55,13 @@ export default function ServiceDetailPage({ params }) {
             {t('services.detail.bookCta')}
           </Button>
           {service.duration ? (
-            <span className="flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2.5 text-[12.5px] text-primary">
+            <span className="flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2.5 text-[14.5px] text-primary">
               <Icon name="clock" size={13} tone="accent" />
               {service.duration}
             </span>
           ) : null}
           {service.priceFrom ? (
-            <span className="flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2.5 text-[12.5px] text-primary">
+            <span className="flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2.5 text-[14.5px] text-primary">
               <Icon name="wallet" size={13} tone="accent" />
               {t('common.from')} {service.priceFrom}
             </span>
@@ -96,9 +96,9 @@ export default function ServiceDetailPage({ params }) {
                 </Reveal>
                 <RevealGroup className="mt-6 space-y-3">
                   {service.includes.map((item) => (
-                    <RevealItem key={item} className="flex items-start gap-3 rounded-card border border-line bg-card p-4">
+                    <RevealItem key={item} className="flex items-start gap-3 rounded-card border border-line bg-card p-8">
                       <Icon name="check-circle" size={16} tone="accent" className="mt-0.5" />
-                      <span className="text-[13.5px] leading-relaxed text-primary">{item}</span>
+                      <span className="text-[15.5px] leading-relaxed text-primary">{item}</span>
                     </RevealItem>
                   ))}
                 </RevealGroup>
@@ -120,7 +120,7 @@ export default function ServiceDetailPage({ params }) {
                 <h2 className="mt-5 font-display text-[24px] leading-snug text-on-primary">
                   {t('services.detail.aside.title')}
                 </h2>
-                <p className="mt-3 text-[13px] leading-relaxed text-on-primary/60">
+                <p className="mt-3 text-[15.5px] leading-relaxed text-on-primary/60">
                   {t('services.detail.aside.text')}
                 </p>
 
@@ -129,7 +129,7 @@ export default function ServiceDetailPage({ params }) {
                     href={clinic.contact.phoneHref}
                     className="flex items-center justify-between rounded-card border border-on-primary/[0.15] px-5 py-4 transition-colors duration-300 hover:border-accent hover:bg-accent/10"
                   >
-                    <span className="flex items-center gap-3 text-[13.5px] text-on-primary">
+                    <span className="flex items-center gap-3 text-[14.5px] text-on-primary">
                       <Icon name="phone" size={15} tone="accent" />
                       {clinic.contact.phone}
                     </span>
@@ -142,7 +142,7 @@ export default function ServiceDetailPage({ params }) {
                       rel="noopener noreferrer"
                       className="flex items-center justify-between rounded-card border border-on-primary/[0.15] px-5 py-4 transition-colors duration-300 hover:border-accent hover:bg-accent/10"
                     >
-                      <span className="flex items-center gap-3 text-[13.5px] text-on-primary">
+                      <span className="flex items-center gap-3 text-[14.5px] text-on-primary">
                         <Icon name="whatsapp" size={15} tone="accent" />
                         {t('services.detail.aside.whatsappLabel')}
                       </span>
@@ -156,7 +156,7 @@ export default function ServiceDetailPage({ params }) {
                     {t('common.openingHours')}
                   </p>
                   {clinicHours().map((slot) => (
-                    <p key={slot.days} className="mt-2 flex justify-between text-[12.5px] text-on-primary/70">
+                    <p key={slot.days} className="mt-2 flex justify-between text-[14.5px] text-on-primary/70">
                       <span>{slot.days}</span>
                       <span>{slot.time}</span>
                     </p>
@@ -165,14 +165,14 @@ export default function ServiceDetailPage({ params }) {
               </div>
 
               {related.length ? (
-                <div className="mt-5 rounded-card border border-line bg-card p-6">
+                <div className="mt-5 rounded-card border border-line bg-card p-8">
                   <p className="eyebrow">{t('services.detail.alsoOffered')}</p>
                   <ul className="mt-4 space-y-2.5">
                     {related.map((item) => (
                       <li key={item.slug}>
                         <Link
                           href={`/services/${item.slug}`}
-                          className="group flex items-center justify-between gap-4 text-[13.5px] text-primary"
+                          className="group flex items-center justify-between gap-4 text-[14.5px] text-primary"
                         >
                           <span className="transition-colors group-hover:text-accent">{item.title}</span>
                           <Icon name="arrow-right" size={12} tone="accent" className="transition-transform duration-500 ease-ios group-hover:translate-x-1" />

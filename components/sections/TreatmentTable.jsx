@@ -1,7 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useCalmMotion } from '@/lib/hooks';
 import Icon from '@/components/ui/Icon';
 import { treatments, treatmentCategories, getTreatmentCategory } from '@/lib/data';
 import { IOS_EASE, IOS_SOFT, spring, tap } from '@/lib/motion';
@@ -20,7 +21,7 @@ import { IOS_EASE, IOS_SOFT, spring, tap } from '@/lib/motion';
 export default function TreatmentTable() {
   const categories = treatmentCategories();
   const [active, setActive] = useState(categories[0]?.id);
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
 
   if (!categories.length) return null;
 
@@ -56,9 +57,9 @@ export default function TreatmentTable() {
                 aria-selected={selected}
                 aria-controls={`treatment-panel-${item.id}`}
                 tabIndex={selected ? 0 : -1}
-                whileTap={reduceMotion ? undefined : tap}
+                whileTap={calm ? undefined : tap}
                 onClick={() => setActive(item.id)}
-                className="relative flex flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-[13px] transition-colors duration-300"
+                className="relative flex flex-1 items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-6 py-3 text-[15px] transition-colors duration-300"
               >
                 {selected ? (
                   <motion.span layoutId="segment-pill" transition={spring.snappy} className="absolute inset-0 rounded-full bg-primary" />
@@ -88,31 +89,31 @@ export default function TreatmentTable() {
           {(category.items || []).map((item, index) => (
             <motion.li
               key={item.name}
-              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+              initial={calm ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: IOS_SOFT, delay: reduceMotion ? 0 : index * 0.05 }}
-              className="grid gap-2 p-5 transition-colors duration-300 hover:bg-surface-50 sm:grid-cols-12 sm:items-center sm:gap-4"
+              transition={{ duration: 0.6, ease: IOS_SOFT, delay: calm ? 0 : index * 0.05 }}
+              className="grid gap-2 px-6 py-6 transition-colors duration-300 hover:bg-surface-50 sm:grid-cols-12 sm:items-center sm:gap-4"
             >
               <div className="sm:col-span-5">
-                <p className="font-display text-[16px] text-primary">{item.name}</p>
-                {item.note ? <p className="mt-1 text-[12px] text-ink-faint">{item.note}</p> : null}
+                <p className="font-display text-[17.5px] text-primary">{item.name}</p>
+                {item.note ? <p className="mt-1.5 text-[14.5px] text-ink-faint">{item.note}</p> : null}
               </div>
-              <p className="flex items-center gap-2 text-[12.5px] text-ink-muted sm:col-span-3">
+              <p className="flex items-center gap-2 text-[14.5px] text-ink-muted sm:col-span-3">
                 <Icon name="calendar" size={12} tone="accent" />
                 {item.visits}
               </p>
-              <p className="flex items-center gap-2 text-[12.5px] text-ink-muted sm:col-span-2">
+              <p className="flex items-center gap-2 text-[14.5px] text-ink-muted sm:col-span-2">
                 <Icon name="clock" size={12} tone="accent" />
                 {item.time}
               </p>
-              <p className="font-display text-[16px] text-accent sm:col-span-2 sm:text-right">{item.price}</p>
+              <p className="font-display text-[17.5px] text-accent sm:col-span-2 sm:text-right">{item.price}</p>
             </motion.li>
           ))}
         </motion.ul>
       </AnimatePresence>
 
       {treatments.note ? (
-        <p className="mt-5 flex items-start gap-2.5 text-[12px] leading-relaxed text-ink-faint">
+        <p className="mt-5 flex items-start gap-2.5 text-[13.5px] leading-relaxed text-ink-faint">
           <Icon name="shield" size={13} tone="accent" className="mt-0.5" />
           {treatments.note}
         </p>

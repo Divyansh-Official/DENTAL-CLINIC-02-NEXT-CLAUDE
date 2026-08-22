@@ -10,7 +10,7 @@ export default function AnnouncementBar() {
 
   return (
     <div className="relative z-[80] bg-primary text-on-primary">
-      <div className="shell flex flex-wrap items-center justify-center gap-x-4 gap-y-1 py-2 text-center text-[12.5px]">
+      <div className="shell flex flex-wrap items-center justify-center gap-x-4 gap-y-1 py-2 text-center text-[14.5px]">
         <span>{message}</span>
         {announcement.cta?.href ? (
           <Link

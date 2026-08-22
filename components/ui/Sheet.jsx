@@ -1,9 +1,9 @@
 'use client';
 
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Icon from './Icon';
 import { spring, IOS_EASE } from '@/lib/motion';
-import { useModalBehaviour } from '@/lib/hooks';
+import { useModalBehaviour , useCalmMotion } from '@/lib/hooks';
 import { t } from '@/lib/data';
 
 /**
@@ -16,7 +16,7 @@ import { t } from '@/lib/data';
  */
 export default function Sheet({ open, onClose, title, children, maxWidth = 'max-w-2xl' }) {
   const containerRef = useModalBehaviour(open, onClose);
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
 
   return (
     <AnimatePresence>
@@ -38,15 +38,15 @@ export default function Sheet({ open, onClose, title, children, maxWidth = 'max-
             aria-label={title}
             tabIndex={-1}
             className={`relative w-full ${maxWidth} max-h-[88vh] overflow-y-auto no-scrollbar rounded-t-[28px] bg-surface shadow-panel sm:mx-6 sm:rounded-[28px]`}
-            initial={reduceMotion ? { opacity: 0 } : { y: '100%', opacity: 0.6, scale: 0.98 }}
-            animate={reduceMotion ? { opacity: 1 } : { y: 0, opacity: 1, scale: 1 }}
+            initial={calm ? { opacity: 0 } : { y: '100%', opacity: 0.6, scale: 0.98 }}
+            animate={calm ? { opacity: 1 } : { y: 0, opacity: 1, scale: 1 }}
             exit={
-              reduceMotion
+              calm
                 ? { opacity: 0 }
                 : { y: '100%', opacity: 0.4, transition: { duration: 0.3, ease: IOS_EASE } }
             }
-            transition={reduceMotion ? { duration: 0.2 } : spring.sheet}
-            drag={reduceMotion ? false : 'y'}
+            transition={calm ? { duration: 0.2 } : spring.sheet}
+            drag={calm ? false : 'y'}
             dragDirectionLock
             dragConstraints={{ top: 0, bottom: 0 }}
             dragElastic={{ top: 0, bottom: 0.6 }}

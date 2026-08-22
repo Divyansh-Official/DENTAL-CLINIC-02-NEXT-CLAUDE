@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useCalmMotion } from '@/lib/hooks';
 import Icon from '@/components/ui/Icon';
 import { RevealGroup, RevealItem } from '@/components/ui/Reveal';
 import { appointment, doctorItems, t } from '@/lib/data';
@@ -20,7 +21,7 @@ import { IOS_EASE, spring, tap } from '@/lib/motion';
 function CopyButton({ value, label }) {
   const [copied, setCopied] = useState(false);
   const timer = useRef(null);
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
 
   /* The original left a setTimeout running after unmount, which warns in
      development and sets state on a dead component. */
@@ -53,7 +54,7 @@ function CopyButton({ value, label }) {
   return (
     <motion.button
       type="button"
-      whileTap={reduceMotion ? undefined : tap}
+      whileTap={calm ? undefined : tap}
       onClick={copy}
       className="relative grid h-9 w-9 place-items-center rounded-full border border-line bg-card text-primary transition-colors duration-300 hover:border-primary/40"
     >
@@ -77,7 +78,7 @@ function CopyButton({ value, label }) {
 }
 
 export default function AppointmentContact() {
-  const reduceMotion = useReducedMotion();
+  const calm = useCalmMotion();
   const channels = Array.isArray(appointment.primaryChannels) ? appointment.primaryChannels : [];
   const featured = channels.filter((channel) => channel.featured);
   const secondary = channels.filter((channel) => !channel.featured);
@@ -92,8 +93,8 @@ export default function AppointmentContact() {
               <motion.a
                 href={channel.href}
                 {...linkAttrs(channel.href)}
-                whileTap={reduceMotion ? undefined : tap}
-                whileHover={reduceMotion ? undefined : { y: -4 }}
+                whileTap={calm ? undefined : tap}
+                whileHover={calm ? undefined : { y: -4 }}
                 transition={spring.snappy}
                 className="group grain relative flex h-full flex-col justify-between overflow-hidden rounded-panel bg-primary p-8"
               >
@@ -103,10 +104,10 @@ export default function AppointmentContact() {
                   </span>
                   <p className="mt-6 text-[11px] uppercase tracking-[0.2em] text-on-primary/45">{channel.label}</p>
                   <p className="mt-2 font-display text-[26px] leading-tight text-on-primary sm:text-[30px]">{channel.value}</p>
-                  <p className="mt-2 text-[13px] text-on-primary/55">{channel.note}</p>
+                  <p className="mt-2 text-[14.5px] text-on-primary/55">{channel.note}</p>
                 </div>
 
-                <span className="mt-8 inline-flex items-center gap-2.5 text-[13.5px] text-accent">
+                <span className="mt-8 inline-flex items-center gap-2.5 text-[14.5px] text-accent">
                   {channel.action}
                   <Icon name="arrow-right" size={13} className="transition-transform duration-500 ease-ios group-hover:translate-x-1.5" />
                 </span>
@@ -124,15 +125,15 @@ export default function AppointmentContact() {
                 <a
                   href={channel.href}
                   {...linkAttrs(channel.href)}
-                  className="group flex h-full items-start gap-4 rounded-card border border-line bg-card p-6 transition-all duration-500 ease-ios hover:-translate-y-1 hover:shadow-lift"
+                  className="group flex h-full items-start gap-4 rounded-card border border-line bg-card p-8 transition-all duration-500 ease-ios hover:-translate-y-1 hover:shadow-lift"
                 >
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-surface-200 text-primary transition-colors duration-500 group-hover:bg-primary group-hover:text-on-primary">
                     <Icon name={channel.icon} size={18} />
                   </span>
                   <span>
                     <span className="block text-[11px] uppercase tracking-[0.18em] text-accent">{channel.label}</span>
-                    <span className="mt-1.5 block text-[14px] leading-snug text-primary">{channel.value}</span>
-                    <span className="mt-1.5 block text-[12px] text-ink-faint">{channel.note}</span>
+                    <span className="mt-1.5 block text-[15px] leading-snug text-primary">{channel.value}</span>
+                    <span className="mt-1.5 block text-[13.5px] text-ink-faint">{channel.note}</span>
                   </span>
                 </a>
               </RevealItem>
@@ -147,7 +148,7 @@ export default function AppointmentContact() {
             <h2 className="display-lg text-[clamp(1.8rem,3.4vw,2.6rem)]">
               <AccentTitle text={t('appointment.specialists.title')} accent={t('appointment.specialists.italicWord')} />
             </h2>
-            <p className="max-w-sm text-[13px] leading-relaxed text-ink-muted">{t('appointment.specialists.intro')}</p>
+            <p className="max-w-sm text-[15.5px] leading-relaxed text-ink-muted">{t('appointment.specialists.intro')}</p>
           </div>
 
           <RevealGroup className="mt-10 grid gap-5 sm:grid-cols-2">
@@ -162,16 +163,16 @@ export default function AppointmentContact() {
                         fill
                         loading="lazy"
                         sizes="(max-width: 640px) 100vw, 220px"
-                        className="object-cover transition-transform duration-[1100ms] ease-ios group-hover:scale-[1.05]"
+                        className="object-cover"
                       />
                     </div>
                   ) : null}
 
                   <div className="flex flex-1 flex-col p-6">
-                    <h3 className="font-display text-[19px] text-primary">{doctor.name}</h3>
-                    <p className="mt-1 text-[12px] tracking-[0.04em] text-accent">{doctor.specialty}</p>
+                    <h3 className="font-display text-[21px] text-primary">{doctor.name}</h3>
+                    <p className="mt-1 text-[13px] tracking-[0.04em] text-accent">{doctor.specialty}</p>
 
-                    <dl className="mt-4 space-y-2 text-[12px] text-ink-muted">
+                    <dl className="mt-4 space-y-2 text-[13.5px] text-ink-muted">
                       <div className="flex items-start gap-2.5">
                         <dt className="sr-only">Availability</dt>
                         <Icon name="clock" size={12} tone="accent" className="mt-0.5" />
@@ -187,7 +188,7 @@ export default function AppointmentContact() {
                     <div className="mt-5 flex items-center gap-2 border-t border-line pt-4">
                       <a
                         href={doctor.phoneHref}
-                        className="flex flex-1 items-center gap-2.5 text-[13.5px] text-primary transition-colors hover:text-accent"
+                        className="flex flex-1 items-center gap-2.5 text-[14.5px] text-primary transition-colors hover:text-accent"
                       >
                         <Icon name="phone" size={13} tone="accent" />
                         {doctor.phone}
@@ -195,7 +196,7 @@ export default function AppointmentContact() {
                       <CopyButton value={doctor.phone} label={t('common.copyLabel')} />
                       {doctor.whatsappHref ? (
                         <motion.a
-                          whileTap={reduceMotion ? undefined : tap}
+                          whileTap={calm ? undefined : tap}
                           href={doctor.whatsappHref}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -206,7 +207,7 @@ export default function AppointmentContact() {
                       ) : null}
                       {doctor.emailHref ? (
                         <motion.a
-                          whileTap={reduceMotion ? undefined : tap}
+                          whileTap={calm ? undefined : tap}
                           href={doctor.emailHref}
                           className="grid h-9 w-9 place-items-center rounded-full border border-line bg-card text-primary transition-colors duration-300 hover:border-primary/40"
                         >
