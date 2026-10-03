@@ -1,76 +1,124 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useId, useRef } from 'react';
 import Icon from './Icon';
-import { spring, IOS_EASE } from '@/lib/motion';
-import { useModalBehaviour , useCalmMotion } from '@/lib/hooks';
-import { t } from '@/lib/data';
+import { DURATION } from '@/lib/motion';
+import { prefersCalm } from '@/lib/hooks';
 
 /**
- * iOS bottom sheet. Springs up from the bottom edge, dims the page behind it,
- * carries a grabber, and dismisses when dragged past a distance or velocity
- * threshold — the same two rules UIKit applies.
+ * iOS sheet on a native <dialog>.
  *
- * Focus is trapped inside while it is open and returned to the trigger when it
- * closes; see lib/hooks.js.
+ * showModal() gives everything a modal needs for free: the rest of the page
+ * becomes inert, focus moves in and returns to the trigger on close, Escape
+ * closes it, and the page behind holds still (html:has(dialog[open]) in
+ * globals.css). It rises on a bouncy spring, leaves on a quick fall, and on a
+ * phone it docks to the bottom edge with a grabber that can be dragged down
+ * to dismiss — past 120px or on a fast flick, the same two rules UIKit uses.
  */
-export default function Sheet({ open, onClose, title, children, maxWidth = 'max-w-2xl' }) {
-  const containerRef = useModalBehaviour(open, onClose);
-  const calm = useCalmMotion();
+export default function Sheet({ open, onClose, title, children, width = 760, closeLabel = 'Close', footer = null }) {
+  const dialogRef = useRef(null);
+  const panelRef = useRef(null);
+  const titleId = useId();
+  const drag = useRef(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return undefined;
+
+    if (open && !dialog.open) {
+      dialog.removeAttribute('data-closing');
+      dialog.showModal();
+      /* Focus the sheet itself rather than its close button, so a mouse user
+         does not see a focus ring appear; Tab still reaches every control. */
+      panelRef.current?.focus({ preventScroll: true });
+      return undefined;
+    }
+
+    if (!open && dialog.open) {
+      if (prefersCalm()) {
+        dialog.close();
+        return undefined;
+      }
+      dialog.setAttribute('data-closing', '');
+      const timer = window.setTimeout(() => {
+        dialog.close();
+        dialog.removeAttribute('data-closing');
+        if (panelRef.current) panelRef.current.style.transform = '';
+      }, DURATION.exit);
+      return () => window.clearTimeout(timer);
+    }
+    return undefined;
+  }, [open]);
+
+  /* Escape: let React drive the close so the exit animation plays. */
+  const onCancel = (event) => {
+    event.preventDefault();
+    onClose?.();
+  };
+
+  /* A click on the dialog box itself (outside the panel) is the backdrop. */
+  const onClick = (event) => {
+    if (event.target === dialogRef.current) onClose?.();
+  };
+
+  const onPointerDown = (event) => {
+    if (event.pointerType === 'mouse' || window.innerWidth >= 640) return;
+    drag.current = { y: event.clientY, t: performance.now(), dy: 0 };
+    panelRef.current.style.transition = 'none';
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const onPointerMove = (event) => {
+    if (!drag.current) return;
+    const dy = Math.max(0, event.clientY - drag.current.y);
+    drag.current.dy = dy;
+    panelRef.current.style.transform = `translate3d(0, ${dy}px, 0)`;
+  };
+
+  const onPointerUp = () => {
+    if (!drag.current) return;
+    const { dy, t } = drag.current;
+    const velocity = dy / Math.max(1, performance.now() - t);
+    drag.current = null;
+    const panel = panelRef.current;
+    panel.style.transition = `transform var(--snappy-ms) var(--spring-snappy)`;
+    if (dy > 120 || velocity > 0.7) {
+      onClose?.();
+    } else {
+      panel.style.transform = '';
+    }
+  };
 
   return (
-    <AnimatePresence>
-      {open ? (
-        <div className="fixed inset-0 z-[90] flex items-end justify-center sm:items-center">
-          <motion.div
-            onClick={onClose}
-            className="absolute inset-0 bg-primary-900/45 backdrop-blur-[3px]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.35, ease: IOS_EASE }}
-          />
-
-          <motion.div
-            ref={containerRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label={title}
-            tabIndex={-1}
-            className={`relative w-full ${maxWidth} max-h-[88vh] overflow-y-auto no-scrollbar rounded-t-[28px] bg-surface shadow-panel sm:mx-6 sm:rounded-[28px]`}
-            initial={calm ? { opacity: 0 } : { y: '100%', opacity: 0.6, scale: 0.98 }}
-            animate={calm ? { opacity: 1 } : { y: 0, opacity: 1, scale: 1 }}
-            exit={
-              calm
-                ? { opacity: 0 }
-                : { y: '100%', opacity: 0.4, transition: { duration: 0.3, ease: IOS_EASE } }
-            }
-            transition={calm ? { duration: 0.2 } : spring.sheet}
-            drag={calm ? false : 'y'}
-            dragDirectionLock
-            dragConstraints={{ top: 0, bottom: 0 }}
-            dragElastic={{ top: 0, bottom: 0.6 }}
-            onDragEnd={(_, info) => {
-              if (info.offset.y > 140 || info.velocity.y > 700) onClose();
-            }}
-          >
-            <div className="sticky top-0 z-10 material px-6 pb-4 pt-3">
-              <div className="mx-auto mb-4 h-1.5 w-11 rounded-full bg-primary/20 sm:hidden" />
-              <div className="flex items-center justify-between gap-4">
-                <h2 className="display-md text-[22px] sm:text-2xl">{title}</h2>
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-primary/[0.07] text-primary transition-colors hover:bg-primary/[0.12]"
-                >
-                  <Icon name="close" size={14} label={t('common.close')} />
-                </button>
-              </div>
-            </div>
-            <div className="px-6 pb-8">{children}</div>
-          </motion.div>
+    <dialog
+      ref={dialogRef}
+      className="sheet"
+      aria-labelledby={titleId}
+      onCancel={onCancel}
+      onClick={onClick}
+      style={{ '--sheet-w': `${width}px` }}
+    >
+      <div ref={panelRef} className="sheet-panel outline-none" tabIndex={-1}>
+        <div
+          className="relative z-10 flex-none border-b border-black/[0.06] bg-card/80 px-5 pb-4 pt-3 backdrop-blur-xl sm:px-7 sm:pt-5"
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+        >
+          <div className="mx-auto mb-3 h-[5px] w-10 rounded-full bg-black/15 sm:hidden" aria-hidden="true" />
+          <div className="flex items-center justify-between gap-4">
+            <h2 id={titleId} className="t-headline truncate">
+              {title}
+            </h2>
+            <button type="button" onClick={onClose} className="icon-btn flex-none bg-black/[0.06] hover:bg-black/10" aria-label={closeLabel}>
+              <Icon name="close" size={16} strokeWidth={2} />
+            </button>
+          </div>
         </div>
-      ) : null}
-    </AnimatePresence>
+        <div className="sheet-scroll px-5 pb-8 pt-5 sm:px-7 sm:pb-9">{children}</div>
+        {footer ? <div className="flex-none border-t border-black/[0.06] px-5 py-4 sm:px-7">{footer}</div> : null}
+      </div>
+    </dialog>
   );
 }

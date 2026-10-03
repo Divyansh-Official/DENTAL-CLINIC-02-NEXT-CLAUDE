@@ -10,17 +10,17 @@ A suggested layout:
 
 ```
 public/
-  hero.jpg              clinic.json  -> hero.image
-  interior.jpg          clinic.json  -> about.interiorImage
-  founder.png           clinic.json  -> about.portraitImage   (cut-out PNG works best)
-  team/dr-name.jpg      doctors.json -> items[].image
+  hero.jpg              clinic.json   -> hero.image
+  interior.jpg          clinic.json   -> about.interiorImage
+  founder.jpg           clinic.json   -> about.portraitImage
+  team/aanya-mehta.jpg  doctors.json  -> items[].image
   services/implants.jpg services.json -> items[].image
-  gallery/01.jpg        gallery.json -> items[].src
-  tour.mp4              clinic.json  -> hero.story.video.src
+  gallery/01.jpg        gallery.json  -> items[].src
+  tour.mp4              clinic.json   -> hero.story.video.src
 ```
 
 `npm run check` reports any JSON path pointing at a file that is not here.
 
-Favicons and the social share card are generated from the brand colours at
-build time — see `app/icon.js`, `app/apple-icon.js` and `app/opengraph-image.js`.
-There is nothing to draw by hand.
+The favicon, the Apple touch icon and the social share card are generated
+from the brand colours at build time — see `app/icon.js`, `app/apple-icon.js`
+and `app/opengraph-image.js`. There is nothing to draw by hand.

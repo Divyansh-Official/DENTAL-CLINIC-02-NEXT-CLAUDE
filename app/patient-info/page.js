@@ -1,105 +1,89 @@
 import { notFound } from 'next/navigation';
-import PageHero from '@/components/sections/PageHero';
-import ReadyBanner from '@/components/sections/ReadyBanner';
 import JsonLd from '@/components/layout/JsonLd';
-import Accordion from '@/components/ui/Accordion';
+import FaqExplorer from '@/components/sections/patient-info/FaqExplorer';
+import FirstVisitSteps from '@/components/sections/patient-info/FirstVisitSteps';
+import PolicyCards from '@/components/sections/patient-info/PolicyCards';
+import CtaBanner from '@/components/sections/shared/CtaBanner';
+import PageHero from '@/components/sections/shared/PageHero';
+import SafetyStandards from '@/components/sections/shared/SafetyStandards';
 import Icon from '@/components/ui/Icon';
-import Reveal, { RevealGroup, RevealItem } from '@/components/ui/Reveal';
-import SectionHeading from '@/components/ui/SectionHeading';
-import { clinic, isEnabled, patientInfo, t } from '@/lib/data';
+import Reveal from '@/components/ui/Reveal';
+import SectionHeader from '@/components/ui/SectionHeader';
+import { clinic, clinicPhone, isEnabled, page, patientInfo, t } from '@/lib/data';
 import { breadcrumbSchema, faqSchema, pageMetadata } from '@/lib/seo';
 
-const CRUMBS = [{ label: 'Patient Info' }];
+/**
+ * /patient-info — PageHero → FirstVisitSteps → SafetyStandards →
+ *                 FaqExplorer → PolicyCards → CtaBanner
+ * The FAQ is emitted as FAQPage structured data, eligible for a rich result.
+ */
+const meta = page('patientInfo');
+const CRUMBS = [{ label: meta.crumb }];
 
-export const metadata = pageMetadata({
-  title: 'Patient Info',
-  description: patientInfo.section.intro,
-  path: '/patient-info'
-});
+export const metadata = pageMetadata({ title: meta.title, description: patientInfo.section?.intro, path: '/patient-info' });
 
 export default function PatientInfoPage() {
   if (!isEnabled('patientInfo')) notFound();
+  const phone = clinicPhone();
+  const faq = Array.isArray(patientInfo.faq) ? patientInfo.faq : [];
 
   return (
     <>
-      {/* The FAQ block is eligible for a rich result in search. */}
-      <JsonLd schema={[breadcrumbSchema(CRUMBS, t('common.home')), faqSchema(patientInfo.faq)]} />
-
+      <JsonLd schema={[breadcrumbSchema(CRUMBS), faqSchema(faq)]} />
       <PageHero
-        eyebrow={patientInfo.section.eyebrow}
-        title={patientInfo.section.title}
-        italicWord={patientInfo.section.italicWord}
-        intro={patientInfo.section.intro}
-        breadcrumb={CRUMBS}
+        eyebrow={patientInfo.section?.eyebrow}
+        title={patientInfo.section?.title}
+        accent={patientInfo.section?.accent}
+        intro={patientInfo.section?.intro}
+        crumbs={CRUMBS}
+        labels={{ home: t('common.home'), breadcrumb: t('common.breadcrumbLabel') }}
       />
 
-      <section className="section-pad">
-        <div className="shell">
-          <SectionHeading
-            eyebrow={t('patientInfo.firstVisit.eyebrow')}
-            title={patientInfo.firstVisit.title}
-            italicWord={t('patientInfo.firstVisit.italicWord')}
-          />
+      <FirstVisitSteps
+        eyebrow={t('patientInfo.firstVisit.eyebrow')}
+        title={patientInfo.firstVisit?.title}
+        accent={t('patientInfo.firstVisit.accent')}
+        steps={patientInfo.firstVisit?.steps || []}
+      />
 
-          <RevealGroup className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {patientInfo.firstVisit.steps.map((step, index) => (
-              <RevealItem key={step.title} className="h-full">
-                <div className="group h-full rounded-card border border-line bg-card p-8 transition-all duration-500 ease-ios hover:-translate-y-1.5 hover:shadow-lift">
-                  <div className="flex items-center justify-between">
-                    <Icon name={step.icon} size={24} tone="primary" />
-                    <span className="font-display text-[14.5px] text-accent">{String(index + 1).padStart(2, '0')}</span>
-                  </div>
-                  <h3 className="mt-6 font-display text-[21px] text-primary">{step.title}</h3>
-                  <p className="mt-2.5 text-[15.5px] leading-relaxed text-ink-muted">{step.text}</p>
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </div>
-      </section>
+      <SafetyStandards
+        eyebrow={t('patientInfo.safety.eyebrow')}
+        title={patientInfo.safety?.title}
+        accent={t('patientInfo.safety.accent')}
+        points={patientInfo.safety?.points || []}
+        image={clinic.about?.interiorImage}
+      />
 
-      <section className="section-pad bg-surface-50">
-        <div className="shell grid gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-4">
-            <SectionHeading
-              eyebrow={t('patientInfo.faq.eyebrow')}
-              title={t('patientInfo.faq.title')}
-              italicWord={t('patientInfo.faq.italicWord')}
+      {faq.length ? (
+        <section className="tone-white section">
+          <div className="shell grid grid-cols-1 gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <div>
+              <SectionHeader align="left" eyebrow={t('patientInfo.faq.eyebrow')} title={t('patientInfo.faq.title')} accent={t('patientInfo.faq.accent')} />
+              <Reveal className="tile mt-8 bg-tile p-6 sm:p-7">
+                <p className="t-small">{t('patientInfo.faq.helpText')}</p>
+                {phone.href ? (
+                  <a href={phone.href} className="link-more mt-4 text-[16px]">
+                    <Icon name="phone" size={16} />
+                    {phone.value}
+                  </a>
+                ) : null}
+              </Reveal>
+            </div>
+            <FaqExplorer
+              items={faq}
+              labels={{
+                searchLabel: t('patientInfo.faq.searchLabel'),
+                searchPlaceholder: t('patientInfo.faq.searchPlaceholder'),
+                noResults: t('patientInfo.faq.noResults', { query: '{query}' })
+              }}
             />
-            <Reveal delay={0.2}>
-              <div className="mt-8 rounded-card border border-line bg-card p-8">
-                <p className="text-[15.5px] leading-relaxed text-ink-muted">{t('patientInfo.faq.helpText')}</p>
-                <a
-                  href={clinic.contact.phoneHref}
-                  className="mt-4 inline-flex items-center gap-2 text-[14.5px] text-primary transition-colors hover:text-accent"
-                >
-                  <Icon name="phone" size={13} tone="accent" />
-                  {clinic.contact.phone}
-                </a>
-              </div>
-            </Reveal>
           </div>
+        </section>
+      ) : null}
 
-          <div className="lg:col-span-8">
-            <Accordion items={patientInfo.faq} />
-          </div>
-        </div>
-      </section>
+      <PolicyCards eyebrow={t('patientInfo.policiesEyebrow')} policies={patientInfo.policies || []} />
 
-      <section className="section-pad">
-        <div className="shell grid gap-6 lg:grid-cols-2">
-          {patientInfo.policies.map((policy) => (
-            <Reveal key={policy.id}>
-              <article id={policy.id} className="h-full scroll-mt-28 rounded-card border border-line bg-card p-8">
-                <h2 className="font-display text-[24px] text-primary">{policy.title}</h2>
-                <p className="body-lead mt-4 text-[14.5px]">{policy.body}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      <ReadyBanner />
+      <CtaBanner banner={clinic.banners?.ready} phone={phone} labels={{ call: t('common.callTheClinic') }} />
     </>
   );
 }

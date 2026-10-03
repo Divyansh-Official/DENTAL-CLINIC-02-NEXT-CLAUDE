@@ -1,85 +1,57 @@
 /**
  * Colours and radii resolve to CSS custom properties that lib/theme.js writes
- * into the document from data/site.json. That indirection is the point: a
- * clinic changes four hex values in JSON and the entire site recolours on the
- * next request — no Tailwind rebuild, no stylesheet edit, and the `/opacity`
- * modifier keeps working because the properties hold "R G B" triplets.
+ * into the document from data/site.json. A clinic changes a few hex values in
+ * JSON and the whole site recolours on the next request — no Tailwind rebuild —
+ * and the `/opacity` modifier keeps working because the properties hold
+ * "R G B" triplets.
  */
 const withAlpha = (token) => `rgb(var(--c-${token}) / <alpha-value>)`;
 
+const tokens = [
+  'primary', 'primary-hover', 'primary-deep', 'primary-soft', 'primary-glow',
+  'accent', 'accent-soft', 'accent-deep', 'grad-mid',
+  'surface', 'surface-2', 'surface-3', 'card',
+  'ink', 'ink-2', 'ink-3', 'line', 'line-soft',
+  'night', 'night-2', 'night-3', 'on-night', 'on-night-2',
+  'on-primary', 'on-accent'
+];
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './app/**/*.{js,jsx}',
-    './components/**/*.{js,jsx}',
-    './lib/**/*.{js,jsx}'
-  ],
+  content: ['./app/**/*.{js,jsx}', './components/**/*.{js,jsx}', './lib/**/*.{js,jsx}'],
   theme: {
     extend: {
+      screens: {
+        xs: '420px',
+        /* The header shows its inline links from here; below it, the menu. */
+        nav: '1180px'
+      },
       colors: {
-        primary: {
-          DEFAULT: withAlpha('primary'),
-          50: withAlpha('primary-50'),
-          100: withAlpha('primary-100'),
-          400: withAlpha('primary-400'),
-          600: withAlpha('primary-600'),
-          700: withAlpha('primary-700'),
-          900: withAlpha('primary-900')
-        },
-        accent: {
-          DEFAULT: withAlpha('accent'),
-          light: withAlpha('accent-light'),
-          soft: withAlpha('accent-soft'),
-          deep: withAlpha('accent-deep')
-        },
-        surface: {
-          DEFAULT: withAlpha('surface'),
-          50: withAlpha('surface-50'),
-          100: withAlpha('surface-100'),
-          200: withAlpha('surface-200'),
-          300: withAlpha('surface-300')
-        },
-        ink: {
-          DEFAULT: withAlpha('ink'),
-          muted: withAlpha('ink-muted'),
-          faint: withAlpha('ink-faint')
-        },
-        line: withAlpha('line'),
-        card: withAlpha('card'),
-        'on-primary': withAlpha('on-primary'),
-        'on-accent': withAlpha('on-accent')
+        ...Object.fromEntries(tokens.map((token) => [token, withAlpha(token)])),
+        /* Tone-aware: these follow the section they sit in (white, grey or
+           night), so one component reads correctly on all three. */
+        fg: 'rgb(var(--fg) / <alpha-value>)',
+        'fg-2': 'rgb(var(--fg-2) / <alpha-value>)',
+        'fg-3': 'rgb(var(--fg-3) / <alpha-value>)',
+        tile: 'rgb(var(--tile) / <alpha-value>)',
+        hair: 'rgb(var(--hair) / <alpha-value>)'
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Georgia', 'serif'],
-        body: ['var(--font-body)', 'system-ui', 'sans-serif']
+        sans: ['var(--font-stack)']
       },
       borderRadius: {
         card: 'var(--r-card)',
         panel: 'var(--r-panel)',
-        hero: 'var(--r-hero)'
+        control: 'var(--r-control)'
       },
-      boxShadow: {
-        card: '0 1px 2px rgb(var(--c-ink) / 0.03), 0 18px 40px -28px rgb(var(--c-primary) / 0.35)',
-        lift: '0 2px 4px rgb(var(--c-ink) / 0.03), 0 32px 64px -32px rgb(var(--c-primary) / 0.45)',
-        panel: '0 40px 80px -40px rgb(var(--c-primary) / 0.5)',
-        float: '0 20px 48px -20px rgb(var(--c-primary) / 0.28)'
+      maxWidth: {
+        shell: 'var(--shell-max)',
+        prose: '42rem'
       },
       transitionTimingFunction: {
         ios: 'cubic-bezier(0.32, 0.72, 0, 1)',
-        'ios-out': 'cubic-bezier(0.16, 1, 0.3, 1)'
-      },
-      keyframes: {
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' }
-        },
-        spinSlow: { from: { transform: 'rotate(0deg)' }, to: { transform: 'rotate(360deg)' } }
-      },
-      animation: {
-        marquee: 'marquee var(--marquee-duration, 32s) linear infinite',
-        'spin-slow': 'spinSlow 18s linear infinite'
-      },
-      maxWidth: { shell: '1240px' }
+        out: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      }
     }
   },
   plugins: []

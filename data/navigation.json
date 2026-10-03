@@ -1,105 +1,46 @@
 {
-  "$comment": "Header and footer menus. Links to a route disabled in site.json are removed automatically.",
+  "$comment": "Header and footer menus. Links to a route disabled in site.json are removed automatically. `primary` shows in the header bar on wide screens; the menu shows primary and secondary together.",
   "primary": [
-    {
-      "label": "Home",
-      "href": "/"
-    },
-    {
-      "label": "About Us",
-      "href": "/about"
-    },
-    {
-      "label": "Services",
-      "href": "/services"
-    },
-    {
-      "label": "Treatments",
-      "href": "/treatments"
-    },
-    {
-      "label": "Gallery",
-      "href": "/gallery"
-    },
-    {
-      "label": "Patient Info",
-      "href": "/patient-info"
-    },
-    {
-      "label": "Blog",
-      "href": "/blog"
-    },
-    {
-      "label": "Contact",
-      "href": "/contact"
-    }
+    { "label": "About", "href": "/about" },
+    { "label": "Services", "href": "/services" },
+    { "label": "Team", "href": "/team" },
+    { "label": "Treatments", "href": "/treatments" },
+    { "label": "Gallery", "href": "/gallery" },
+    { "label": "Journal", "href": "/blog" },
+    { "label": "Contact", "href": "/contact" }
+  ],
+  "secondary": [
+    { "label": "Patient info", "href": "/patient-info" }
   ],
   "cta": {
-    "label": "Book Appointment",
+    "label": "Book an appointment",
     "href": "/book-appointment",
-    "icon": "arrow-right"
+    "icon": "calendar"
   },
+  "$footerColumns": "A column with \"source\": \"services\" lists every service from services.json automatically, so a new service appears in the footer without editing this file.",
   "footerColumns": [
     {
-      "title": "Quick Links",
+      "title": "Explore",
       "links": [
-        {
-          "label": "Home",
-          "href": "/"
-        },
-        {
-          "label": "About Us",
-          "href": "/about"
-        },
-        {
-          "label": "Services",
-          "href": "/services"
-        },
-        {
-          "label": "Treatments",
-          "href": "/treatments"
-        },
-        {
-          "label": "Gallery",
-          "href": "/gallery"
-        },
-        {
-          "label": "Blog",
-          "href": "/blog"
-        },
-        {
-          "label": "Contact",
-          "href": "/contact"
-        }
+        { "label": "Home", "href": "/" },
+        { "label": "About us", "href": "/about" },
+        { "label": "Our dentists", "href": "/team" },
+        { "label": "Treatments & pricing", "href": "/treatments" },
+        { "label": "Gallery", "href": "/gallery" }
       ]
     },
     {
-      "title": "Our Services",
+      "title": "Services",
+      "source": "services",
+      "limit": 6
+    },
+    {
+      "title": "Patients",
       "links": [
-        {
-          "label": "General Dentistry",
-          "href": "/services/general-dentistry"
-        },
-        {
-          "label": "Cosmetic Dentistry",
-          "href": "/services/cosmetic-dentistry"
-        },
-        {
-          "label": "Dental Implants",
-          "href": "/services/dental-implants"
-        },
-        {
-          "label": "Orthodontics",
-          "href": "/services/orthodontics"
-        },
-        {
-          "label": "Root Canal Therapy",
-          "href": "/services/root-canal-therapy"
-        },
-        {
-          "label": "Teeth Whitening",
-          "href": "/services/teeth-whitening"
-        }
+        { "label": "Book an appointment", "href": "/book-appointment" },
+        { "label": "Patient info", "href": "/patient-info" },
+        { "label": "Journal", "href": "/blog" },
+        { "label": "Contact", "href": "/contact" }
       ]
     }
   ]

@@ -1,17 +1,37 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import PageHero from '@/components/sections/PageHero';
-import ReadyBanner from '@/components/sections/ReadyBanner';
-import { ServiceCard } from '@/components/sections/ServicesGrid';
 import JsonLd from '@/components/layout/JsonLd';
-import Accordion from '@/components/ui/Accordion';
-import Button from '@/components/ui/Button';
-import Icon from '@/components/ui/Icon';
-import Reveal, { RevealGroup, RevealItem } from '@/components/ui/Reveal';
-import { clinic, clinicHours, clinicWhatsapp, getService, getServiceSlugs, serviceItems, t } from '@/lib/data';
+import CtaBanner from '@/components/sections/shared/CtaBanner';
+import ServiceCard from '@/components/sections/shared/ServiceCard';
+import ServiceAside from '@/components/sections/services/ServiceAside';
+import ServiceFaq from '@/components/sections/services/ServiceFaq';
+import ServiceHero from '@/components/sections/services/ServiceHero';
+import ServiceOverview from '@/components/sections/services/ServiceOverview';
+import ServicePricing from '@/components/sections/services/ServicePricing';
+import ServiceSpecialists from '@/components/sections/services/ServiceSpecialists';
+import SectionHeader from '@/components/ui/SectionHeader';
+import Shelf from '@/components/ui/Shelf';
+import {
+  clinic,
+  clinicHours,
+  clinicPhone,
+  clinicWhatsapp,
+  doctorSlug,
+  doctorsForService,
+  getService,
+  getServiceSlugs,
+  getTreatmentCategory,
+  isEnabled,
+  openStatusProps,
+  page,
+  serviceItems,
+  t
+} from '@/lib/data';
 import { breadcrumbSchema, faqSchema, pageMetadata, serviceSchema } from '@/lib/seo';
 
+/**
+ * /services/[slug] — ServiceHero → (ServiceOverview · ServicePricing ·
+ * ServiceSpecialists · ServiceFaq | ServiceAside) → related shelf → CtaBanner
+ */
 export function generateStaticParams() {
   return getServiceSlugs().map((slug) => ({ slug }));
 }
@@ -19,190 +39,82 @@ export function generateStaticParams() {
 /* A slug that is not in services.json returns 404 rather than rendering empty. */
 export const dynamicParams = false;
 
-export function generateMetadata({ params }) {
-  const service = getService(params.slug);
-  if (!service) return { title: 'Service not found', robots: { index: false, follow: false } };
-  return pageMetadata({
-    title: service.title,
-    description: service.excerpt,
-    path: `/services/${service.slug}`,
-    image: service.image?.src
-  });
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const service = getService(slug);
+  if (!service) return { title: t('pages.notFound.title'), robots: { index: false, follow: false } };
+  return pageMetadata({ title: service.title, description: service.excerpt, path: `/services/${service.slug}`, image: service.image?.src });
 }
 
-export default function ServiceDetailPage({ params }) {
-  const service = getService(params.slug);
+export default async function ServiceDetailPage({ params }) {
+  const { slug } = await params;
+  const service = getService(slug);
   if (!service) notFound();
 
-  const related = serviceItems().filter((item) => item.slug !== service.slug).slice(0, 3);
-  const crumbs = [{ label: 'Services', href: '/services' }, { label: service.title }];
-  const whatsapp = clinicWhatsapp();
+  const crumbs = [{ label: page('services').crumb, href: '/services' }, { label: service.title }];
+  const related = serviceItems().filter((item) => item.slug !== service.slug);
+  const specialists = doctorsForService(service.slug).map((doctor) => ({ ...doctor, href: `/team/${doctorSlug(doctor)}` }));
+  const pricing = isEnabled('treatments') && service.pricing ? getTreatmentCategory(service.pricing) : null;
+  const whatsapp = clinicWhatsapp(t('services.detail.whatsappMessage', { service: service.title }));
+  const shelf = { previous: t('shelf.previous'), next: t('shelf.next') };
 
   return (
     <>
-      <JsonLd
-        schema={[serviceSchema(service), breadcrumbSchema(crumbs, t('common.home')), faqSchema(service.faq)]}
+      <JsonLd schema={[serviceSchema(service), breadcrumbSchema(crumbs), faqSchema(service.faq)]} />
+
+      <ServiceHero
+        service={service}
+        crumbs={crumbs}
+        whatsappHref={whatsapp}
+        glass={isEnabled('liquidGlass')}
+        labels={{
+          home: t('common.home'),
+          breadcrumb: t('common.breadcrumbLabel'),
+          eyebrow: t('services.detail.eyebrow'),
+          duration: t('services.detail.durationLabel'),
+          priceLabel: t('services.detail.priceLabel'),
+          book: t('services.detail.bookCta'),
+          whatsapp: t('services.detail.aside.whatsappLabel')
+        }}
       />
 
-      <PageHero
-        eyebrow={t('services.detail.eyebrow')}
-        title={service.title}
-        intro={service.excerpt}
-        breadcrumb={crumbs}
-      >
-        <div className="flex flex-wrap items-center gap-3">
-          <Button href="/book-appointment" size="lg">
-            {t('services.detail.bookCta')}
-          </Button>
-          {service.duration ? (
-            <span className="flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2.5 text-[14.5px] text-primary">
-              <Icon name="clock" size={13} tone="accent" />
-              {service.duration}
-            </span>
-          ) : null}
-          {service.priceFrom ? (
-            <span className="flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2.5 text-[14.5px] text-primary">
-              <Icon name="wallet" size={13} tone="accent" />
-              {t('common.from')} {service.priceFrom}
-            </span>
-          ) : null}
-        </div>
-      </PageHero>
-
-      <section className="section-pad">
-        <div className="shell grid gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="lg:col-span-7">
-            <Reveal>
-              <div className="relative aspect-[4/2.6] w-full overflow-hidden rounded-panel">
-                <Image
-                  src={service.image.src}
-                  alt={service.image.alt || ''}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 58vw"
-                  className="object-cover"
-                />
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <p className="body-lead mt-8 text-[15px]">{service.description}</p>
-            </Reveal>
-
-            {service.includes?.length ? (
-              <>
-                <Reveal delay={0.15}>
-                  <h2 className="display-md mt-10 text-[24px]">{t('services.detail.includesTitle')}</h2>
-                </Reveal>
-                <RevealGroup className="mt-6 space-y-3">
-                  {service.includes.map((item) => (
-                    <RevealItem key={item} className="flex items-start gap-3 rounded-card border border-line bg-card p-8">
-                      <Icon name="check-circle" size={16} tone="accent" className="mt-0.5" />
-                      <span className="text-[15.5px] leading-relaxed text-primary">{item}</span>
-                    </RevealItem>
-                  ))}
-                </RevealGroup>
-              </>
-            ) : null}
-
-            {service.faq?.length ? (
-              <Reveal delay={0.1}>
-                <h2 className="display-md mt-12 text-[24px]">{t('services.detail.faqTitle')}</h2>
-                <Accordion items={service.faq} className="mt-5" />
-              </Reveal>
-            ) : null}
+      <section className="tone-gray section">
+        <div className="shell grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-14 xl:grid-cols-[minmax(0,1fr)_380px]">
+          <div className="min-w-0">
+            <ServiceOverview service={service} labels={{ overview: t('services.detail.overviewTitle'), includes: t('services.detail.includesTitle') }} />
+            <ServicePricing
+              category={pricing}
+              href="/treatments"
+              labels={{ title: pricing?.name ? `${t('services.detail.pricingTitle')} · ${pricing.name}` : t('services.detail.pricingTitle'), all: t('services.pricingLink') }}
+            />
+            <ServiceSpecialists doctors={specialists} title={t('services.detail.specialistsTitle')} />
+            <ServiceFaq items={service.faq} title={t('services.detail.faqTitle')} group={`faq-${service.slug}`} />
           </div>
-
-          <aside className="lg:col-span-5">
-            <Reveal className="sticky top-[calc(var(--nav-h)+24px)]">
-              <div className="grain overflow-hidden rounded-panel bg-primary p-7">
-                <Icon name={service.icon} size={30} tone="accent" />
-                <h2 className="mt-5 font-display text-[24px] leading-snug text-on-primary">
-                  {t('services.detail.aside.title')}
-                </h2>
-                <p className="mt-3 text-[15.5px] leading-relaxed text-on-primary/60">
-                  {t('services.detail.aside.text')}
-                </p>
-
-                <div className="mt-7 space-y-3">
-                  <a
-                    href={clinic.contact.phoneHref}
-                    className="flex items-center justify-between rounded-card border border-on-primary/[0.15] px-5 py-4 transition-colors duration-300 hover:border-accent hover:bg-accent/10"
-                  >
-                    <span className="flex items-center gap-3 text-[14.5px] text-on-primary">
-                      <Icon name="phone" size={15} tone="accent" />
-                      {clinic.contact.phone}
-                    </span>
-                    <Icon name="arrow-right" size={13} className="text-on-primary" />
-                  </a>
-                  {whatsapp ? (
-                    <a
-                      href={whatsapp}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-between rounded-card border border-on-primary/[0.15] px-5 py-4 transition-colors duration-300 hover:border-accent hover:bg-accent/10"
-                    >
-                      <span className="flex items-center gap-3 text-[14.5px] text-on-primary">
-                        <Icon name="whatsapp" size={15} tone="accent" />
-                        {t('services.detail.aside.whatsappLabel')}
-                      </span>
-                      <Icon name="arrow-right" size={13} className="text-on-primary" />
-                    </a>
-                  ) : null}
-                </div>
-
-                <div className="mt-7 border-t border-on-primary/[0.12] pt-5">
-                  <p className="text-[11px] uppercase tracking-[0.2em] text-on-primary/45">
-                    {t('common.openingHours')}
-                  </p>
-                  {clinicHours().map((slot) => (
-                    <p key={slot.days} className="mt-2 flex justify-between text-[14.5px] text-on-primary/70">
-                      <span>{slot.days}</span>
-                      <span>{slot.time}</span>
-                    </p>
-                  ))}
-                </div>
-              </div>
-
-              {related.length ? (
-                <div className="mt-5 rounded-card border border-line bg-card p-8">
-                  <p className="eyebrow">{t('services.detail.alsoOffered')}</p>
-                  <ul className="mt-4 space-y-2.5">
-                    {related.map((item) => (
-                      <li key={item.slug}>
-                        <Link
-                          href={`/services/${item.slug}`}
-                          className="group flex items-center justify-between gap-4 text-[14.5px] text-primary"
-                        >
-                          <span className="transition-colors group-hover:text-accent">{item.title}</span>
-                          <Icon name="arrow-right" size={12} tone="accent" className="transition-transform duration-500 ease-ios group-hover:translate-x-1" />
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-            </Reveal>
-          </aside>
+          <ServiceAside
+            icon={service.icon}
+            phone={clinicPhone()}
+            whatsappHref={whatsapp}
+            hours={clinicHours()}
+            status={openStatusProps()}
+            labels={{ title: t('services.detail.aside.title'), text: t('services.detail.aside.text'), whatsapp: t('services.detail.aside.whatsappLabel') }}
+          />
         </div>
       </section>
 
       {related.length ? (
-        <section className="section-pad bg-surface-50">
+        <section className="tone-white section overflow-hidden">
           <div className="shell">
-            <h2 className="display-lg">{t('services.detail.relatedTitle')}</h2>
-            <RevealGroup className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((item) => (
-                <RevealItem key={item.slug} className="h-full">
-                  <ServiceCard service={item} />
-                </RevealItem>
-              ))}
-            </RevealGroup>
+            <SectionHeader align="left" title={t('services.detail.relatedTitle')} size="title" />
           </div>
+          <Shelf className="mt-10" label={t('services.detail.relatedTitle')} itemWidth="clamp(270px, 78vw, 350px)" labels={shelf}>
+            {related.map((item) => (
+              <ServiceCard key={item.slug} service={item} variant="feature" labels={{ from: t('common.from') }} />
+            ))}
+          </Shelf>
         </section>
       ) : null}
 
-      <ReadyBanner />
+      <CtaBanner banner={clinic.banners?.ready} phone={clinicPhone()} labels={{ call: t('common.callTheClinic') }} tone="tone-white" />
     </>
   );
 }

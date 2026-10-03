@@ -1,8 +1,9 @@
 {
+  "$comment": "The treatment journey. Any number of steps lays out correctly — a row on wide screens, a timeline on phones.",
   "section": {
-    "eyebrow": "Our Process",
-    "title": "Care That's Simple & Stress-Free",
-    "italicWord": "Stress-Free"
+    "eyebrow": "How it works",
+    "title": "Care that is simple and stress-free.",
+    "accent": "stress-free"
   },
   "steps": [
     {
@@ -35,6 +36,5 @@
       "title": "Follow-Up",
       "text": "We ensure lasting results & your comfort."
     }
-  ],
-  "$comment": "The treatment journey. Any number of steps between three and six lays out correctly."
+  ]
 }

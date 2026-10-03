@@ -1,13 +1,13 @@
 {
   "$comment": "First visit, payments, hygiene standards, FAQ and policies. The FAQ here is emitted as FAQPage structured data.",
   "section": {
-    "eyebrow": "Patient Info",
-    "title": "Everything Before You Arrive",
-    "italicWord": "Arrive",
+    "eyebrow": "Patient information",
+    "title": "Everything before you arrive.",
+    "accent": "you arrive",
     "intro": "Visit preparation, payment options, insurance and the answers we are asked most often."
   },
   "firstVisit": {
-    "title": "Your First Visit",
+    "title": "Your first visit, step by step.",
     "steps": [
       {
         "icon": "clipboard",
@@ -32,7 +32,7 @@
     ]
   },
   "payments": {
-    "title": "Payments & Insurance",
+    "title": "Payments & insurance",
     "icon": "wallet",
     "methods": [
       "Cash",
@@ -54,7 +54,7 @@
     }
   },
   "safety": {
-    "title": "Hygiene & Safety",
+    "title": "Hygiene and safety, without compromise.",
     "icon": "sanitizer",
     "points": [
       "Class B autoclave sterilisation with cycle logging for every instrument tray",

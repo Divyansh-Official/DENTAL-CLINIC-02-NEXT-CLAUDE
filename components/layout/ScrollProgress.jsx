@@ -1,17 +1,8 @@
-'use client';
-
-import { motion, useScroll, useSpring } from 'framer-motion';
-
-/** Hairline reading indicator pinned to the top edge. */
+/**
+ * Hairline reading indicator along the top edge, driven entirely by a CSS
+ * scroll timeline (`.scroll-progress` in globals.css) — no JavaScript, no
+ * scroll listener. Where scroll timelines are unsupported it stays hidden.
+ */
 export default function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 220, damping: 34, restDelta: 0.001 });
-
-  return (
-    <motion.div
-      style={{ scaleX }}
-      className="fixed inset-x-0 top-0 z-[80] h-[2px] origin-left bg-accent"
-      aria-hidden="true"
-    />
-  );
+  return <div className="scroll-progress" aria-hidden="true" />;
 }

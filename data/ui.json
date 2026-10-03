@@ -1,5 +1,5 @@
 {
-  "$comment": "Interface microcopy. Every word the components used to hardcode now lives here, so the site can be reworded — or translated — without opening a .jsx file.",
+  "$comment": "Interface copy. Every label, heading, page title and screen-reader string the components use lives here, so the site can be reworded — or translated — without opening a .jsx file. {tokens} such as {clinic}, {city} and {established} are filled in automatically.",
 
   "common": {
     "skipToContent": "Skip to content",
@@ -9,23 +9,51 @@
     "closeMenu": "Close menu",
     "close": "Close",
     "breadcrumbLabel": "Breadcrumb",
-    "readMore": "Read more",
+    "primaryNavLabel": "Primary",
+    "quickActionsLabel": "Quick actions",
+    "learnMore": "Learn more",
+    "readMore": "Read article",
     "viewDetails": "View details",
+    "viewProfile": "View profile",
     "getDirections": "Get directions",
     "callTheClinic": "Call the clinic",
+    "callNow": "Call now",
+    "bookCta": "Book an appointment",
     "openingHours": "Opening hours",
-    "contactHeading": "Contact Us",
-    "hoursHeading": "Opening Hours",
+    "contactHeading": "Contact",
+    "hoursHeading": "Hours",
+    "followUs": "Follow us",
     "from": "From",
-    "copyLabel": "Copy number for",
+    "copyLabel": "Copy number",
     "copiedLabel": "Copied",
-    "previousLabel": "Previous",
-    "nextLabel": "Next",
-    "mapTitlePrefix": "Map to"
+    "previous": "Previous",
+    "next": "Next",
+    "mapTitlePrefix": "Map to",
+    "ratingLabel": "{score} out of {max} stars",
+    "ratingCaption": "{value} from {count} patient reviews",
+    "reviewsCount": "{count} reviews",
+    "since": "Since {established}",
+    "all": "All",
+    "emailLabel": "Email {person}",
+    "whatsappLabel": "WhatsApp {person}"
+  },
+
+  "status": {
+    "loading": "Opening hours",
+    "today": "Today",
+    "openNow": "Open now",
+    "closesAt": "Closes {time}",
+    "closed": "Closed",
+    "opensToday": "Opens today at {time}",
+    "opensTomorrow": "Opens tomorrow at {time}",
+    "opensOn": "Opens {day} at {time}"
+  },
+
+  "header": {
+    "book": "Book"
   },
 
   "stickyBar": {
-    "$comment": "The mobile action bar pinned to the bottom edge. Set features.stickyMobileBar in site.json.",
     "call": "Call",
     "whatsapp": "WhatsApp",
     "book": "Book"
@@ -35,45 +63,101 @@
     "label": "Chat on WhatsApp"
   },
 
+  "pages": {
+    "$comment": "Browser-tab titles and breadcrumb labels for each route.",
+    "about": { "title": "About us", "crumb": "About" },
+    "team": { "title": "Our dentists", "crumb": "Team" },
+    "services": { "title": "Services", "crumb": "Services" },
+    "treatments": { "title": "Treatments & pricing", "crumb": "Treatments" },
+    "gallery": { "title": "Gallery", "crumb": "Gallery" },
+    "patientInfo": { "title": "Patient information", "crumb": "Patient info" },
+    "blog": { "title": "Journal", "crumb": "Journal" },
+    "contact": { "title": "Contact", "crumb": "Contact" },
+    "booking": { "title": "Book an appointment", "crumb": "Book" },
+    "notFound": { "title": "Page not found" }
+  },
+
   "notFound": {
-    "eyebrow": "404",
-    "title": "This page has moved on",
-    "italicWord": "moved on",
+    "eyebrow": "Error 404",
+    "title": "This page has moved on.",
+    "accent": "moved on",
     "body": "The link is broken or the page was renamed. Head back to the homepage, or call the clinic and someone will point you to what you were looking for.",
     "cta": { "label": "Back to homepage", "href": "/" }
   },
 
   "error": {
     "eyebrow": "Something went wrong",
-    "title": "This page could not load",
-    "italicWord": "not load",
-    "body": "The page hit an unexpected error. Try again, and if it keeps happening call the clinic directly — the phone always works.",
-    "retry": "Try again",
-    "cta": { "label": "Back to homepage", "href": "/" }
+    "title": "This page could not load.",
+    "accent": "not load",
+    "body": "The page hit an unexpected error. Try again — and if it keeps happening, call the clinic directly. The phone always works.",
+    "retry": "Try again"
   },
 
   "hero": {
-    "storyCtaLabel": "Read our full story"
+    "storyCtaLabel": "Read our full story",
+    "cardEyebrow": "Specialist-led care",
+    "cardText": "{city} · Since {established}"
+  },
+
+  "stats": {
+    "eyebrow": "By the numbers",
+    "title": "Trusted by thousands of smiles.",
+    "accent": "thousands"
+  },
+
+  "shelf": {
+    "previous": "Show previous",
+    "next": "Show next"
+  },
+
+  "home": {
+    "team": {
+      "cta": "Meet the whole team"
+    }
   },
 
   "testimonials": {
-    "previousLabel": "Previous reviews",
-    "nextLabel": "Next reviews",
-    "pageLabel": "Go to review page"
+    "ratingLabel": "Average rating"
   },
 
   "about": {
     "promise": {
-      "eyebrow": "Our Promise",
-      "title": "Dentistry you can understand",
-      "italicWord": "understand",
+      "eyebrow": "Our promise",
+      "title": "Dentistry you can understand.",
+      "accent": "understand",
       "paragraphs": [
         "Nothing is treated until it has been explained. You see your own radiographs and intra-oral photographs on screen, you hear what is urgent and what can wait, and you leave with a written estimate that does not change halfway through.",
-        "That standard has held since {established}, across every patient we have treated, and it is the reason most of our new appointments come from someone we have already treated."
+        "That standard has held since {established}, across every patient we have treated — and it is the reason most of our new appointments come from someone we have already looked after."
       ]
     },
-    "standards": { "eyebrow": "Standards", "italicWord": "Safety" },
-    "team": { "qualificationLabel": "Qualification", "languagesLabel": "Speaks" }
+    "standards": { "eyebrow": "Standards", "accent": "Safety" },
+    "team": { "cta": "Meet the whole team" }
+  },
+
+  "team": {
+    "hero": {
+      "eyebrow": "Our dentists",
+      "title": "The hands behind your smile.",
+      "accent": "your smile",
+      "intro": "Every specialist here is board-certified and treats within their own discipline. You are never handed to a generalist for specialist work."
+    },
+    "filterLabel": "Filter dentists by specialty",
+    "allSpecialties": "All",
+    "profile": {
+      "experience": "Experience",
+      "languages": "Languages",
+      "availability": "Availability",
+      "qualification": "Qualification",
+      "about": "About",
+      "expertise": "Areas of expertise",
+      "education": "Education & training",
+      "treatments": "Treatments offered",
+      "articles": "Articles by {doctor}",
+      "contactTitle": "Reach {doctor} directly",
+      "contactText": "Each dentist keeps their own line. If you already know who you need, skip the front desk.",
+      "bookWith": "Book with {doctor}",
+      "others": "Meet the rest of the team"
+    }
   },
 
   "services": {
@@ -81,61 +165,87 @@
     "detail": {
       "eyebrow": "Service",
       "bookCta": "Book this treatment",
+      "overviewTitle": "Overview",
       "includesTitle": "What the treatment includes",
+      "pricingTitle": "Indicative pricing",
+      "specialistsTitle": "Your specialists",
       "faqTitle": "Questions patients ask",
+      "durationLabel": "Duration",
+      "priceLabel": "Starting from",
       "aside": {
-        "title": "Talk to a dentist before you decide",
+        "title": "Talk to a dentist before you decide.",
         "text": "No forms, no callbacks queued for tomorrow. Call the clinic and a dentist confirms whether this is the right treatment for you.",
         "whatsappLabel": "WhatsApp the clinic"
       },
-      "alsoOffered": "Also offered",
-      "relatedTitle": "Explore other treatments"
+      "relatedTitle": "Explore other treatments",
+      "whatsappMessage": "Hello {clinic}, I'd like to ask about {service}."
     }
   },
 
   "treatments": {
+    "tabsLabel": "Treatment categories",
+    "columns": {
+      "procedure": "Procedure",
+      "visits": "Visits",
+      "time": "Time",
+      "price": "Price"
+    },
     "payments": {
       "eyebrow": "Paying for treatment",
-      "italicWord": "Insurance",
+      "accent": "Insurance",
       "intro": "Transparent figures, several ways to pay, and paperwork prepared for reimbursement where your policy allows it.",
       "methodsTitle": "Accepted payment methods",
-      "insuranceTitle": "Insurance"
+      "insuranceTitle": "Insurance partners"
     }
   },
 
+  "gallery": {
+    "filterLabel": "Filter gallery",
+    "viewLabel": "View {title}",
+    "counter": "{index} of {total}"
+  },
+
   "patientInfo": {
-    "firstVisit": { "eyebrow": "Before you arrive", "italicWord": "Visit" },
+    "firstVisit": { "eyebrow": "Before you arrive", "accent": "first visit" },
+    "safety": { "eyebrow": "Hygiene & safety", "accent": "Safety" },
     "faq": {
       "eyebrow": "Questions",
-      "title": "Answers to the ones we hear daily",
-      "italicWord": "daily",
-      "helpText": "Not covered here? Call the clinic and ask. There is no charge for a question."
-    }
+      "title": "Answers to the ones we hear daily.",
+      "accent": "daily",
+      "helpText": "Not covered here? Call the clinic and ask. There is no charge for a question.",
+      "searchLabel": "Search questions",
+      "searchPlaceholder": "Search questions",
+      "noResults": "No questions match “{query}”. Try another word, or call us."
+    },
+    "policiesEyebrow": "Policies"
   },
 
   "blog": {
     "hero": {
-      "title": "Tips, Trends & Expert Advice",
-      "italicWord": "Expert",
+      "eyebrow": "Journal",
+      "title": "Tips, trends and expert advice.",
+      "accent": "expert advice",
       "intro": "Written by the dentists who treat here, not by a content agency. No listicles, no scare tactics.",
       "metaDescription": "Dental insights, treatment guides and expert advice from the {clinic} clinical team."
     },
+    "filterLabel": "Filter articles",
+    "featured": "Featured",
     "detail": {
       "authorLabel": "Written by",
       "practisingAt": "Practising at {clinic}, {city}.",
       "disclaimer": "This article is general information and cannot replace an examination. If something in it applies to you, call the clinic and ask.",
-      "bookCta": "Book Appointment",
+      "bookCta": "Book an appointment",
       "relatedTitle": "Keep reading"
-    },
-    "allCategory": "All"
+    }
   },
 
   "contact": {
     "eyebrow": "Contact",
-    "title": "Find Us, Call Us, Visit Us",
-    "italicWord": "Visit",
+    "title": "Find us, call us, visit us.",
+    "accent": "visit us",
     "intro": "We are on {line1} in {line2}.",
-    "bookCta": "Book Appointment",
+    "metaDescription": "Reach {clinic} in {city} by phone, WhatsApp or email, or find directions and opening hours.",
+    "bookCta": "Book an appointment",
     "visitEyebrow": "Visit the clinic",
     "$channels": "`field` points at a key in clinic.contact — the number itself is never duplicated here.",
     "channels": [
@@ -148,11 +258,15 @@
 
   "appointment": {
     "specialists": {
-      "title": "Reach a specialist directly",
-      "italicWord": "specialist",
+      "eyebrow": "Specialists",
+      "title": "Reach a specialist directly.",
+      "accent": "specialist",
       "intro": "Each dentist keeps their own line. If you already know who you need, skip the front desk."
     },
+    "availabilityLabel": "Availability",
+    "qualificationLabel": "Qualification",
     "beforeYouCall": "Before you call",
+    "locationEyebrow": "Location",
     "addressLabel": "Clinic address",
     "metaDescription": "Call, message or visit {clinic} directly. Every dentist here keeps their own line — no forms, no waiting for a callback."
   }

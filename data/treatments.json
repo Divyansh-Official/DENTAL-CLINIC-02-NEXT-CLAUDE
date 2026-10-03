@@ -1,9 +1,9 @@
 {
-  "$comment": "The price table. Categories become the segmented control at the top of /treatments.",
+  "$comment": "The price table. Categories become the segmented control on /treatments; a service links to one through its `pricing` key.",
   "section": {
-    "eyebrow": "Treatments",
-    "title": "Every Procedure, Explained Plainly",
-    "italicWord": "Plainly",
+    "eyebrow": "Treatments & pricing",
+    "title": "Every procedure, explained plainly.",
+    "accent": "plainly",
     "intro": "Indicative pricing, visit counts and recovery times so you can plan before you commit. Final figures are confirmed after your examination."
   },
   "note": "Prices are indicative ranges for the Koramangala clinic and exclude diagnostics. Your written estimate is issued after examination and never changes mid-treatment.",

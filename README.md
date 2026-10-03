@@ -1,12 +1,14 @@
-# Dental Clinic Website Template
+# Demo Dental Clinic — Website Template
 
-A complete, production-ready dental clinic website built with Next.js and
-Tailwind. **Every word, colour, price, phone number, typeface and image on the
-site is read from `/data`.** Selling it to a new clinic means editing JSON —
-no component is ever touched.
+A production-ready dental clinic website in Apple's design language, built with
+Next.js and Tailwind. **Every word, colour, price, phone number, dentist and
+image on the site is read from `/data`.** Selling it to a new clinic means
+editing JSON — no component is ever touched.
 
 There is no backend. Booking hands off to the phone, WhatsApp, email and maps
-apps, so there is nothing to host, secure or maintain beyond static files.
+apps, so there is nothing to secure or maintain beyond the site itself.
+
+Live demo: https://dental-clinic-02-next-claude.vercel.app
 
 ---
 
@@ -17,8 +19,7 @@ npm install
 npm run dev
 ```
 
-Node 18.17+. Deploys to Vercel, Netlify, Cloudflare Pages or any static host
-with zero configuration.
+Node 18.18+.
 
 | Command | What it does |
 |---|---|
@@ -28,305 +29,222 @@ with zero configuration.
 | `npm run lint` | ESLint |
 | `npm run check` | **Pre-launch content check — run before every handover** |
 
+### Deploying
+
+Built for **Vercel** (push to the connected branch and it deploys). Any host
+that runs Next.js works — Netlify, Render, a Node server with `npm start`.
+The site uses Next's image optimisation and security headers, which need the
+Next.js server, so it is not a plain static export.
+
 ---
 
-## Selling this to a new clinic
+## What's in it
 
-The whole job is four files and a folder of photographs. Work top to bottom.
+| Route | Page |
+|---|---|
+| `/` | Hero with live opening status, services shelf, about, numbers, team, process, reviews, journal, closing banner |
+| `/about` | Story and promise, numbers, team, hygiene standards, process, reviews |
+| `/team` | Every dentist |
+| `/team/[slug]` | **A profile for each dentist** — bio, expertise, education, treatments they perform, articles they wrote, direct line |
+| `/services` | Every service |
+| `/services/[slug]` | Service detail — inclusions, its price list, the dentists who perform it, FAQ, sticky contact card |
+| `/treatments` | Price table with a segmented control, payment options, insurers |
+| `/gallery` | Filterable mosaic with a lightbox |
+| `/patient-info` | First visit, hygiene, searchable FAQ, privacy and terms |
+| `/blog`, `/blog/[slug]` | Journal with a category filter; articles link to their author's profile |
+| `/contact` | Channels, map, live opening status, hours |
+| `/book-appointment` | **The conversion page** — direct contact, emergency line, every dentist's own number, no forms |
+
+Plus `sitemap.xml`, `robots.txt`, `manifest.webmanifest`, generated favicon,
+Apple touch icon and social card, a custom 404, an error page and a root-level
+error page — both of which still show the clinic's phone number.
+
+---
+
+## Rebranding for a new clinic
 
 ### 1. `data/site.json` — the switchboard
 
 ```jsonc
 {
-  "url": "https://theclinic.com",        // canonical links, sitemap, social previews
+  "url": "https://theclinic.com",       // blank on Vercel = use the deployment URL
+  "locale": { "timeZone": "Asia/Kolkata", "numberFormat": "en-IN", ... },
   "theme": {
-    "colors": {
-      "primary": "#0F332C",              // change these four…
-      "accent":  "#B08D57",
-      "surface": "#F7F4EF",
-      "ink":     "#16181A"
-    },
-    "fonts": { "display": "Playfair Display", "body": "Jost" }
+    "colors": { "primary": "#0071E3", "accent": "#21B5A6", "surface": "#F5F5F7",
+                "ink": "#1D1D1F", "card": "#FFFFFF", "night": "#0A0A0C" },
+    "fonts": { "family": "Inter", "appleSystemFont": true }
   },
-  "features": { "blog": true, "gallery": true, ... },
-  "analytics": { "googleAnalyticsId": "" }
+  "features": { "team": true, "blog": true, "liquidGlass": true, ... }
 }
 ```
 
-**Colour.** Set the four hex values and the entire site recolours — every tint,
-shade, hairline, muted label, icon, shadow and gradient is derived from them at
-runtime by `lib/theme.js` and published as CSS custom properties. No Tailwind
-rebuild, no stylesheet edits, no per-colour image assets. The ratios were
-reverse-engineered from the reference palette, so a navy or plum clinic gets the
-same visual rhythm as the original green one.
+**Colour.** Set the hex values and the entire site recolours — every tint,
+gradient, hairline and shadow is derived at runtime by `lib/theme.js` and
+published as CSS custom properties. The accent word in every heading is set in
+a gradient from `primary` to `accent`.
 
-If one derived tint is wrong for a particular brand, override just that token:
+**Type.** Apple devices render the site in San Francisco, the system font.
+Everyone else gets `family` — Inter, Manrope, DM Sans or Plus Jakarta Sans,
+self-hosted by `next/font`.
 
-```json
-"overrides": { "line": "#DDD6C8" }
-```
+**Feature flags.** Turning a page off removes it from the navigation, the
+footer and the sitemap, and makes it return 404. `liquidGlass: false` swaps
+every refracting surface for plain frosted glass.
 
-**Type.** Pick any pair from the menu in `lib/fonts.js` (five display faces,
-five body faces). An unknown name falls back to the default pair and warns.
-
-The scale itself lives in `app/globals.css`: `.display-2xl` down to
-`.display-sm` for headings, `.body-lead` / `.body-base` / `.body-sm` for copy.
-Body text sits at 16–17px with 1.7 line-height, and every display size sheds
-letter-spacing as it grows — large serif type set at default tracking is the
-single most common reason a page reads as a template.
-
-**Feature flags.** Turning one off removes the route from the navigation, the
-footer, the sitemap *and* makes it return 404 — no orphan pages, no dead links.
-Useful when a clinic does not want to publish prices or does not have a blog.
-
-**Analytics.** Nothing third-party is injected unless an id is present. A blank
-config ships zero tracking scripts.
+**Time zone.** The live "Open now · Closes 8:00 pm" pill is computed in the
+clinic's own time zone, wherever the visitor is.
 
 ### 2. `data/clinic.json` — who they are
 
-Identity, hero copy, statistics, about section, contact details, opening hours,
-socials, banners, footer, SEO.
+Identity, hero, statistics, about, contact, hours, socials, banners, footer,
+SEO. **Each number is written once**: phone, WhatsApp and email links are built
+from `contact.phone`, `contact.whatsapp` and `contact.email`, and the
+`whatsappMessage` is pre-filled on every WhatsApp link on the site.
 
-Two things people miss:
+- **`contact.address.geo`** — real coordinates, for the map pack and "dentist
+  near me".
+- **`hours[].opens` / `closes` / `dayOfWeek`** — the machine-readable half of
+  the hours, read by Google and by the live status pill.
 
-- **`contact.address.geo`** — real latitude and longitude. Google uses these to
-  place the clinic on the map and to answer "dentist near me". Right-click the
-  pin in Google Maps to copy them.
-- **`hours[].opens` / `closes` / `dayOfWeek`** — the machine-readable half of the
-  opening hours. `days` and `time` are what visitors read; these are what
-  appears in the search listing. Keep them in sync.
+### 3. `data/doctors.json` — the team
 
-The copyright line uses `{year}`, so it never goes stale.
+Each dentist becomes a card, a `/team/<slug>` profile, and a direct line on
+the booking page. Everything except `slug` and `name` is optional.
 
-### 3. `data/doctors.json` and `data/appointment.json` — the conversion path
+```jsonc
+{
+  "slug": "aanya-mehta",
+  "name": "Dr. Aanya Mehta",
+  "role": "Founder & Chief Dentist",
+  "services": ["cosmetic-dentistry", "teeth-whitening"],   // links them to those service pages
+  "expertise": ["Digital smile design", ...],
+  "education": [{ "degree": "MDS — Prosthodontics", "institution": "...", "year": "2008" }],
+  "phone": "+91 ...", "whatsapp": "+91 ...", "email": "...",
+  "about": ["paragraph", "paragraph"]
+}
+```
 
-Real names, real direct numbers, real booking channels. `npm run check` verifies
-that every `phoneHref` actually dials the number printed beside it.
+### 4. Everything is connected
 
-### 4. Photographs
+| Write this… | …and it appears here |
+|---|---|
+| A service in `services.json` | Card, detail page, home shelf, footer column, sitemap, structured data |
+| `"pricing": "surgical"` on a service | That price list on the service page |
+| `"services": [...]` on a dentist | "Your specialists" on those service pages, "Treatments offered" on the profile |
+| `"author": "Dr. Kabir Shah"` on a post | Byline links to the profile; post listed under "Articles by…" |
+| A new category on a post | A new filter in the journal |
+| A gallery item | The mosaic; `"span": "wide"` or `"tall"` shapes its tile |
+
+### 5. Photographs
 
 Drop them in `/public` and reference with a leading slash
-(`"src": "/reception.jpg"`). See `public/README.md` for a suggested layout.
-Remote hosts need an entry in `next.config.mjs`; local files do not.
+(`"src": "/reception.jpg"`). Remote hosts need an entry in `next.config.mjs`;
+`npm run check` reports any that are missing.
 
-Favicons, the Apple touch icon and the social share card are **generated from
-the brand colours at build time** (`app/icon.js`, `app/apple-icon.js`,
-`app/opengraph-image.js`). There is nothing to draw by hand and no clinic ever
-ships with a blank share card.
-
-### 5. Run the check
+### 6. Run the check
 
 ```bash
 npm run check
 ```
 
-```
-Content check  -  Lumière Dental Clinic
-
-Warnings (18)
-  - site.json -> "url" is still the demo domain lumieredental.com.
-  - clinic.json still contains the demo clinic name, at identity.name, …
-  - 35 images are still a stock Unsplash photograph. …
-```
-
-It reads `/data` the way the app does and reports:
-
-- **Errors** — the site will be broken or badly wrong in search. Exits non-zero,
-  so it can gate a deploy.
-- **Warnings** — leftover demo content. Almost always a missed edit.
-- **Notes** — worth a look.
-
-It catches mismatched `tel:` links, footer links pointing at deleted services, a
-`founder.id` with no matching doctor, gallery categories not in the filter list,
-unknown icon names, `/public` paths that do not exist, missing alt text, invalid
-hex colours, duplicate slugs, and every trace of the demo clinic.
-
-Ship when it is clean.
+It reads `/data` the way the app does and reports **errors** (broken site or
+search listing — exits non-zero, so it can gate a deploy), **warnings**
+(leftover demo content) and **notes**. It verifies phone links, hours, time
+zone, every internal link, every icon name, every service / dentist / pricing
+cross-reference, gallery categories, blog dates, image hosts, local image
+paths and alt text.
 
 ---
 
-## Content files
+## Design system
 
-| File | Controls |
-|---|---|
-| `site.json` | Domain, locale, theme, fonts, feature flags, analytics |
-| `clinic.json` | Identity, hero, stats, about, contact, hours, socials, banners, footer, SEO |
-| `ui.json` | Every interface label and heading the components used to hardcode |
-| `navigation.json` | Header menu, header CTA, footer link columns |
-| `services.json` | Service cards and their full detail pages |
-| `treatments.json` | Price table categories, procedures, costs, visit counts |
-| `doctors.json` | Team, qualifications, direct phone/WhatsApp/email |
-| `testimonials.json` | Patient reviews and ratings |
-| `process.json` | The treatment journey |
-| `blog.json` | Articles, categories, body paragraphs |
-| `gallery.json` | Photographs, categories, tile sizes |
-| `patient-info.json` | First visit, payments, insurance, FAQ, policies |
-| `appointment.json` | Booking channels, emergency line, response times |
+Apple's visual language, end to end:
 
-Every file carries a `$comment` key explaining what it drives. Keys beginning
-with `$` are documentation and are ignored everywhere.
+- **Type** — San Francisco on Apple devices, a large semibold display scale
+  with tightened tracking, 17px body copy.
+- **Colour** — #1D1D1F ink on white and #F5F5F7, one saturated action colour,
+  near-black feature sections, a brand gradient on the accent word of each
+  heading.
+- **Layout** — centred section heads, horizontal "shelves" of cards that scroll
+  under the thumb, sticky contact cards, generous space.
+- **Controls** — pill buttons, iOS segmented controls whose pill slides between
+  segments, native `<details>` accordions, sheets that rise on a spring and
+  drag down to dismiss on a phone.
 
-### Copy interpolation
+### Liquid glass
 
-Any string in any data file can reference live clinic values:
+The header, the phone tab bar, the WhatsApp orb and the panes over photographs
+are **liquid glass**, ported from the QuickLocal admin console's team chat.
+It is not a blur with a white border: a light ray is traced through a
+squircle-profiled glass bezel with Snell's law, the offset is baked into a
+displacement map, and an SVG filter bends the page behind the surface — with
+chromatic dispersion, a Fresnel rim light, and a spring that lenses the glass
+harder under the pointer. Chromium renders the refraction; Safari and Firefox
+get frosted glass with the same tint and rim. "Reduce transparency" turns
+every glass surface solid.
 
-```json
-"practisingAt": "Practising at {clinic}, {city}."
-```
+### Motion
 
-Available tokens: `{clinic}` `{name}` `{city}` `{state}` `{line1}` `{line2}`
-`{phone}` `{email}` `{established}` `{year}`. Add more in `copyTokens()` in
-`lib/data.js`.
+All motion is CSS — no animation library ships to the browser.
 
-### Accent headings
+- **Load-time entrances** (`.enter`) rise and fade the hero into place.
+- **Scroll reveals** (`[data-reveal]`) are driven by CSS view timelines: no
+  observers, no scroll listeners.
+- **Springs** — SwiftUI's .bouncy, .snappy and .smooth curves, sampled into CSS
+  `linear()` — drive presses, sheets, the menu and the segmented pill.
 
-Headings set one word or phrase in the accent italic. Matching is
-punctuation-insensitive and understands multi-word phrases, so `"italicWords":
-["You", "Your Family"]` italicises *Your Family* as a unit, and an accent word
-of `"Smiles"` still matches a heading ending in `Smiles.`
-
----
-
-## Routes
-
-| Route | What it does |
-|---|---|
-| `/` | Hero, stats, services, about, process, reviews, articles |
-| `/about` | Clinic story, full team, hygiene standards |
-| `/services` | All services |
-| `/services/[slug]` | Service detail with inclusions and FAQ |
-| `/treatments` | Segmented price table, payment methods, insurance |
-| `/gallery` | Filterable masonry with a draggable lightbox |
-| `/patient-info` | First visit, FAQ accordion, privacy and terms |
-| `/blog`, `/blog/[slug]` | Category-filtered index and articles |
-| `/contact` | Contact channels, map, hours |
-| `/book-appointment` | **The conversion page** — direct contact, no forms |
-
-Plus `sitemap.xml`, `robots.txt`, `manifest.webmanifest`, generated icons, a
-generated social card, a custom 404 and a runtime error page that still shows
-the clinic's phone number.
+Nothing is ever hidden waiting for JavaScript. With scripts blocked, with
+reduced motion requested, or with `?nomotion` in the URL (handy for clean
+portfolio screenshots; `localStorage.nomotion = '1'` for a whole session),
+every element renders in its final state.
 
 ---
 
 ## Search visibility
 
-Structured data is generated from `/data` — nothing to maintain by hand:
+Structured data is generated from `/data`:
 
-- **`Dentist`** with coordinates, machine-readable opening hours, price range,
-  founder, social profiles and a `MedicalProcedure` offer per service
-- **`BreadcrumbList`** on every inner page, built from the same array that draws
-  the visible breadcrumb, so the two cannot drift apart
-- **`FAQPage`** on patient info and on any service with questions — eligible for
-  a rich result
-- **`BlogPosting`** on articles
-- **`WebSite`** linking it together by `@id`
+- **`Dentist`** with coordinates, opening hours, price range, founder,
+  employees, socials and an offer per service
+- **`Person`** for each dentist, on their profile
+- **`BreadcrumbList`** on every inner page, from the same array the visible
+  breadcrumb draws
+- **`FAQPage`** on patient info and every service with questions
+- **`BlogPosting`** on articles, attributed to the dentist who wrote them
+- **`WebSite`** tying it together
 
-Every page gets a canonical URL, Open Graph and Twitter cards.
+Every page gets a canonical URL, Open Graph and Twitter cards, and a generated
+social image.
 
-> **On the aggregate rating.** `clinic.seo.aggregateRating` is published as
-> structured data. Only keep it if the clinic genuinely holds those reviews —
-> inventing them breaks Google's guidelines and risks a manual penalty. Set
-> `value` to `0` to omit it entirely.
-
----
-
-## Icons
-
-Icons are **inline SVG**, defined in `lib/icons.js` and addressed by name from
-any JSON file:
-
-```json
-{ "icon": "tooth" }
-```
-
-They are server-rendered, cost no network requests, inherit `currentColor` so
-they follow the brand automatically, and cannot break. Adding one means adding a
-24×24 entry to `lib/icons.js`. `npm run check` fails on an unknown name.
-
-*(This replaced a third-party raster CDN that cost ~50 requests per page, needed
-a CSS filter per colour, showed broken images on a slow network, and carried a
-licence requiring a visible attribution link in the footer — a liability in a
-template being resold. That obligation is gone.)*
+> **On the aggregate rating.** `clinic.seo.aggregateRating` is shown in the hero
+> and published as structured data. Only keep it if the clinic genuinely holds
+> those reviews. Set `value` to `0` to remove it everywhere.
 
 ---
-
-## Motion
-
-Animation is deliberately restrained: things fade and rise into place, and then
-they stop.
-
-- **No parallax anywhere.** Nothing moves at a different rate to the page.
-- **No image tracks the pointer**, and no photograph zooms on hover. A
-  thumbnail that scales under the cursor is the most common tell of a bought
-  template; here the veil deepens and the heading takes the accent colour
-  instead.
-- **`IOS_EASE`** `cubic-bezier(0.32, 0.72, 0, 1)` for anything that slides,
-  **`IOS_SOFT`** `cubic-bezier(0.16, 1, 0.3, 1)` for content settling.
-- **Springs, not durations** for interface chrome, sheets and presses.
-
-Reproduced from iOS: translucent blurred nav material, a bar that retracts on
-scroll down and returns on scroll up, bottom sheets draggable past a velocity
-threshold, segmented controls whose pill slides between segments, and momentum
-scrolling via Lenis.
-
-### Motion that can actually be switched off
-
-`components/ui/Appear.jsx` and the `Reveal` family render a **plain element**
-when motion is held back — not a motion component configured to do nothing.
-
-That distinction is load-bearing. Framer writes its `initial` state to the DOM
-as an inline style immediately, and neither removing the props nor passing
-`initial={false}` clears a style it has already written. An element that starts
-at `opacity: 0` and never receives an animation frame stays invisible forever.
-Rendering a plain tag sidesteps the whole class of failure.
-
-Motion is held back when:
-
-- the visitor has asked their system for reduced motion, or
-- the page is opened with **`?nomotion`** (or `localStorage.nomotion = '1'` for
-  a whole session)
-
-That second switch exists so the site can be **screenshotted reliably** — for a
-portfolio, a proposal or a client review — without waiting on scroll-triggered
-reveals or catching a heading mid-flight.
-
-The first page render is never animated either. Animating it would mean
-shipping `opacity: 0` on the element wrapping the entire page, so a JavaScript
-error or a blocked bundle would leave the visitor looking at a blank screen.
 
 ## Architecture
 
-- **App Router**, JavaScript, no TypeScript overhead for a template handover
-- Server components by default; `'use client'` only where interaction demands it
-- `lib/data.js` is the single import surface, with safe accessors — a mistyped
-  slug or a deleted array returns a sane default instead of throwing
-- **Development-time validation**: `lib/data.js` checks the content on server
-  start and prints readable warnings naming the file and key to fix
-- Every route prerenders to static HTML, including all service and blog pages
-- Accessibility: skip link, one `h1` per page, visible focus rings, focus
-  trapping and restoration in modals, `aria-controls` on the accordion, a proper
-  tablist on the price table, `aria-pressed` on filters, titled iframes, alt text
-  everywhere, semantic landmarks
+- **Next.js 15 App Router + React 19**, JavaScript
+- `components/` is organised by page — see **[components/README.md](components/README.md)**
+  for the route → section map
+- Server components by default; client components only where there is
+  interaction, and they receive data as props — the content JSON never reaches
+  the browser bundle
+- `lib/data.js` is the single import surface, with safe accessors that join
+  the files together, and development-time validation that names the file and
+  key to fix
+- Every route prerenders to static HTML, including every service, dentist and
+  article
+- Accessibility: skip link, one `h1` per page, visible focus rings, native
+  modal dialogs (focus trap, Escape, inert background), a real tablist on the
+  price table with arrow / Home / End keys, `aria-pressed` filters, live
+  regions for copy and status, alt text everywhere, reduced motion and reduced
+  transparency honoured
 
-### Conversion features
+### Booking without a backend
 
-- **Sticky mobile action bar** — call, WhatsApp and book pinned to the thumb
-  zone, because on a phone a clinic converts through the call button and almost
-  nothing else. Hidden on the booking page, where those actions *are* the page.
-- **Floating WhatsApp button** on desktop
-- **Announcement bar** for offers and holiday hours (`features.announcement`)
-
-Each is a feature flag.
-
----
-
-## Booking without a backend
-
-`/book-appointment` deliberately has no form. Every action is a native handoff:
-`tel:`, `wa.me` with a pre-filled message, `mailto:`, Google Maps directions,
-and copy-to-clipboard on each specialist's number.
-
-Nothing is stored, nothing is submitted, there is no server to maintain or
-secure, and there is no GDPR surface. If a clinic later wants a form, add a
-route handler under `app/api/` and post to it — the rest of the site is
-unaffected.
+`/book-appointment` deliberately has no form. Every action is a native
+hand-off: `tel:`, `wa.me` with a pre-filled message, `mailto:` with a subject,
+Google Maps directions, and copy-to-clipboard on each dentist's number. Nothing
+is stored or submitted. If a clinic later wants a form, add a route handler
+under `app/api/` and post to it — the rest of the site is unaffected.

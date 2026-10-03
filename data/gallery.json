@@ -2,8 +2,8 @@
   "$comment": "Gallery tiles. `span` is \"normal\", \"wide\" or \"tall\" and controls how much grid each photo takes.",
   "section": {
     "eyebrow": "Gallery",
-    "title": "Inside the Clinic",
-    "italicWord": "Clinic",
+    "title": "Inside the clinic.",
+    "accent": "the clinic",
     "intro": "The rooms, the equipment and a few results our patients agreed to share."
   },
   "filters": [
