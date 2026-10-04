@@ -23,7 +23,7 @@ export default function MorphLink({ href, children, onClick, ...rest }) {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     if (!canAnimate()) return;
     event.preventDefault();
-    expand({ source: morphSurface(event.currentTarget), go: () => router.push(href) });
+    expand({ source: morphSurface(event.currentTarget), href, go: () => router.push(href) });
   };
 
   return (
