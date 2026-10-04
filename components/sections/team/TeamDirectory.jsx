@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import SegmentedControl from '@/components/ui/SegmentedControl';
-import DoctorCard from '@/components/sections/shared/DoctorCard';
+import DoctorCard from '@/components/cards/DoctorCard';
 
 /**
  * /team: every dentist as a portrait card. Once the team grows past six, a

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import LiquidGlass from '@/components/glass/LiquidGlass';
@@ -14,14 +14,49 @@ import Icon from '@/components/ui/Icon';
  * page, refracting whatever scrolls beneath it, and hides on the booking page
  * where those actions are already the content. The body only reserves space
  * for it below 768px (globals.css), so desktop never gets phantom padding.
+ *
+ * Like iOS 26's tab bars it minimises while you scroll down — shrinking to its
+ * icons so more of the page shows — and comes back the moment you scroll up.
  */
 export default function MobileTabBar({ phoneHref, whatsappHref, bookHref, labels = {}, glass = true }) {
   const pathname = usePathname();
   const hidden = pathname === bookHref;
 
+  const [compact, setCompact] = useState(false);
+
   useEffect(() => {
     document.body.dataset.tabbar = hidden ? 'off' : 'on';
   }, [hidden]);
+
+  /* One passive listener, read once per frame; the state only changes when
+     the direction does, so scrolling causes no renders. */
+  useEffect(() => {
+    if (hidden) return undefined;
+    let last = window.scrollY;
+    let frame = 0;
+    const read = () => {
+      frame = 0;
+      const y = window.scrollY;
+      const delta = y - last;
+      if (Math.abs(delta) < 8) return;
+      /* A jump (a restored position, an anchor) is not the visitor scrolling. */
+      if (Math.abs(delta) < 400) setCompact(delta > 0 && y > 160);
+      last = y;
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(read);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(frame);
+    };
+  }, [hidden]);
+
+  /* A new page starts with the bar open. */
+  useEffect(() => {
+    setCompact(false);
+  }, [pathname]);
 
   if (hidden) return null;
 
@@ -38,23 +73,26 @@ export default function MobileTabBar({ phoneHref, whatsappHref, bookHref, labels
       aria-label={labels.quickActions}
       className="fixed inset-x-3 bottom-[calc(12px+env(safe-area-inset-bottom,0px))] z-[75] md:hidden"
       data-print="hide"
+      data-chrome="tabbar"
+      data-compact={compact ? '' : undefined}
+      onFocus={() => setCompact(false)}
     >
-      <Surface {...surfaceProps} className={`mx-auto flex h-[62px] max-w-md items-center gap-1 rounded-full p-1.5 ${glass ? '' : 'glass'}`}>
+      <Surface {...surfaceProps} className={`tabbar-surface mx-auto flex h-[62px] max-w-md items-center gap-1 rounded-full p-1.5 ${glass ? '' : 'glass'}`}>
         {phoneHref ? (
           <a href={phoneHref} className={`${item} text-ink`}>
-            <Icon name="phone" size={20} />
-            {labels.call}
+            <Icon name="phone" size={20} className="tabbar-icon" />
+            <span className="tabbar-label">{labels.call}</span>
           </a>
         ) : null}
         {whatsappHref ? (
           <a href={whatsappHref} target="_blank" rel="noopener noreferrer" className={`${item} text-ink`}>
-            <Icon name="whatsapp" size={20} className="text-[#1FAF57]" />
-            {labels.whatsapp}
+            <Icon name="whatsapp" size={20} className="tabbar-icon text-[#1FAF57]" />
+            <span className="tabbar-label">{labels.whatsapp}</span>
           </a>
         ) : null}
         <Link href={bookHref} className={`${item} flex-[1.4] bg-primary text-on-primary shadow-[inset_0_1px_0_rgb(255_255_255/0.2)] active:bg-primary-deep`}>
-          <Icon name="calendar" size={20} />
-          {labels.book}
+          <Icon name="calendar" size={20} className="tabbar-icon" />
+          <span className="tabbar-label">{labels.book}</span>
         </Link>
       </Surface>
     </nav>

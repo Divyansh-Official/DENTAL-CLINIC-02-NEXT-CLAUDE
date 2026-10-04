@@ -42,10 +42,10 @@ Next.js server, so it is not a plain static export.
 
 | Route | Page |
 |---|---|
-| `/` | Hero with live opening status, services shelf, about, numbers, team, process, reviews, journal, closing banner |
-| `/about` | Story and promise, numbers, team, hygiene standards, process, reviews |
+| `/` | Hero with live opening status, services shelf, a statement that lights up as you scroll, a bento grid of the clinic's technology, about, numbers, team, process, reviews, journal, closing banner |
+| `/about` | Story and promise, statement, numbers, team, hygiene standards, process, reviews |
 | `/team` | Every dentist |
-| `/team/[slug]` | **A profile for each dentist** — bio, expertise, education, treatments they perform, articles they wrote, direct line |
+| `/team/[slug]` | **A profile for each dentist** — full-screen portrait, quick facts, bio, expertise, education, treatments they perform, articles they wrote, direct line |
 | `/services` | Every service |
 | `/services/[slug]` | Service detail — inclusions, its price list, the dentists who perform it, FAQ, sticky contact card |
 | `/treatments` | Price table with a segmented control, payment options, insurers |
@@ -96,8 +96,9 @@ clinic's own time zone, wherever the visitor is.
 
 ### 2. `data/clinic.json` — who they are
 
-Identity, hero, statistics, about, contact, hours, socials, banners, footer,
-SEO. **Each number is written once**: phone, WhatsApp and email links are built
+Identity, hero, statistics, about, the two scroll-lit statements
+(`statement.home`, `statement.about`), the technology bento (`technology`),
+contact, hours, socials, banners, footer, SEO. **Each number is written once**: phone, WhatsApp and email links are built
 from `contact.phone`, `contact.whatsapp` and `contact.email`, and the
 `whatsappMessage` is pre-filled on every WhatsApp link on the site.
 
@@ -134,6 +135,7 @@ the booking page. Everything except `slug` and `name` is optional.
 | `"author": "Dr. Kabir Shah"` on a post | Byline links to the profile; post listed under "Articles by…" |
 | A new category on a post | A new filter in the journal |
 | A gallery item | The mosaic; `"span": "wide"` or `"tall"` shapes its tile |
+| A `technology` item | A bento tile; `"size"` is `large`, `wide`, `tall` or `small`, and an `image` or a `stat` decides its look |
 
 ### 5. Photographs
 
@@ -185,13 +187,25 @@ every glass surface solid.
 
 ### Motion
 
-All motion is CSS — no animation library ships to the browser.
+No animation library ships to the browser — the motion is CSS and the
+browser's own View Transitions.
 
-- **Load-time entrances** (`.enter`) rise and fade the hero into place.
-- **Scroll reveals** (`[data-reveal]`) are driven by CSS view timelines: no
-  observers, no scroll listeners.
+- **Cards zoom open.** Tap a service, dentist or article card and it grows
+  out of its exact place on the screen into a full-screen page — the App
+  Store's Today cards — and the page's content rises in once it lands. The
+  glass **Back** control shrinks the page back into the card, at the scroll
+  position you left. Gallery tiles zoom into the lightbox the same way.
+- **Scrolling** — content rises in from below and vanishes (fading, lifting,
+  shrinking a touch) as it passes under the header; scrolling back up plays
+  it in reverse. Hero text recedes as the page scrolls away, and the
+  statement sections light up word by word. All driven by CSS scroll and view
+  timelines: no observers, no scroll listeners.
+- **Glass that responds** — the header turns to dark glass over dark
+  sections, and the phone tab bar minimises to its icons while you scroll
+  down, as iOS 26's do.
 - **Springs** — SwiftUI's .bouncy, .snappy and .smooth curves, sampled into CSS
-  `linear()` — drive presses, sheets, the menu and the segmented pill.
+  `linear()` — drive presses, sheets, the menu, the segmented pill and the
+  card zoom.
 
 Nothing is ever hidden waiting for JavaScript. With scripts blocked, with
 reduced motion requested, or with `?nomotion` in the URL (handy for clean

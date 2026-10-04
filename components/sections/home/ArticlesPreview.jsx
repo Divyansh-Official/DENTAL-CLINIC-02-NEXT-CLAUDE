@@ -1,7 +1,7 @@
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import TextLink from '@/components/ui/TextLink';
-import PostCard from '@/components/sections/shared/PostCard';
+import PostCard from '@/components/cards/PostCard';
 
 /** Home: the three latest journal articles. */
 export default function ArticlesPreview({ posts = [], section = {}, labels = {} }) {

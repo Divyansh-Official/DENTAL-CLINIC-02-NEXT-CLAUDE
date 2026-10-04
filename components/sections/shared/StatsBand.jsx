@@ -1,6 +1,6 @@
 import Aurora from '@/components/ui/Aurora';
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import StatNumber from '@/components/ui/StatNumber';
 
@@ -14,7 +14,7 @@ export default function StatsBand({ stats = [], locale, eyebrow, title, accent }
   const cols = stats.length >= 4 ? 'lg:grid-cols-4' : stats.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2';
 
   return (
-    <section className="tone-dark section relative overflow-hidden">
+    <section className="tone-dark section relative overflow-clip">
       <Aurora variant="night" />
       <div className="shell relative">
         {title ? <SectionHeader eyebrow={eyebrow} title={title} accent={accent} /> : null}

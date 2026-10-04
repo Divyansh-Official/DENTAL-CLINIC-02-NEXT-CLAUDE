@@ -1,7 +1,7 @@
 import Button from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import OpenStatus from '@/components/ui/OpenStatus';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import { linkAttrs } from '@/lib/format';
 import MapEmbed from './MapEmbed';
 

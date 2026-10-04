@@ -1,6 +1,6 @@
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import TextLink from '@/components/ui/TextLink';
-import ServiceCard from '@/components/sections/shared/ServiceCard';
+import ServiceCard from '@/components/cards/ServiceCard';
 
 /** Services index: every service as a card, three to a row on desktop. */
 export default function ServicesIndex({ services = [], labels = {}, pricingHref }) {

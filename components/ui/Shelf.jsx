@@ -48,8 +48,10 @@ export default function Shelf({ children, label, itemWidth, gap, labels = {}, cl
   if (itemWidth) style['--shelf-item'] = itemWidth;
   if (gap) style['--shelf-gap'] = gap;
 
+  /* The shelf as a whole rises in and vanishes with the page scroll; its
+     cards cannot each take a view timeline inside a sideways scroller. */
   return (
-    <div className={className}>
+    <div className={className} data-reveal="">
       <ul ref={ref} className="shelf" style={style} aria-label={label}>
         {Children.toArray(children).map((child, index) => (
           <li key={child.key ?? index}>{child}</li>

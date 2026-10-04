@@ -1,36 +1,69 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 import Image from 'next/image';
 import Icon from '@/components/ui/Icon';
 import SegmentedControl from '@/components/ui/SegmentedControl';
 import Sheet from '@/components/ui/Sheet';
-import { prefersCalm } from '@/lib/hooks';
+import { canMorph, filterTransition, morphInPlace } from '@/lib/morph';
 
 /**
  * Gallery: a filterable mosaic with a lightbox.
  *
  * Filtering runs through the View Transitions API where the browser has it,
  * so tiles glide to their new places; elsewhere the grid simply re-flows.
- * Tiles span wide or tall as each item asks. The lightbox is a sheet with
- * previous/next, arrow keys and a counter.
+ * Tiles span wide or tall as each item asks. Tapping one zooms the photograph
+ * out of the grid into the lightbox — a sheet with previous/next, arrow keys
+ * and a counter — and closing shrinks it back into its tile.
  */
 export default function GalleryExplorer({ items = [], filters = [], labels = {} }) {
   const allValue = filters[0] || labels.all || 'All';
   const [filter, setFilter] = useState(allValue);
   const [activeIndex, setActiveIndex] = useState(-1);
+  const [zoomed, setZoomed] = useState(false);
+  const tiles = useRef(new Map());
 
   const visible = useMemo(() => (filter === allValue ? items : items.filter((item) => item.category === filter)), [filter, allValue, items]);
   const active = activeIndex >= 0 ? visible[activeIndex] : null;
 
   const changeFilter = (value) => {
     if (value === filter) return;
-    if (typeof document !== 'undefined' && document.startViewTransition && !prefersCalm()) {
-      document.startViewTransition(() => flushSync(() => setFilter(value)));
-    } else {
-      setFilter(value);
+    filterTransition(() => flushSync(() => setFilter(value)));
+  };
+
+  const keyOf = (item, index) => item.id || item.src || index;
+
+  const open = (index, event) => {
+    const tile = event.currentTarget.querySelector('[data-morph-source]');
+    if (!canMorph()) {
+      setZoomed(false);
+      setActiveIndex(index);
+      return;
     }
+    morphInPlace({
+      mode: 'open',
+      source: tile,
+      update: () =>
+        flushSync(() => {
+          setZoomed(true);
+          setActiveIndex(index);
+        })
+    });
+  };
+
+  const close = () => {
+    if (activeIndex < 0) return;
+    const item = visible[activeIndex];
+    if (!zoomed || !canMorph()) {
+      setActiveIndex(-1);
+      return;
+    }
+    morphInPlace({
+      mode: 'close',
+      update: () => flushSync(() => setActiveIndex(-1)),
+      target: () => tiles.current.get(keyOf(item, activeIndex))
+    });
   };
 
   const step = useCallback(
@@ -60,15 +93,24 @@ export default function GalleryExplorer({ items = [], filters = [], labels = {} 
 
       <ul className="mt-10 grid grid-flow-dense auto-rows-[clamp(150px,24vw,270px)] grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
         {visible.map((item, index) => (
-          <li key={item.id || item.src} className={span(item.span)} style={{ viewTransitionName: `gallery-${String(item.id || index).replace(/[^a-zA-Z0-9_-]/g, '')}` }}>
+          <li key={item.id || item.src} className={span(item.span)} data-vt style={{ '--vt': `gallery-${String(item.id || index).replace(/[^a-zA-Z0-9_-]/g, '')}` }}>
             <button
               type="button"
-              onClick={() => setActiveIndex(index)}
+              onClick={(event) => open(index, event)}
               aria-haspopup="dialog"
               aria-label={(labels.view || 'View {title}').replace('{title}', item.title || item.alt || '')}
               className="tile tile-hover group media block h-full w-full text-left"
             >
-              <Image src={item.src} alt={item.alt || item.title || ''} fill sizes="(max-width: 768px) 50vw, 400px" className="object-cover" />
+              <span
+                data-morph-source
+                ref={(node) => {
+                  if (node) tiles.current.set(keyOf(item, index), node);
+                  else tiles.current.delete(keyOf(item, index));
+                }}
+                className="absolute inset-0"
+              >
+                <Image src={item.src} alt={item.alt || item.title || ''} fill sizes="(max-width: 768px) 50vw, 400px" className="object-cover" />
+              </span>
               <span className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-100" />
               <span className="absolute inset-x-3 bottom-3 flex items-center justify-between gap-2 sm:inset-x-4 sm:bottom-4">
                 <span className="truncate text-[14px] font-semibold text-white sm:text-[15px]">{item.title}</span>
@@ -83,7 +125,8 @@ export default function GalleryExplorer({ items = [], filters = [], labels = {} 
 
       <Sheet
         open={Boolean(active)}
-        onClose={() => setActiveIndex(-1)}
+        onClose={close}
+        instant={zoomed}
         title={active?.title || ''}
         closeLabel={labels.close}
         width={980}
@@ -107,7 +150,7 @@ export default function GalleryExplorer({ items = [], filters = [], labels = {} 
         }
       >
         {active ? (
-          <div className="media relative h-[min(64dvh,680px)] w-full overflow-hidden rounded-2xl">
+          <div data-morph-target className="media relative h-[min(64dvh,680px)] w-full overflow-hidden rounded-2xl">
             <Image key={active.src} src={active.src} alt={active.alt || active.title || ''} fill sizes="(max-width: 1024px) 100vw, 940px" className="object-contain" />
           </div>
         ) : null}

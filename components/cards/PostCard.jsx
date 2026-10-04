@@ -1,21 +1,22 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import MorphLink from '@/components/motion/MorphLink';
 import Icon from '@/components/ui/Icon';
 
 /**
  * A journal article. The photograph stays still on hover — the title takes
  * the brand colour instead. `featured` lays it out wide beside its image.
- * Purely presentational; dates arrive already formatted.
+ * Purely presentational; dates arrive already formatted. Tapping it zooms the
+ * photograph open into the article's full-screen opening (MorphLink).
  */
 export default function PostCard({ post, date, featured = false, labels = {} }) {
   if (!post) return null;
 
   return (
-    <Link
+    <MorphLink
       href={`/blog/${post.slug}`}
       className={`group flex h-full flex-col ${featured ? 'gap-0 md:grid md:grid-cols-[1.25fr_1fr] md:items-center md:gap-10 lg:gap-14' : ''}`}
     >
-      <span className={`media tile block w-full ${featured ? 'aspect-[16/10] md:aspect-[4/3]' : 'aspect-[16/10]'}`}>
+      <span data-morph-source className={`media tile block w-full ${featured ? 'aspect-[16/10] md:aspect-[4/3]' : 'aspect-[16/10]'}`}>
         {post.image?.src ? (
           <Image
             src={post.image.src}
@@ -43,6 +44,6 @@ export default function PostCard({ post, date, featured = false, labels = {} }) 
           <Icon name="chevron-right" size={14} strokeWidth={2} />
         </span>
       </span>
-    </Link>
+    </MorphLink>
   );
 }

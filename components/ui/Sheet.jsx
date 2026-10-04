@@ -14,8 +14,11 @@ import { prefersCalm } from '@/lib/hooks';
  * globals.css). It rises on a bouncy spring, leaves on a quick fall, and on a
  * phone it docks to the bottom edge with a grabber that can be dragged down
  * to dismiss — past 120px or on a fast flick, the same two rules UIKit uses.
+ *
+ * `instant` skips the sheet's own rise and fall — for a sheet whose content
+ * has zoomed into place from the page (the gallery lightbox).
  */
-export default function Sheet({ open, onClose, title, children, width = 760, closeLabel = 'Close', footer = null }) {
+export default function Sheet({ open, onClose, title, children, width = 760, closeLabel = 'Close', footer = null, instant = false }) {
   const dialogRef = useRef(null);
   const panelRef = useRef(null);
   const titleId = useId();
@@ -35,7 +38,7 @@ export default function Sheet({ open, onClose, title, children, width = 760, clo
     }
 
     if (!open && dialog.open) {
-      if (prefersCalm()) {
+      if (prefersCalm() || instant) {
         dialog.close();
         return undefined;
       }
@@ -48,6 +51,8 @@ export default function Sheet({ open, onClose, title, children, width = 760, clo
       return () => window.clearTimeout(timer);
     }
     return undefined;
+    // `instant` is read at the moment the sheet opens or closes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   /* Escape: let React drive the close so the exit animation plays. */
@@ -93,6 +98,7 @@ export default function Sheet({ open, onClose, title, children, width = 760, clo
     <dialog
       ref={dialogRef}
       className="sheet"
+      data-instant={instant ? '' : undefined}
       aria-labelledby={titleId}
       onCancel={onCancel}
       onClick={onClick}

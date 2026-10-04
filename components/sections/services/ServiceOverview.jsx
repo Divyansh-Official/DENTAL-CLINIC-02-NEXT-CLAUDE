@@ -1,5 +1,5 @@
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 
 /** Service detail: the description, then what the treatment includes. */
 export default function ServiceOverview({ service, labels = {} }) {

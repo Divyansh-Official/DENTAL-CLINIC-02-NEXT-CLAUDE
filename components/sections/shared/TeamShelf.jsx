@@ -1,7 +1,7 @@
 import SectionHeader from '@/components/ui/SectionHeader';
 import Shelf from '@/components/ui/Shelf';
 import TextLink from '@/components/ui/TextLink';
-import DoctorCard from './DoctorCard';
+import DoctorCard from '@/components/cards/DoctorCard';
 
 /**
  * The dentists as a shelf of portrait cards, each linking to their profile.
@@ -11,7 +11,7 @@ export default function TeamShelf({ doctors = [], section = {}, labels = {}, lin
   if (!doctors.length) return null;
 
   return (
-    <section className={`${tone} section overflow-hidden`}>
+    <section className={`${tone} section overflow-clip`}>
       <div className="shell">
         <SectionHeader align="left" eyebrow={section.eyebrow} title={section.title} accent={section.accent} intro={section.intro}>
           {linkHref && labels.cta ? <TextLink href={linkHref}>{labels.cta}</TextLink> : null}

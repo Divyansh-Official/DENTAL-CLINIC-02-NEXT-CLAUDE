@@ -1,6 +1,6 @@
 import Aurora from '@/components/ui/Aurora';
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import { linkAttrs } from '@/lib/format';
 
 /**

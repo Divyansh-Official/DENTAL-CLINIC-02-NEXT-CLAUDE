@@ -1,5 +1,5 @@
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 
 /**
  * Patient info: the privacy policy and terms, each with an anchor id so the

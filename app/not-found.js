@@ -1,7 +1,7 @@
 import AccentText from '@/components/ui/AccentText';
 import Aurora from '@/components/ui/Aurora';
 import Button from '@/components/ui/Button';
-import Enter from '@/components/ui/Enter';
+import Enter from '@/components/motion/Enter';
 import { clinicPhone, t } from '@/lib/data';
 
 export const metadata = { title: t('pages.notFound.title'), robots: { index: false, follow: false } };
@@ -10,7 +10,7 @@ export default function NotFound() {
   const phone = clinicPhone();
 
   return (
-    <section className="tone-white relative flex min-h-[78vh] items-center overflow-hidden pb-24 pt-[calc(var(--header-h)+64px)]">
+    <section className="tone-white relative flex min-h-[78vh] items-center overflow-clip pb-24 pt-[calc(var(--header-h)+64px)]">
       <Aurora variant="hero" />
       <div className="shell relative text-center">
         <Enter as="p" className="t-eyebrow">

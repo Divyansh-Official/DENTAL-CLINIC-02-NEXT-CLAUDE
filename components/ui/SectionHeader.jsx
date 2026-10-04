@@ -1,5 +1,5 @@
 import AccentText from './AccentText';
-import Reveal from './Reveal';
+import Reveal from '@/components/motion/Reveal';
 
 /**
  * The heading block every section opens with: eyebrow, a large title with one

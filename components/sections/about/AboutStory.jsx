@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import AccentText from '@/components/ui/AccentText';
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 
 /**
  * About: the clinic's promise in its own words, beside the photograph of the

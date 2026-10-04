@@ -1,16 +1,17 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import MorphLink from '@/components/motion/MorphLink';
 import Icon from '@/components/ui/Icon';
 
 /**
  * A dentist: portrait, role, name, specialty and languages, linking to their
- * profile at /team/<slug>. Purely presentational.
+ * profile at /team/<slug>, which the card zooms open into (MorphLink).
+ * Purely presentational.
  */
 export default function DoctorCard({ doctor, href, labels = {} }) {
   if (!doctor) return null;
 
   return (
-    <Link href={href} className="tile tile-hover group flex h-full flex-col bg-tile">
+    <MorphLink href={href} className="tile tile-hover group flex h-full flex-col bg-tile">
       <span className="media block aspect-[4/4.5] w-full">
         {doctor.image?.src ? (
           <Image
@@ -50,6 +51,6 @@ export default function DoctorCard({ doctor, href, labels = {} }) {
           <Icon name="chevron-right" size={14} strokeWidth={2} />
         </span>
       </span>
-    </Link>
+    </MorphLink>
   );
 }

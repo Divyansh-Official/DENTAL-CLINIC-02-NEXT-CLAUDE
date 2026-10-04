@@ -1,12 +1,13 @@
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/layout/JsonLd';
 import CtaBanner from '@/components/sections/shared/CtaBanner';
-import PostCard from '@/components/sections/shared/PostCard';
-import ServiceCard from '@/components/sections/shared/ServiceCard';
+import PostCard from '@/components/cards/PostCard';
+import ServiceCard from '@/components/cards/ServiceCard';
 import TeamShelf from '@/components/sections/shared/TeamShelf';
 import DoctorDetails from '@/components/sections/team/DoctorDetails';
+import DoctorFacts from '@/components/sections/team/DoctorFacts';
 import DoctorHero from '@/components/sections/team/DoctorHero';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import {
   clinic,
@@ -27,7 +28,7 @@ import { formatDate } from '@/lib/format';
 import { breadcrumbSchema, doctorSchema, pageMetadata } from '@/lib/seo';
 
 /**
- * /team/[slug] — DoctorHero → DoctorDetails → treatments offered →
+ * /team/[slug] — DoctorHero → DoctorFacts → DoctorDetails → treatments offered →
  * articles by them → the rest of the team → CtaBanner
  *
  * A new dentist in doctors.json gets this page automatically; every block
@@ -74,17 +75,25 @@ export default async function DoctorPage({ params }) {
         contact={contact}
         crumbs={crumbs}
         glass={isEnabled('liquidGlass')}
+        back={{ href: '/team', label: t('common.back') }}
         labels={{
           home: t('common.home'),
           breadcrumb: t('common.breadcrumbLabel'),
-          experience: t('team.profile.experience'),
-          languages: t('team.profile.languages'),
-          availability: t('team.profile.availability'),
           qualification: t('team.profile.qualification'),
           copy: t('common.copyLabel'),
           copied: t('common.copiedLabel'),
           whatsapp: t('common.whatsappLabel', { person: name }),
           email: t('common.emailLabel', { person: name })
+        }}
+      />
+
+      <DoctorFacts
+        doctor={doctor}
+        labels={{
+          experience: t('team.profile.experience'),
+          languages: t('team.profile.languages'),
+          availability: t('team.profile.availability'),
+          qualification: t('team.profile.qualification')
         }}
       />
 

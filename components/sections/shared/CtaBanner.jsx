@@ -1,7 +1,7 @@
 import AccentText from '@/components/ui/AccentText';
 import Aurora from '@/components/ui/Aurora';
 import Button from '@/components/ui/Button';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 
 /**
  * The closing call to action on every inner page: a night panel with slow

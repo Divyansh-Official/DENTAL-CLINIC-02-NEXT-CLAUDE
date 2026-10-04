@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 
 /**

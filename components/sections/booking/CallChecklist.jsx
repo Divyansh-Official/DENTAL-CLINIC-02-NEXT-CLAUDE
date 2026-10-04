@@ -1,5 +1,5 @@
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 
 /** Booking: what to have ready before calling, as a numbered list. */
 export default function CallChecklist({ eyebrow, title, items = [], note }) {

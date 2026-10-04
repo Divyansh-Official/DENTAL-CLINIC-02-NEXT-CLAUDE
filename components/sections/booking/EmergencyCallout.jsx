@@ -1,5 +1,5 @@
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 
 /**
  * Booking: the emergency line, in the system red Apple reserves for

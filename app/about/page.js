@@ -4,6 +4,7 @@ import CtaBanner from '@/components/sections/shared/CtaBanner';
 import PageHero from '@/components/sections/shared/PageHero';
 import ProcessSteps from '@/components/sections/shared/ProcessSteps';
 import SafetyStandards from '@/components/sections/shared/SafetyStandards';
+import Statement from '@/components/sections/shared/Statement';
 import StatsBand from '@/components/sections/shared/StatsBand';
 import TeamShelf from '@/components/sections/shared/TeamShelf';
 import TestimonialsShelf from '@/components/sections/shared/TestimonialsShelf';
@@ -33,8 +34,8 @@ import { formatNumber } from '@/lib/format';
 import { breadcrumbSchema, pageMetadata } from '@/lib/seo';
 
 /**
- * /about — PageHero → AboutStory → StatsBand → TeamShelf → SafetyStandards
- *          → ProcessSteps → TestimonialsShelf → CtaBanner
+ * /about — PageHero → AboutStory → Statement → StatsBand → TeamShelf →
+ *          SafetyStandards → ProcessSteps → TestimonialsShelf → CtaBanner
  */
 const meta = page('about');
 const CRUMBS = [{ label: meta.crumb }];
@@ -74,6 +75,8 @@ export default function AboutPage() {
         points={about?.points || []}
         registration={clinic.identity?.registration}
       />
+
+      <Statement statement={clinic.statement?.about} />
 
       <StatsBand stats={clinicStats()} locale={locale.numberFormat} eyebrow={t('stats.eyebrow')} title={t('stats.title')} accent={t('stats.accent')} />
 

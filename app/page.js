@@ -5,7 +5,9 @@ import ArticlesPreview from '@/components/sections/home/ArticlesPreview';
 import HomeHero from '@/components/sections/home/HomeHero';
 import ServicesShowcase from '@/components/sections/home/ServicesShowcase';
 import SmileBanner from '@/components/sections/home/SmileBanner';
+import FeatureBento from '@/components/sections/shared/FeatureBento';
 import ProcessSteps from '@/components/sections/shared/ProcessSteps';
+import Statement from '@/components/sections/shared/Statement';
 import StatsBand from '@/components/sections/shared/StatsBand';
 import TeamShelf from '@/components/sections/shared/TeamShelf';
 import TestimonialsShelf from '@/components/sections/shared/TestimonialsShelf';
@@ -36,8 +38,9 @@ import { formatDate, formatNumber } from '@/lib/format';
 
 /**
  * Home. Section by section:
- *   HomeHero → ServicesShowcase → AboutSplit → StatsBand → TeamShelf →
- *   ProcessSteps → TestimonialsShelf → ArticlesPreview → SmileBanner
+ *   HomeHero → ServicesShowcase → Statement → FeatureBento → AboutSplit →
+ *   StatsBand → TeamShelf → ProcessSteps → TestimonialsShelf →
+ *   ArticlesPreview → SmileBanner
  * The Dentist and WebSite schema come from the root layout.
  */
 export default function HomePage() {
@@ -113,6 +116,10 @@ export default function HomePage() {
         section={services.section}
         labels={{ from: t('common.from'), learnMore: t('common.learnMore'), shelf }}
       />
+
+      <Statement statement={clinic.statement?.home} />
+
+      <FeatureBento section={clinic.technology?.section} items={clinic.technology?.items || []} glass={glass} />
 
       <AboutSplit
         about={about}
