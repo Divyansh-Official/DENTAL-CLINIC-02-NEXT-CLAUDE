@@ -1,51 +1,24 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { useCalmMotion } from '@/lib/hooks';
-import { pagePush } from '@/lib/motion';
+import { useEffect } from 'react';
 
 /**
- * Route change reads as an iOS navigation push rather than a hard cut.
+ * A soft rise on client-side navigation, used by app/template.js (which
+ * Next.js remounts on every route change).
  *
- * Two deliberate decisions:
- *
- * The first render is never animated. Animating it would mean the server sends
- * `opacity: 0` on the element wrapping the entire page — so a JavaScript error,
- * a blocked bundle or a slow hydration leaves the visitor looking at a blank
- * screen. The page is painted as-is on arrival and only animates on subsequent
- * navigations, where the markup is already on screen.
- *
- * There is also no AnimatePresence with `mode="wait"`. Waiting for the outgoing
- * page to exit before mounting the incoming one adds roughly 300ms of blank
- * screen to every navigation and delays the largest contentful paint.
+ * The first page load is never animated: the server-rendered page paints
+ * as-is. Only later navigations, where the previous page was already on
+ * screen, get the entrance. The flag is set in an effect, so the server and
+ * the first client render always agree.
  */
-export default function PageTransition({ children }) {
-  const pathname = usePathname();
-  const calm = useCalmMotion();
-  const [ready, setReady] = useState(false);
-  const firstPath = useRef(pathname);
+let hasNavigated = false;
+
+export default function PageTransition({ children, enabled = true }) {
+  const animate = enabled && hasNavigated;
 
   useEffect(() => {
-    setReady(true);
+    hasNavigated = true;
   }, []);
 
-  const isFirstRender = !ready && pathname === firstPath.current;
-
-  if (calm || isFirstRender) {
-    return <main className="min-h-[60vh]">{children}</main>;
-  }
-
-  return (
-    <motion.main
-      key={pathname}
-      variants={pagePush}
-      initial="initial"
-      animate="animate"
-      className="min-h-[60vh]"
-    >
-      {children}
-    </motion.main>
-  );
+  return <div className={animate ? 'page-enter' : undefined}>{children}</div>;
 }

@@ -1,46 +1,45 @@
 {
-  "$comment": "Global switchboard. Everything that is not clinic copy lives here: domain, branding, theme, feature toggles, analytics. Edit this file first when you set up a new clinic.",
-  "url": "https://lumieredental.com",
-  "basePath": "",
+  "$comment": "Global switchboard. Everything that is not clinic copy lives here: domain, theme, typography, feature toggles, analytics. Edit this file first when you set up a new clinic.",
+  "$url": "The live domain. Canonical links, the sitemap, social previews and structured data are built from it. Leave it blank on Vercel and the deployment URL is used automatically.",
+  "url": "https://dental-clinic-02-next-claude.vercel.app",
   "locale": {
-    "lang": "en",
-    "region": "IN",
     "htmlLang": "en-IN",
     "openGraph": "en_IN",
     "numberFormat": "en-IN",
     "currency": "INR",
-    "currencySymbol": "₹",
+    "$timeZone": "The clinic's own time zone. The live 'Open now' indicator is calculated in it, whatever time zone the visitor is in.",
     "timeZone": "Asia/Kolkata"
   },
   "theme": {
-    "$comment": "Set these four hex values and the entire site recolours. Every tint, shade, border, icon and shadow is derived from them at runtime — no Tailwind rebuild, no CSS edits.",
+    "$comment": "Set these hex values and the entire site recolours. Every tint, gradient, hairline and shadow is derived from them at runtime — no Tailwind rebuild, no CSS edits.",
     "colors": {
-      "primary": "#0F332C",
-      "accent": "#B08D57",
-      "surface": "#F7F4EF",
-      "ink": "#16181A",
-      "card": "#FFFFFF"
+      "primary": "#0071E3",
+      "accent": "#21B5A6",
+      "surface": "#F5F5F7",
+      "ink": "#1D1D1F",
+      "card": "#FFFFFF",
+      "night": "#0A0A0C"
     },
-    "$overrides": "Optional. Any key here wins over the derived value. Use only if a derived tint is not right for your brand.",
+    "$overrides": "Optional. Any token here wins over the derived value, e.g. { \"line\": \"#D2D2D7\" }.",
     "overrides": {},
     "fonts": {
-      "$comment": "Pick from the curated pairs in lib/fonts.js. Anything else falls back to the default pair.",
-      "display": "Playfair Display",
-      "body": "Jost"
+      "$comment": "Apple devices use San Francisco, the system font. Everyone else gets `family`: Inter, Manrope, DM Sans or Plus Jakarta Sans. Set appleSystemFont to false to use `family` everywhere.",
+      "family": "Inter",
+      "appleSystemFont": true
     },
     "radius": {
-      "card": "20px",
-      "panel": "32px",
-      "hero": "40px"
+      "card": "24px",
+      "panel": "36px",
+      "control": "14px"
     }
   },
   "features": {
-    "$comment": "Turn whole capabilities on or off without deleting code or breaking links. A disabled route is removed from the nav, the sitemap and the footer, and returns 404.",
-    "smoothScroll": true,
+    "$comment": "Turn whole capabilities on or off without deleting code or breaking links. A disabled route is removed from the nav, the footer and the sitemap, and returns 404.",
     "scrollProgress": true,
     "pageTransitions": true,
     "stickyMobileBar": true,
     "floatingWhatsapp": true,
+    "liquidGlass": true,
     "blog": true,
     "gallery": true,
     "treatments": true,
@@ -61,16 +60,11 @@
   "analytics": {
     "$comment": "Leave blank to load nothing at all. No third-party script is injected unless an id is present.",
     "googleAnalyticsId": "",
-    "googleTagManagerId": "",
-    "metaPixelId": ""
+    "googleTagManagerId": ""
   },
   "verification": {
     "google": "",
     "bing": ""
-  },
-  "images": {
-    "$comment": "Remote image hosts must also be listed in next.config.mjs. Local files in /public need no entry.",
-    "placeholderColor": "#EFE9E0"
   },
   "openGraph": {
     "$comment": "Leave image blank to auto-generate a branded card from the clinic name and tagline.",

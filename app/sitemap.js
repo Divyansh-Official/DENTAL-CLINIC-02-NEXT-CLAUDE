@@ -1,16 +1,17 @@
-import { absoluteUrl, getPostSlugs, getServiceSlugs, isEnabled } from '@/lib/data';
+import { absoluteUrl, getDoctorSlugs, getPostSlugs, getServiceSlugs, isEnabled } from '@/lib/data';
 
 /**
- * Routes disabled by a feature flag are left out entirely, so a clinic that
- * turns off the blog does not advertise a hundred URLs that return 404.
+ * Every route, every service, every dentist and every article. Routes turned
+ * off by a feature flag are left out, so the sitemap never advertises a 404.
  */
 export default function sitemap() {
   const now = new Date();
 
   const staticRoutes = [
-    { path: '', priority: 1 },
+    { path: '/', priority: 1 },
     { path: '/about', priority: 0.8 },
     { path: '/services', priority: 0.9 },
+    { path: '/team', priority: 0.8, flag: 'team' },
     { path: '/treatments', priority: 0.8, flag: 'treatments' },
     { path: '/gallery', priority: 0.6, flag: 'gallery' },
     { path: '/patient-info', priority: 0.6, flag: 'patientInfo' },
@@ -19,24 +20,12 @@ export default function sitemap() {
     { path: '/book-appointment', priority: 0.9 }
   ].filter((route) => !route.flag || isEnabled(route.flag));
 
+  const entry = (path, priority, changeFrequency = 'monthly') => ({ url: absoluteUrl(path), lastModified: now, changeFrequency, priority });
+
   return [
-    ...staticRoutes.map((route) => ({
-      url: absoluteUrl(route.path || '/'),
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: route.priority
-    })),
-    ...getServiceSlugs().map((slug) => ({
-      url: absoluteUrl(`/services/${slug}`),
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.7
-    })),
-    ...getPostSlugs().map((slug) => ({
-      url: absoluteUrl(`/blog/${slug}`),
-      lastModified: now,
-      changeFrequency: 'yearly',
-      priority: 0.6
-    }))
+    ...staticRoutes.map((route) => entry(route.path, route.priority)),
+    ...getServiceSlugs().map((slug) => entry(`/services/${slug}`, 0.7)),
+    ...getDoctorSlugs().map((slug) => entry(`/team/${slug}`, 0.6)),
+    ...getPostSlugs().map((slug) => entry(`/blog/${slug}`, 0.6, 'yearly'))
   ];
 }

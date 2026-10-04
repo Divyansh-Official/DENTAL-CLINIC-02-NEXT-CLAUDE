@@ -1,24 +1,25 @@
 {
+  "$comment": "Journal articles. Add or remove freely — the index, the category filter, the sitemap and the static routes all follow this file. Dates are ISO (YYYY-MM-DD) and are formatted in the site locale. An `author` that matches a dentist in doctors.json links to their profile. The first post is featured.",
   "section": {
-    "eyebrow": "Dental Insights",
-    "title": "Tips, Trends & Expert Advice",
+    "eyebrow": "Journal",
+    "title": "Tips, trends and expert advice.",
+    "accent": "expert advice",
     "cta": {
       "label": "View all articles",
       "href": "/blog"
-    },
-    "italicWord": "Expert"
+    }
   },
   "posts": [
     {
       "slug": "invisalign-vs-braces",
       "title": "Invisalign vs Braces: Which Is Right for You?",
-      "date": "May 20, 2024",
+      "date": "2024-05-20",
       "readTime": "6 min read",
       "category": "Orthodontics",
       "author": "Dr. Meera Krishnan",
       "excerpt": "Both straighten teeth. They do it on different timelines, at different costs, and they ask different things of you.",
       "image": {
-        "src": "https://images.unsplash.com/photo-1571772996211-2f02c9727629?auto=format&fit=crop&w=1200&q=80",
+        "src": "https://images.unsplash.com/photo-1571772996211-2f02c9727629?auto=format&fit=crop&w=1400&q=80",
         "alt": "Woman smiling with clear aligners"
       },
       "body": [
@@ -31,13 +32,13 @@
     {
       "slug": "how-to-care-for-dental-implants",
       "title": "How to Take Care of Your Dental Implants",
-      "date": "May 10, 2024",
+      "date": "2024-05-10",
       "readTime": "5 min read",
       "category": "Implants",
       "author": "Dr. Kabir Shah",
       "excerpt": "An implant cannot decay, but the bone holding it can be lost. Maintenance is the whole game.",
       "image": {
-        "src": "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1200&q=80",
+        "src": "https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&w=1400&q=80",
         "alt": "Dental implant model"
       },
       "body": [
@@ -50,13 +51,13 @@
     {
       "slug": "teeth-whitening-myths-vs-facts",
       "title": "Teeth Whitening: Myths vs Facts",
-      "date": "May 02, 2024",
+      "date": "2024-05-02",
       "readTime": "4 min read",
       "category": "Cosmetic",
       "author": "Dr. Aanya Mehta",
       "excerpt": "Charcoal, lemon juice and baking soda are not whitening agents. Here is what actually changes tooth shade.",
       "image": {
-        "src": "https://images.unsplash.com/photo-1445527815219-ecbfec67492e?auto=format&fit=crop&w=1200&q=80",
+        "src": "https://images.unsplash.com/photo-1445527815219-ecbfec67492e?auto=format&fit=crop&w=1400&q=80",
         "alt": "Close-up of a bright smile"
       },
       "body": [
@@ -69,13 +70,13 @@
     {
       "slug": "kids-dental-care-tips",
       "title": "Kids Dental Care: Tips for Healthy Smiles",
-      "date": "Apr 29, 2024",
+      "date": "2024-04-29",
       "readTime": "5 min read",
       "category": "Pediatric",
       "author": "Dr. Aanya Mehta",
       "excerpt": "The first dental visit should happen by the first birthday, and it should be boring on purpose.",
       "image": {
-        "src": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=1200&q=80",
+        "src": "https://images.unsplash.com/photo-1609840114035-3c981b782dfe?auto=format&fit=crop&w=1400&q=80",
         "alt": "Child at a dental checkup"
       },
       "body": [
@@ -88,13 +89,13 @@
     {
       "slug": "what-causes-sensitive-teeth",
       "title": "What Really Causes Sensitive Teeth",
-      "date": "Apr 12, 2024",
+      "date": "2024-04-12",
       "readTime": "4 min read",
       "category": "General",
       "author": "Dr. Rahul Menon",
       "excerpt": "Cold water on one tooth is a different problem from cold water on all of them. The distinction matters.",
       "image": {
-        "src": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=1200&q=80",
+        "src": "https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=1400&q=80",
         "alt": "Dental examination in progress"
       },
       "body": [
@@ -107,13 +108,13 @@
     {
       "slug": "dental-visit-what-to-expect",
       "title": "Your First Visit: What Actually Happens",
-      "date": "Mar 28, 2024",
+      "date": "2024-03-28",
       "readTime": "3 min read",
       "category": "Patient Guide",
-      "author": "Lumière Team",
+      "author": "Demo Dental Team",
       "excerpt": "A walkthrough of the first forty-five minutes, so nothing in the appointment is a surprise.",
       "image": {
-        "src": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
+        "src": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1400&q=80",
         "alt": "Dental treatment room"
       },
       "body": [
@@ -123,6 +124,5 @@
         "Most first visits end with a scaling and polish if the gums allow it, so you leave with something done rather than only a plan."
       ]
     }
-  ],
-  "$comment": "Articles. Add or remove freely — the index, the category filter, the sitemap and the static routes all follow this file."
+  ]
 }

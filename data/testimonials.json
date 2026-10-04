@@ -1,15 +1,15 @@
 {
   "$comment": "Patient reviews. Use real ones — the aggregate rating in clinic.json should match what you actually hold.",
   "section": {
-    "eyebrow": "Patients Love Us",
-    "title": "Real Stories. Real Smiles.",
-    "italicWord": "Smiles",
+    "eyebrow": "Patients love us",
+    "title": "Real stories. Real smiles.",
+    "accent": "Real smiles",
     "intro": "Verified reviews from patients treated at our Koramangala clinic."
   },
   "items": [
     {
       "id": "t1",
-      "quote": "The team at Lumière Dental Clinic is amazing! They made my root canal treatment completely painless.",
+      "quote": "The team at Demo Dental Clinic is amazing! They made my root canal treatment completely painless.",
       "rating": 5,
       "name": "Priya Sharma",
       "location": "Bangalore",
