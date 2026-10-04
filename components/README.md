@@ -99,7 +99,7 @@ Site chrome (`components/layout/`), on every page: `AnnouncementBar` →
 
 | What you see | How | Where |
 |---|---|---|
-| A card zooms open into its page; Back zooms the page into the card | a fixed overlay of the card's own photo, animated with Web Animations **beneath the header**, which never moves; it settles onto the page's `[data-morph-target]` and fades | `lib/morph.js`, `motion/MorphLink`, `motion/MorphBack`, `sections/shared/DetailHero` |
+| A card zooms open into its page; Back zooms the page into the card | a fixed overlay of the card's own photo, animated with Web Animations **beneath the header**, which never moves. It grows straight to the box and crop the page's photo will have (`lib/heroes.js`), the page renders under it only once it is still, and it dissolves as the text rises in. Back dissolves the text, renders the previous page under an opaque layer, then shrinks into the card | `lib/morph.js`, `lib/heroes.js`, `motion/MorphLink`, `motion/MorphBack`, `sections/shared/DetailHero` |
 | A gallery tile zooms into the lightbox and back | View Transitions within one page | `lib/morph.js` (`morphInPlace`), `gallery/GalleryExplorer` |
 | Content rises in from below and vanishes at the top | two scroll-driven animations on registered properties (`--rv-in`, `--rv-out`) | `motion/Reveal`, `[data-reveal]` in globals.css |
 | Hero text recedes as the page scrolls away | scroll timeline on the root | `[data-vanish]` in globals.css |

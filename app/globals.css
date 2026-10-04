@@ -890,12 +890,18 @@
   }
 
   /* Dark at the foot for the text, a breath of shade at the top for the
-     header — the photograph stays bright in between. */
+     header — the photograph stays bright in between. The zoom layer's shade
+     (.morph-shade) is the same gradient, so a card lands looking exactly
+     like the page it opens. */
   .detail-hero-scrim {
     position: absolute;
     inset: 0;
     z-index: -1;
     pointer-events: none;
+  }
+
+  .detail-hero-scrim,
+  .morph-shade {
     background:
       linear-gradient(to bottom, rgb(0 0 0 / 0.42), rgb(0 0 0 / 0) 22%),
       linear-gradient(to top, rgb(var(--c-night) / 0.97) 0%, rgb(var(--c-night) / 0.9) 30%, rgb(var(--c-night) / 0.66) 50%, rgb(var(--c-night) / 0.28) 66%, rgb(var(--c-night) / 0) 80%);
@@ -903,7 +909,8 @@
 
   /* On a wide screen the text takes less of the height: more photograph. */
   @media (min-width: 1024px) {
-    .detail-hero-scrim {
+    .detail-hero-scrim,
+    .morph-shade {
       background:
         linear-gradient(to bottom, rgb(0 0 0 / 0.42), rgb(0 0 0 / 0) 24%),
         linear-gradient(to top, rgb(var(--c-night) / 0.96) 0%, rgb(var(--c-night) / 0.76) 28%, rgb(var(--c-night) / 0.24) 54%, rgb(var(--c-night) / 0) 70%);
@@ -915,7 +922,8 @@
       left: 38%;
     }
 
-    .detail-hero[data-split] .detail-hero-scrim {
+    .detail-hero[data-split] .detail-hero-scrim,
+    .morph-surface[data-split] .morph-shade {
       background:
         linear-gradient(to right, rgb(var(--c-night)) 40%, rgb(var(--c-night) / 0.82) 46%, rgb(var(--c-night) / 0.4) 56%, rgb(var(--c-night) / 0) 70%),
         linear-gradient(to top, rgb(var(--c-night) / 0.7), rgb(var(--c-night) / 0) 38%);
@@ -1385,6 +1393,18 @@
     inset: 0;
     z-index: 60;
     pointer-events: none;
+    will-change: opacity;
+  }
+
+  /* While a card zooms, the floating glass swaps refraction for plain frosted
+     glass: the photograph changes under it every frame, and re-running the
+     refraction filter that often costs frames. It returns the moment the
+     zoom ends; over a moving photograph the two are indistinguishable. */
+  html[data-morph] .site-header .lg[data-lg-live],
+  html[data-morph] [data-chrome] .lg[data-lg-live],
+  html[data-morph] .lg[data-chrome][data-lg-live] {
+    -webkit-backdrop-filter: blur(18px) saturate(1.7) !important;
+    backdrop-filter: blur(18px) saturate(1.7) !important;
   }
 
   .morph-dim {
@@ -1392,6 +1412,7 @@
     inset: 0;
     background: rgb(var(--c-night));
     opacity: 0;
+    will-change: opacity;
   }
 
   .morph-surface {
@@ -1417,9 +1438,6 @@
     inset: 0;
     z-index: 1;
     opacity: 0;
-    background:
-      linear-gradient(to bottom, rgb(0 0 0 / 0.42), rgb(0 0 0 / 0) 22%),
-      linear-gradient(to top, rgb(var(--c-night) / 0.97) 0%, rgb(var(--c-night) / 0.86) 34%, rgb(var(--c-night) / 0.5) 58%, rgb(var(--c-night) / 0) 82%);
   }
 
   .morph-copy {
@@ -1749,7 +1767,7 @@ html[data-morph^='close']::view-transition-image-pair(morph) {
   html[data-morph-arrived]:not(.no-motion) .enter,
   html[data-morph-arrived]:not(.no-motion) .enter-fade,
   html[data-morph-arrived]:not(.no-motion) .enter-scale {
-    animation-delay: calc(var(--d, 0) * 1ms + 480ms);
+    animation-delay: calc(var(--d, 0) * 1ms + var(--arrive, 480ms));
   }
 
   /* Scroll-driven motion. Where view timelines are unsupported (Firefox) the

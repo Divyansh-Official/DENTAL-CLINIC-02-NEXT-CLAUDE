@@ -34,15 +34,20 @@ import MobileMenu from './MobileMenu';
 export default function SiteHeader({ brand, items = [], extra = [], cta, contact, status, labels = {}, glass = true }) {
   const pathname = usePathname() || '/';
   const [menuOpen, setMenuOpen] = useState(false);
-  const [tone, setTone] = useState(null);
   const headerRef = useRef(null);
   const toggleRef = useRef(null);
   const menuId = useId();
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const isActive = (href) => (href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`));
 
+  /* The tone is a purely visual attribute, set on the element directly: no
+     React state, so reading it on scroll costs no re-render and can never
+     touch hydration. React does not render `data-tone`, so it leaves it be. */
   useEffect(() => {
     let frame = 0;
+    const setTone = (tone) => {
+      if (headerRef.current && headerRef.current.dataset.tone !== tone) headerRef.current.dataset.tone = tone;
+    };
     const probe = () => {
       frame = 0;
       const header = headerRef.current;
@@ -92,7 +97,7 @@ export default function SiteHeader({ brand, items = [], extra = [], cta, contact
 
   return (
     <>
-      <header ref={headerRef} className="site-header" data-tone={tone || undefined} data-print="hide">
+      <header ref={headerRef} className="site-header" data-print="hide">
         <Surface
           {...surfaceProps}
           className={`mx-auto flex h-[52px] w-full max-w-[calc(var(--shell-max)-16px)] items-center gap-2 rounded-full pl-2.5 pr-1.5 md:h-[58px] md:pl-3.5 md:pr-2 ${glass ? '' : 'glass'}`}

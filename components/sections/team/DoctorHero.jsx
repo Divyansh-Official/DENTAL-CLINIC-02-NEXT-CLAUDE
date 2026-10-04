@@ -3,6 +3,7 @@ import Enter from '@/components/motion/Enter';
 import ContactActions from '@/components/ui/ContactActions';
 import Icon from '@/components/ui/Icon';
 import DetailHero from '@/components/sections/shared/DetailHero';
+import { DOCTOR_HERO } from '@/lib/heroes';
 import { Breadcrumbs } from '@/components/sections/shared/PageHero';
 
 /**
@@ -31,7 +32,7 @@ export default function DoctorHero({ doctor, contact = {}, crumbs, labels = {}, 
   ) : null;
 
   return (
-    <DetailHero image={doctor.image} focus="center 18%" split back={back} glass={glass} aside={aside}>
+    <DetailHero image={doctor.image} focus={DOCTOR_HERO.focus} split={DOCTOR_HERO.split} back={back} glass={glass} aside={aside}>
       <Enter delay={0} className="hidden sm:block">
         <Breadcrumbs crumbs={crumbs} homeLabel={labels.home} label={labels.breadcrumb} align="left" />
       </Enter>
