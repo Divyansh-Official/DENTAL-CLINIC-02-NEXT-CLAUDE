@@ -203,7 +203,9 @@ browser's Web Animations and its View Transitions.
 - **A header that never moves** — the liquid-glass header is the same
   element on every page and sits above everything that animates: the card
   zoom runs beneath it, and on a phone the menu opens under it while its
-  button turns into a close button in place.
+  button turns into a close button in place. Its glass adapts to what is
+  behind it — dark glass over a dark photo or band, light glass over light
+  pages.
 - **Glass that responds** — the phone tab bar minimises to its icons while
   you scroll down, as iOS 26's do.
 - **Springs** — SwiftUI's .bouncy, .snappy and .smooth curves, sampled into CSS

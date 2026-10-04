@@ -11,7 +11,7 @@ file here.
 components/
 ├── layout/                 Site chrome on every page (rendered by app/layout.js)
 │   ├── AnnouncementBar     thin bar above the header (features.announcement)
-│   ├── SiteHeader          floating liquid-glass capsule — fixed, identical on every page
+│   ├── SiteHeader          floating liquid-glass capsule — fixed; its glass turns dark over dark sections
 │   ├── MobileMenu          glass menu that opens beneath the header below 1180px
 │   ├── MobileTabBar        phone call / WhatsApp / book bar; minimises on scroll down
 │   ├── FloatingContact     WhatsApp glass orb on tablet and desktop
@@ -105,6 +105,7 @@ Site chrome (`components/layout/`), on every page: `AnnouncementBar` →
 | Hero text recedes as the page scrolls away | scroll timeline on the root | `[data-vanish]` in globals.css |
 | A statement lights up word by word | named view timeline on the paragraph | `shared/Statement`, `.statement` in globals.css |
 | The phone tab bar minimises while scrolling down | one passive scroll listener, transform only | `layout/MobileTabBar` |
+| The header's glass turns dark over dark sections and light over light ones | one hit-test per scrolled frame, after each page change, when the menu opens or closes, and when a card zoom covers it | `layout/SiteHeader`, `morphchange` in `lib/morph.js` |
 | Filtered grids glide to their new places | View Transitions, names applied only while filtering | `lib/morph.js` (`filterTransition`) |
 
 Every one of these falls back to a plain, complete page: without JavaScript,
@@ -113,8 +114,9 @@ transitions or scroll timelines. Nothing is ever hidden waiting for a script.
 
 **The header is fixed for good.** It lives in the root layout, so it is the
 same element on every page; it sits above every page layer (the card zoom,
-the phone menu, the tab bar), is never captured by a view transition, and
-never changes look between pages. Only a modal sheet covers it.
+the phone menu, the tab bar) and is never captured by a view transition, so
+it never moves, fades or re-renders. Only a modal sheet covers it. The one
+thing that changes is its tint, which follows what is behind it.
 
 ## Conventions
 
