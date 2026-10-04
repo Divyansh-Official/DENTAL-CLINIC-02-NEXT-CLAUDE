@@ -1,7 +1,6 @@
 import LiquidGlass from '@/components/glass/LiquidGlass';
 import Enter from '@/components/motion/Enter';
-import Button from '@/components/ui/Button';
-import CopyButton from '@/components/ui/CopyButton';
+import ContactActions from '@/components/ui/ContactActions';
 import Icon from '@/components/ui/Icon';
 import DetailHero from '@/components/sections/shared/DetailHero';
 import { Breadcrumbs } from '@/components/sections/shared/PageHero';
@@ -33,11 +32,11 @@ export default function DoctorHero({ doctor, contact = {}, crumbs, labels = {}, 
 
   return (
     <DetailHero image={doctor.image} focus="center 18%" split back={back} glass={glass} aside={aside}>
-      <Enter delay={0}>
+      <Enter delay={0} className="hidden sm:block">
         <Breadcrumbs crumbs={crumbs} homeLabel={labels.home} label={labels.breadcrumb} align="left" />
       </Enter>
       {doctor.role ? (
-        <Enter as="p" delay={60} className="t-eyebrow mt-7">
+        <Enter as="p" delay={60} className="t-eyebrow sm:mt-7">
           {doctor.role}
         </Enter>
       ) : null}
@@ -50,25 +49,16 @@ export default function DoctorHero({ doctor, contact = {}, crumbs, labels = {}, 
         </Enter>
       ) : null}
 
-      <Enter delay={240} className="mt-8 flex flex-wrap items-center gap-2.5">
-        {contact.phoneHref ? (
-          <Button href={contact.phoneHref} size="lg" iconStart="phone" className="w-full sm:w-auto">
-            {contact.phone}
-          </Button>
-        ) : null}
-        {contact.phone ? (
-          <CopyButton value={contact.phone} label={labels.copy} copiedLabel={labels.copied} className="btn-glass-dark !h-[52px] !w-[52px]" />
-        ) : null}
-        {contact.whatsappHref ? (
-          <a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="icon-btn btn-glass-dark h-[52px] w-[52px]">
-            <Icon name="whatsapp" size={21} className="text-[#30D158]" label={labels.whatsapp} />
-          </a>
-        ) : null}
-        {contact.emailHref ? (
-          <a href={contact.emailHref} className="icon-btn btn-glass-dark h-[52px] w-[52px]">
-            <Icon name="mail" size={20} label={labels.email} />
-          </a>
-        ) : null}
+      <Enter delay={240} className="mt-8">
+        <ContactActions
+          tone="dark"
+          size="lg"
+          phone={contact.phone}
+          phoneHref={contact.phoneHref}
+          whatsappHref={contact.whatsappHref}
+          emailHref={contact.emailHref}
+          labels={labels}
+        />
       </Enter>
     </DetailHero>
   );

@@ -1,8 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import MorphLink from '@/components/motion/MorphLink';
-import Button from '@/components/ui/Button';
-import CopyButton from '@/components/ui/CopyButton';
+import ContactActions from '@/components/ui/ContactActions';
 import Icon from '@/components/ui/Icon';
 import Reveal from '@/components/motion/Reveal';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -56,29 +55,16 @@ export default function SpecialistDirectory({ doctors = [], section = {}, labels
                     ) : null}
                   </dl>
 
-                  <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-6">
-                    {doctor.contact.phoneHref ? (
-                      <Button href={doctor.contact.phoneHref} size="sm" iconStart="phone" className="h-10">
-                        {doctor.contact.phone}
-                      </Button>
-                    ) : null}
-                    {doctor.contact.phone ? <CopyButton value={doctor.contact.phone} label={labels.copy} copiedLabel={labels.copied} /> : null}
-                    {doctor.contact.whatsappHref ? (
-                      <a
-                        href={doctor.contact.whatsappHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="icon-btn h-10 w-10 bg-fg/[0.06] hover:bg-fg/10"
-                      >
-                        <Icon name="whatsapp" size={17} className="text-[#1FAF57]" label={doctor.labels.whatsapp} />
-                      </a>
-                    ) : null}
-                    {doctor.contact.emailHref ? (
-                      <a href={doctor.contact.emailHref} className="icon-btn h-10 w-10 bg-fg/[0.06] text-fg hover:bg-fg/10">
-                        <Icon name="mail" size={17} label={doctor.labels.email} />
-                      </a>
-                    ) : null}
-                  </div>
+                  <ContactActions
+                    className="mt-auto pt-6"
+                    tone="light"
+                    size="md"
+                    phone={doctor.contact.phone}
+                    phoneHref={doctor.contact.phoneHref}
+                    whatsappHref={doctor.contact.whatsappHref}
+                    emailHref={doctor.contact.emailHref}
+                    labels={{ ...labels, ...doctor.labels }}
+                  />
                 </div>
               </article>
             </Reveal>

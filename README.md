@@ -187,8 +187,8 @@ every glass surface solid.
 
 ### Motion
 
-No animation library ships to the browser — the motion is CSS and the
-browser's own View Transitions.
+No animation library ships to the browser — the motion is CSS, the
+browser's Web Animations and its View Transitions.
 
 - **Cards zoom open.** Tap a service, dentist or article card and it grows
   out of its exact place on the screen into a full-screen page — the App
@@ -200,9 +200,12 @@ browser's own View Transitions.
   it in reverse. Hero text recedes as the page scrolls away, and the
   statement sections light up word by word. All driven by CSS scroll and view
   timelines: no observers, no scroll listeners.
-- **Glass that responds** — the header turns to dark glass over dark
-  sections, and the phone tab bar minimises to its icons while you scroll
-  down, as iOS 26's do.
+- **A header that never moves** — the liquid-glass header is the same
+  element on every page and sits above everything that animates: the card
+  zoom runs beneath it, and on a phone the menu opens under it while its
+  button turns into a close button in place.
+- **Glass that responds** — the phone tab bar minimises to its icons while
+  you scroll down, as iOS 26's do.
 - **Springs** — SwiftUI's .bouncy, .snappy and .smooth curves, sampled into CSS
   `linear()` — drive presses, sheets, the menu, the segmented pill and the
   card zoom.

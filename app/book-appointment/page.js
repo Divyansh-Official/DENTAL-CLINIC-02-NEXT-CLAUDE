@@ -83,7 +83,10 @@ export default function BookAppointmentPage() {
           availability: t('appointment.availabilityLabel'),
           qualification: t('appointment.qualificationLabel'),
           copy: t('common.copyLabel'),
-          copied: t('common.copiedLabel')
+          copied: t('common.copiedLabel'),
+          copyShort: t('common.copyShort'),
+          whatsappShort: t('common.whatsappShort'),
+          emailShort: t('common.emailShort')
         }}
       />
 

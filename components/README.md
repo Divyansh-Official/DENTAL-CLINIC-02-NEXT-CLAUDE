@@ -11,8 +11,8 @@ file here.
 components/
 ├── layout/                 Site chrome on every page (rendered by app/layout.js)
 │   ├── AnnouncementBar     thin bar above the header (features.announcement)
-│   ├── SiteHeader          floating liquid-glass capsule; turns dark over dark sections
-│   ├── MobileMenu          full-screen glass menu below 1180px
+│   ├── SiteHeader          floating liquid-glass capsule — fixed, identical on every page
+│   ├── MobileMenu          glass menu that opens beneath the header below 1180px
 │   ├── MobileTabBar        phone call / WhatsApp / book bar; minimises on scroll down
 │   ├── FloatingContact     WhatsApp glass orb on tablet and desktop
 │   ├── SiteFooter
@@ -45,6 +45,7 @@ components/
 │   ├── Shelf               horizontal card scroller
 │   ├── Sheet · SheetTrigger iOS sheet on a native <dialog>
 │   ├── Accordion           native <details> group
+│   ├── ContactActions      call + copy / WhatsApp / email, laid out by its container
 │   ├── OpenStatus · Rating · StatNumber · CopyButton
 │   └── Aurora              soft fields of brand colour behind a section
 │
@@ -98,18 +99,22 @@ Site chrome (`components/layout/`), on every page: `AnnouncementBar` →
 
 | What you see | How | Where |
 |---|---|---|
-| A card zooms open into its page; Back zooms the page into the card | View Transitions: the card and the page's `[data-morph-target]` share one name for one transition | `lib/morph.js`, `motion/MorphLink`, `motion/MorphBack`, `sections/shared/DetailHero` |
-| A gallery tile zooms into the lightbox and back | the same, within one page | `lib/morph.js` (`morphInPlace`), `gallery/GalleryExplorer` |
+| A card zooms open into its page; Back zooms the page into the card | a fixed overlay of the card's own photo, animated with Web Animations **beneath the header**, which never moves; it settles onto the page's `[data-morph-target]` and fades | `lib/morph.js`, `motion/MorphLink`, `motion/MorphBack`, `sections/shared/DetailHero` |
+| A gallery tile zooms into the lightbox and back | View Transitions within one page | `lib/morph.js` (`morphInPlace`), `gallery/GalleryExplorer` |
 | Content rises in from below and vanishes at the top | two scroll-driven animations on registered properties (`--rv-in`, `--rv-out`) | `motion/Reveal`, `[data-reveal]` in globals.css |
 | Hero text recedes as the page scrolls away | scroll timeline on the root | `[data-vanish]` in globals.css |
 | A statement lights up word by word | named view timeline on the paragraph | `shared/Statement`, `.statement` in globals.css |
 | The phone tab bar minimises while scrolling down | one passive scroll listener, transform only | `layout/MobileTabBar` |
-| The header turns to dark glass over dark sections | one hit-test per scrolled frame | `layout/SiteHeader` |
 | Filtered grids glide to their new places | View Transitions, names applied only while filtering | `lib/morph.js` (`filterTransition`) |
 
 Every one of these falls back to a plain, complete page: without JavaScript,
 under reduced motion, with `?nomotion`, and in browsers without view
 transitions or scroll timelines. Nothing is ever hidden waiting for a script.
+
+**The header is fixed for good.** It lives in the root layout, so it is the
+same element on every page; it sits above every page layer (the card zoom,
+the phone menu, the tab bar), is never captured by a view transition, and
+never changes look between pages. Only a modal sheet covers it.
 
 ## Conventions
 
