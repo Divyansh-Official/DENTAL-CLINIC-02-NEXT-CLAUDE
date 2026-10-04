@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import LiquidGlass from '@/components/glass/LiquidGlass';
@@ -17,13 +17,48 @@ import MobileMenu from './MobileMenu';
  * and stays pinned once the bar has scrolled away. Links show inline from
  * 1180px; below that the menu button opens a full-screen glass menu.
  *
+ * Like Apple's glass it adapts to what is behind it: over a dark section (a
+ * dentist's portrait, the numbers band, a closing banner) it turns to dark
+ * glass with light text, and back again over light ones. It reads the
+ * section under its centre once per scrolled frame.
+ *
  * All data arrives as props from app/layout.js.
  */
 export default function SiteHeader({ brand, items = [], extra = [], cta, contact, status, labels = {}, glass = true }) {
   const pathname = usePathname() || '/';
   const [menuOpen, setMenuOpen] = useState(false);
+  const [tone, setTone] = useState(null);
+  const headerRef = useRef(null);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const isActive = (href) => (href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`));
+
+  useEffect(() => {
+    let frame = 0;
+    const probe = () => {
+      frame = 0;
+      const header = headerRef.current;
+      if (!header) return;
+      const surface = header.firstElementChild;
+      const box = surface?.getBoundingClientRect();
+      if (!box) return;
+      const below = document
+        .elementsFromPoint(window.innerWidth / 2, box.top + box.height / 2)
+        .find((element) => !header.contains(element));
+      const section = below?.closest('.tone-dark, .tone-gray, .tone-white');
+      setTone(section?.classList.contains('tone-dark') ? 'dark' : 'light');
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(probe);
+    };
+    probe();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [pathname]);
 
   const Surface = glass ? LiquidGlass : 'div';
   const surfaceProps = glass
@@ -37,7 +72,7 @@ export default function SiteHeader({ brand, items = [], extra = [], cta, contact
 
   return (
     <>
-      <header className="site-header" data-print="hide">
+      <header ref={headerRef} className="site-header" data-tone={tone || undefined} data-print="hide">
         <Surface
           {...surfaceProps}
           className={`mx-auto flex h-[52px] w-full max-w-[calc(var(--shell-max)-16px)] items-center gap-2 rounded-full pl-2.5 pr-1.5 md:h-[58px] md:pl-3.5 md:pr-2 ${glass ? '' : 'glass'}`}

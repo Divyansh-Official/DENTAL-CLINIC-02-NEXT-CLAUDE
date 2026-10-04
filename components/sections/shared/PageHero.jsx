@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import AccentText from '@/components/ui/AccentText';
 import Aurora from '@/components/ui/Aurora';
-import Enter from '@/components/ui/Enter';
+import Enter from '@/components/motion/Enter';
 import Icon from '@/components/ui/Icon';
 
 /**
  * The opening of every inner page: breadcrumb, eyebrow, a large title with
  * one phrase in the brand gradient, a lead paragraph and optional actions,
- * over a soft wash of brand colour.
+ * over a soft wash of brand colour. It recedes as the page scrolls away
+ * (`data-vanish`).
  *
  * `crumbs` is the same array the page hands to breadcrumbSchema(), so the
  * visible trail and the structured data cannot drift apart.
@@ -48,9 +49,9 @@ export default function PageHero({ eyebrow, title, accent, intro, crumbs = [], l
   const centered = align === 'center';
 
   return (
-    <section className="tone-white relative overflow-hidden pb-[clamp(56px,7vw,104px)] pt-[calc(var(--header-h)+clamp(40px,6vw,88px))]">
+    <section className="tone-white relative overflow-clip pb-[clamp(56px,7vw,104px)] pt-[calc(var(--header-h)+clamp(40px,6vw,88px))]">
       <Aurora variant="soft" />
-      <div className={`shell relative ${centered ? 'text-center' : ''}`}>
+      <div data-vanish className={`shell relative ${centered ? 'text-center' : ''}`} style={{ '--vanish': '55vh' }}>
         <Enter delay={0}>
           <Breadcrumbs crumbs={crumbs} homeLabel={labels.home} label={labels.breadcrumb} align={align} />
         </Enter>

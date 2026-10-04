@@ -1,4 +1,4 @@
-import PageTransition from '@/components/layout/PageTransition';
+import PageTransition from '@/components/motion/PageTransition';
 import { isEnabled } from '@/lib/data';
 
 /* Next.js remounts a template on every navigation, which is what lets the

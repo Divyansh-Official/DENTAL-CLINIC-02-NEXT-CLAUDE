@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import MorphLink from '@/components/motion/MorphLink';
 import Button from '@/components/ui/Button';
 import CopyButton from '@/components/ui/CopyButton';
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 
 /**
@@ -22,11 +23,11 @@ export default function SpecialistDirectory({ doctors = [], section = {}, labels
           {doctors.map((doctor, index) => (
             <Reveal as="li" key={doctor.slug} index={index % 2}>
               <article className="tile flex h-full flex-col bg-tile sm:flex-row">
-                <Link href={doctor.href} className="media relative block aspect-[4/3] flex-none sm:aspect-auto sm:w-[32%]">
+                <MorphLink href={doctor.href} className="media relative block aspect-[4/3] flex-none sm:aspect-auto sm:w-[32%]">
                   {doctor.image?.src ? (
                     <Image src={doctor.image.src} alt={doctor.image.alt || doctor.name} fill sizes="(max-width: 640px) 100vw, 240px" className="object-cover object-top" />
                   ) : null}
-                </Link>
+                </MorphLink>
                 <div className="flex flex-1 flex-col p-6">
                   <p className="t-caption">{doctor.role}</p>
                   <h3 className="t-headline mt-1">

@@ -3,7 +3,7 @@ import LiquidGlass from '@/components/glass/LiquidGlass';
 import AccentText from '@/components/ui/AccentText';
 import Aurora from '@/components/ui/Aurora';
 import Button from '@/components/ui/Button';
-import Enter from '@/components/ui/Enter';
+import Enter from '@/components/motion/Enter';
 import Icon from '@/components/ui/Icon';
 import OpenStatus from '@/components/ui/OpenStatus';
 import Rating from '@/components/ui/Rating';
@@ -24,10 +24,10 @@ export default function HomeHero({ hero, status, rating, card, story, labels = {
   const pane = (props) => (glass ? { ...props } : {});
 
   return (
-    <section className="tone-white relative overflow-hidden pb-[clamp(64px,8vw,120px)] pt-[calc(var(--header-h)+clamp(36px,6vw,84px))]">
+    <section className="tone-white relative overflow-clip pb-[clamp(64px,8vw,120px)] pt-[calc(var(--header-h)+clamp(36px,6vw,84px))]">
       <Aurora variant="hero" />
 
-      <div className="shell relative text-center">
+      <div data-vanish className="shell relative text-center" style={{ '--vanish': '65vh' }}>
         {status ? (
           <Enter delay={0} className="flex justify-center">
             <OpenStatus {...status} />

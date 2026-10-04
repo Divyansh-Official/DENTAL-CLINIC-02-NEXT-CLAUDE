@@ -1,4 +1,4 @@
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import TextLink from '@/components/ui/TextLink';
 
 /**

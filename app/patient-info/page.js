@@ -7,7 +7,7 @@ import CtaBanner from '@/components/sections/shared/CtaBanner';
 import PageHero from '@/components/sections/shared/PageHero';
 import SafetyStandards from '@/components/sections/shared/SafetyStandards';
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { clinic, clinicPhone, isEnabled, page, patientInfo, t } from '@/lib/data';
 import { breadcrumbSchema, faqSchema, pageMetadata } from '@/lib/seo';

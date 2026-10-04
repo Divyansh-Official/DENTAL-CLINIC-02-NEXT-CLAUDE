@@ -13,7 +13,7 @@ export default function TestimonialsShelf({ items = [], section = {}, rating, la
   if (!items.length) return null;
 
   return (
-    <section className={`${tone} section overflow-hidden`}>
+    <section className={`${tone} section overflow-clip`}>
       <div className="shell">
         <SectionHeader align="left" eyebrow={section.eyebrow} title={section.title} accent={section.accent} intro={section.intro}>
           {rating ? (

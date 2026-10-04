@@ -219,6 +219,23 @@ for (const item of list(gallery.items)) {
   if (item.span && !['normal', 'wide', 'tall'].includes(item.span)) error(`gallery.json -> "${item.id}" has span "${item.span}". Use "normal", "wide" or "tall".`);
 }
 
+/* The scroll-lit statements and the technology bento. */
+for (const [key, statement] of Object.entries(clinic.statement || {})) {
+  if (!statement?.text) continue;
+  const words = String(statement.text).toLowerCase().split(/\s+/).join(' ');
+  if (statement.accent && !words.includes(String(statement.accent).toLowerCase().trim().split(/\s+/).join(' '))) {
+    warn(`clinic.json -> statement.${key}.accent "${statement.accent}" is not a phrase in its text, so nothing will be set in the brand colour.`);
+  }
+}
+for (const [i, item] of list(clinic.technology?.items).entries()) {
+  if (item.size && !['large', 'wide', 'tall', 'small'].includes(item.size)) {
+    error(`clinic.json -> technology.items[${i}] ("${item.title}") has size "${item.size}". Use "large", "wide", "tall" or "small".`);
+  }
+  if ((item.size === 'large' || item.size === 'tall') && !item.image?.src) {
+    warn(`clinic.json -> technology.items[${i}] ("${item.title}") is ${item.size} but has no image; large tiles are designed around a photograph.`);
+  }
+}
+
 /* Every internal link in the navigation and banners must be a real route. */
 const ROUTES = new Set(['/', '/about', '/team', '/services', '/treatments', '/gallery', '/patient-info', '/blog', '/contact', '/book-appointment']);
 const routeExists = (href) => {

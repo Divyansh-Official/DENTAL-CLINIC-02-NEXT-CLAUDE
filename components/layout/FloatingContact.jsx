@@ -26,6 +26,7 @@ export default function FloatingContact({ href, label, bookHref, glass = true })
       rel="noopener noreferrer"
       aria-label={label}
       data-print="hide"
+      data-chrome="fab"
       className={`fixed bottom-6 right-6 z-[75] hidden h-[60px] w-[60px] place-items-center rounded-full transition-transform duration-300 ease-ios hover:scale-105 active:scale-95 md:grid ${glass ? '' : 'glass'}`}
     >
       <Icon name="whatsapp" size={27} className="text-[#1FAF57]" />

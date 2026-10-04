@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import MorphLink from '@/components/motion/MorphLink';
 import Icon from '@/components/ui/Icon';
 
 /**
@@ -10,7 +10,8 @@ import Icon from '@/components/ui/Icon';
  *   'card'     A white tile with the photograph on top. Used in grids.
  *
  * Purely presentational: every value arrives as a prop, so it renders in
- * server and client components alike.
+ * server and client components alike. Tapping it zooms the whole card open
+ * into the service's page (MorphLink).
  */
 export default function ServiceCard({ service, variant = 'card', labels = {} }) {
   if (!service) return null;
@@ -18,7 +19,7 @@ export default function ServiceCard({ service, variant = 'card', labels = {} }) 
 
   if (variant === 'feature') {
     return (
-      <Link
+      <MorphLink
         href={href}
         className="tile tile-hover group flex h-[clamp(440px,62vh,540px)] flex-col bg-night text-white"
       >
@@ -54,12 +55,12 @@ export default function ServiceCard({ service, variant = 'card', labels = {} }) 
             <Icon name="arrow-right" size={17} strokeWidth={1.9} />
           </span>
         </span>
-      </Link>
+      </MorphLink>
     );
   }
 
   return (
-    <Link href={href} className="tile tile-hover group flex h-full flex-col bg-tile">
+    <MorphLink href={href} className="tile tile-hover group flex h-full flex-col bg-tile">
       <span className="media block aspect-[16/10] w-full">
         {service.image?.src ? (
           <Image src={service.image.src} alt={service.image.alt || ''} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px" className="object-cover" />
@@ -89,6 +90,6 @@ export default function ServiceCard({ service, variant = 'card', labels = {} }) 
           <Icon name="chevron-right" size={14} strokeWidth={2} />
         </span>
       </span>
-    </Link>
+    </MorphLink>
   );
 }

@@ -1,15 +1,12 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/layout/JsonLd';
 import ArticleAside from '@/components/sections/blog/ArticleAside';
+import ArticleHero from '@/components/sections/blog/ArticleHero';
 import CtaBanner from '@/components/sections/shared/CtaBanner';
-import PageHero from '@/components/sections/shared/PageHero';
-import PostCard from '@/components/sections/shared/PostCard';
+import PostCard from '@/components/cards/PostCard';
 import Button from '@/components/ui/Button';
-import Enter from '@/components/ui/Enter';
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 import SectionHeader from '@/components/ui/SectionHeader';
 import {
   clinic,
@@ -19,6 +16,7 @@ import {
   getPost,
   getPostSlugs,
   getRelatedPosts,
+  isEnabled,
   locale,
   page,
   t
@@ -27,8 +25,9 @@ import { formatDate, isoDate } from '@/lib/format';
 import { articleSchema, breadcrumbSchema, pageMetadata } from '@/lib/seo';
 
 /**
- * /blog/[slug] — PageHero (left-aligned, with author and date) → hero image →
- * article body beside ArticleAside → related articles → CtaBanner
+ * /blog/[slug] — ArticleHero (the photograph, title and byline the card
+ * zooms open into) → article body beside ArticleAside → related articles →
+ * CtaBanner
  */
 export function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }));
@@ -68,53 +67,16 @@ export default async function BlogPostPage({ params }) {
     <>
       <JsonLd schema={[articleSchema(post, doctor), breadcrumbSchema(crumbs)]} />
 
-      <PageHero
-        align="left"
-        eyebrow={post.category}
-        title={post.title}
-        intro={post.excerpt}
+      <ArticleHero
+        post={post}
+        author={author}
+        date={date}
+        dateTime={isoDate(post.date)}
         crumbs={crumbs}
+        glass={isEnabled('liquidGlass')}
+        back={{ href: '/blog', label: t('common.back') }}
         labels={{ home: t('common.home'), breadcrumb: t('common.breadcrumbLabel') }}
-        below={
-          <>
-            {post.author ? (
-              author ? (
-                <Link href={author.href} className="chip min-h-9 px-4 text-[14px] text-fg hover:bg-fg/10">
-                  <Icon name="user" size={15} />
-                  {post.author}
-                </Link>
-              ) : (
-                <span className="chip min-h-9 px-4 text-[14px] text-fg">
-                  <Icon name="user" size={15} />
-                  {post.author}
-                </span>
-              )
-            ) : null}
-            {date ? (
-              <time dateTime={isoDate(post.date)} className="chip min-h-9 px-4 text-[14px]">
-                <Icon name="calendar" size={15} />
-                {date}
-              </time>
-            ) : null}
-            {post.readTime ? (
-              <span className="chip min-h-9 px-4 text-[14px]">
-                <Icon name="clock" size={15} />
-                {post.readTime}
-              </span>
-            ) : null}
-          </>
-        }
       />
-
-      {post.image?.src ? (
-        <div className="tone-white">
-          <Enter effect="scale" delay={200} className="shell">
-            <div className="media relative aspect-[16/9] w-full overflow-hidden rounded-panel">
-              <Image src={post.image.src} alt={post.image.alt || ''} fill priority sizes="(max-width: 1240px) 100vw, 1200px" className="object-cover" />
-            </div>
-          </Enter>
-        </div>
-      ) : null}
 
       <article className="tone-white section">
         <div className="shell grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-16">

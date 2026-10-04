@@ -3,7 +3,7 @@ import LiquidGlass from '@/components/glass/LiquidGlass';
 import AccentText from '@/components/ui/AccentText';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 
 /**
  * Home's closing panel: a night card with the promise and the booking

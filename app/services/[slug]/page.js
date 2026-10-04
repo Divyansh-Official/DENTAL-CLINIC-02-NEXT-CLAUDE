@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import JsonLd from '@/components/layout/JsonLd';
 import CtaBanner from '@/components/sections/shared/CtaBanner';
-import ServiceCard from '@/components/sections/shared/ServiceCard';
+import ServiceCard from '@/components/cards/ServiceCard';
 import ServiceAside from '@/components/sections/services/ServiceAside';
 import ServiceFaq from '@/components/sections/services/ServiceFaq';
 import ServiceHero from '@/components/sections/services/ServiceHero';
@@ -67,6 +67,7 @@ export default async function ServiceDetailPage({ params }) {
         crumbs={crumbs}
         whatsappHref={whatsapp}
         glass={isEnabled('liquidGlass')}
+        back={{ href: '/services', label: t('common.back') }}
         labels={{
           home: t('common.home'),
           breadcrumb: t('common.breadcrumbLabel'),
@@ -102,7 +103,7 @@ export default async function ServiceDetailPage({ params }) {
       </section>
 
       {related.length ? (
-        <section className="tone-white section overflow-hidden">
+        <section className="tone-white section overflow-clip">
           <div className="shell">
             <SectionHeader align="left" title={t('services.detail.relatedTitle')} size="title" />
           </div>

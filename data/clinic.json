@@ -127,6 +127,70 @@
       "alt": "Dr. Aanya Mehta, founder and chief dentist"
     }
   },
+  "$statement": "Large statements whose words light up one by one as they scroll through the screen. `home` sits under the services on the home page, `about` under the story on the About page. `accent` is a phrase from `text` set in the brand colour. Remove either to hide it.",
+  "statement": {
+    "home": {
+      "eyebrow": "Why patients stay",
+      "text": "Every visit starts with a conversation, not a chair. We show you what we see, explain every option in plain words, and write down the price before anything begins — so the only surprise is how easy it felt.",
+      "accent": "how easy it felt."
+    },
+    "about": {
+      "eyebrow": "What we believe",
+      "text": "Good dentistry is quiet. Gentle hands, honest advice and careful work that lasts — the kind of care you stop worrying about, because it simply works.",
+      "accent": "it simply works."
+    }
+  },
+  "$technology": "The bento grid of what makes the clinic different. `size` is large (a big photo tile), wide, tall or small. Give a tile an `image`, or a `stat` with a `statLabel`, or neither for an icon tile. Add or remove items freely; the grid re-packs itself.",
+  "technology": {
+    "section": {
+      "eyebrow": "Inside the clinic",
+      "title": "Precision you can feel. Comfort you can see.",
+      "accent": "Comfort you can see.",
+      "intro": "The equipment and the habits behind every appointment — chosen to make treatment faster, gentler and more predictable."
+    },
+    "items": [
+      {
+        "size": "large",
+        "icon": "spark",
+        "title": "Digital smile design",
+        "text": "Your new smile is planned on screen from photographs and scans, so you approve the result before a single tooth is touched.",
+        "image": {
+          "src": "https://images.unsplash.com/photo-1595003500447-88ec4b7f9c85?auto=format&fit=crop&w=1400&q=80",
+          "alt": "Dentist reviewing a digital smile design with a patient"
+        }
+      },
+      {
+        "size": "small",
+        "icon": "x-ray",
+        "title": "Low-dose digital X-rays",
+        "stat": "80%",
+        "statLabel": "less radiation than film"
+      },
+      {
+        "size": "small",
+        "icon": "smile",
+        "title": "Comfortable anaesthesia",
+        "text": "A numbing gel first, then a slow, computer-paced injection you barely notice."
+      },
+      {
+        "size": "wide",
+        "icon": "sanitizer",
+        "title": "Hospital-grade sterilisation",
+        "text": "Class B autoclaves, sealed instrument pouches opened in front of you, and a sterilisation log for every cycle.",
+        "image": {
+          "src": "https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1400&q=80",
+          "alt": "Sterilised instruments sealed in pouches"
+        }
+      },
+      {
+        "size": "small",
+        "icon": "clock",
+        "title": "On time, every time",
+        "stat": "10 min",
+        "statLabel": "average wait"
+      }
+    ]
+  },
   "contact": {
     "phone": "+91 98765 43210",
     "whatsapp": "+91 98765 43210",

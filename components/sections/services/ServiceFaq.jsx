@@ -1,5 +1,5 @@
 import Accordion from '@/components/ui/Accordion';
-import Reveal from '@/components/ui/Reveal';
+import Reveal from '@/components/motion/Reveal';
 
 /** Service detail: the questions patients ask about this treatment. */
 export default function ServiceFaq({ items = [], title, group }) {

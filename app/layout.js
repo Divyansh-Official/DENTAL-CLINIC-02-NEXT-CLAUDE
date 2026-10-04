@@ -4,8 +4,9 @@ import AnnouncementBar from '@/components/layout/AnnouncementBar';
 import FloatingContact from '@/components/layout/FloatingContact';
 import JsonLd from '@/components/layout/JsonLd';
 import MobileTabBar from '@/components/layout/MobileTabBar';
-import MotionPreferences from '@/components/layout/MotionPreferences';
-import ScrollProgress from '@/components/layout/ScrollProgress';
+import MorphProvider from '@/components/motion/MorphProvider';
+import MotionPreferences from '@/components/motion/MotionPreferences';
+import ScrollProgress from '@/components/motion/ScrollProgress';
 import SiteFooter from '@/components/layout/SiteFooter';
 import SiteHeader from '@/components/layout/SiteHeader';
 import {
@@ -127,6 +128,9 @@ export default function RootLayout({ children }) {
         <main id="main" tabIndex={-1} className="min-h-[60vh] outline-none">
           {children}
         </main>
+
+        {/* After <main>, so it hears about a new route once the page is in. */}
+        <MorphProvider />
 
         <SiteFooter
           brand={brand}
