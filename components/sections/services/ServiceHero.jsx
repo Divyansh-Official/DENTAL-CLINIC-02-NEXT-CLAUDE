@@ -42,10 +42,10 @@ export default function ServiceHero({ service, crumbs, labels = {}, whatsappHref
 
   return (
     <DetailHero image={service.image} back={back} glass={glass} aside={aside}>
-      <Enter delay={0}>
+      <Enter delay={0} className="hidden sm:block">
         <Breadcrumbs crumbs={crumbs} homeLabel={labels.home} label={labels.breadcrumb} align="left" />
       </Enter>
-      <Enter delay={60} className="mt-7 flex items-center gap-3">
+      <Enter delay={60} className="flex items-center gap-3 sm:mt-7">
         <span className="icon-tile" style={{ '--s': '42px' }}>
           <Icon name={service.icon} size={21} />
         </span>

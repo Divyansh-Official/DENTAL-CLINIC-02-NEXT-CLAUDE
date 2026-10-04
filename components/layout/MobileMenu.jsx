@@ -7,15 +7,28 @@ import Icon from '@/components/ui/Icon';
 import OpenStatus from '@/components/ui/OpenStatus';
 import { DURATION } from '@/lib/motion';
 import { prefersCalm } from '@/lib/hooks';
-import Logo from './Logo';
 
 /**
- * Full-screen menu on a native <dialog>: the page behind blurs into a glass
- * backdrop, the panel drops in on a spring, and the links cascade. Being a
- * real modal dialog, focus is trapped, Escape closes it, and the page behind
- * cannot scroll.
+ * The phone menu, opening *under* the header: the header never moves — its
+ * menu button simply turns into a close button — while the page behind blurs
+ * into a glass backdrop and the panel drops in below it on a spring.
+ *
+ * It is a non-modal <dialog> so it can sit beneath the header, and does the
+ * modal work itself: everything outside the header and the menu is made
+ * inert (so focus and screen readers stay inside), Escape and a tap on the
+ * backdrop close it, focus returns to the menu button, and the page behind
+ * holds still (html:has(dialog[open]) in globals.css).
  */
-export default function MobileMenu({ open, onClose, brand, items, extra, cta, contact, status, labels, isActive, pathname }) {
+function setOutsideInert(dialog, inert) {
+  const header = dialog?.parentElement?.querySelector(':scope > .site-header');
+  Array.from(document.body.children).forEach((element) => {
+    if (element === dialog || element === header || element.tagName === 'SCRIPT') return;
+    if (inert) element.setAttribute('inert', '');
+    else element.removeAttribute('inert');
+  });
+}
+
+export default function MobileMenu({ id, open, onClose, toggleRef, items, extra, cta, contact, status, labels, isActive, pathname }) {
   const dialogRef = useRef(null);
   const firstPath = useRef(pathname);
 
@@ -24,10 +37,14 @@ export default function MobileMenu({ open, onClose, brand, items, extra, cta, co
     if (!dialog) return undefined;
     if (open && !dialog.open) {
       dialog.removeAttribute('data-closing');
-      dialog.showModal();
+      dialog.show();
+      setOutsideInert(dialog, true);
+      dialog.querySelector('a, button')?.focus({ preventScroll: true });
       return undefined;
     }
     if (!open && dialog.open) {
+      setOutsideInert(dialog, false);
+      if (dialog.contains(document.activeElement)) toggleRef?.current?.focus({ preventScroll: true });
       if (prefersCalm()) {
         dialog.close();
         return undefined;
@@ -40,7 +57,20 @@ export default function MobileMenu({ open, onClose, brand, items, extra, cta, co
       return () => window.clearTimeout(timer);
     }
     return undefined;
-  }, [open]);
+  }, [open, toggleRef]);
+
+  /* Escape closes it, as it would a modal. */
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (event) => {
+      if (event.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
+  /* Never leave the page inert if the menu unmounts while open. */
+  useEffect(() => () => setOutsideInert(dialogRef.current, false), []);
 
   /* Close after navigating — but not on first mount. */
   useEffect(() => {
@@ -53,27 +83,10 @@ export default function MobileMenu({ open, onClose, brand, items, extra, cta, co
   const all = [...items, ...extra];
 
   return (
-    <dialog
-      ref={dialogRef}
-      className="menu-sheet"
-      aria-label={labels.menu}
-      onCancel={(event) => {
-        event.preventDefault();
-        onClose();
-      }}
-      onClick={(event) => {
-        if (event.target === dialogRef.current) onClose();
-      }}
-    >
-      <div className="menu-panel glass mx-auto mt-2.5 flex max-h-[calc(100dvh-20px)] w-[calc(100%-20px)] max-w-xl flex-col overflow-hidden rounded-[30px] bg-card/80">
-        <div className="flex flex-none items-center justify-between gap-3 py-2 pl-2.5 pr-1.5 md:pl-3.5">
-          <Logo {...brand} compact />
-          <button type="button" className="icon-btn bg-ink/[0.06] text-ink hover:bg-ink/10" onClick={onClose} aria-label={labels.closeMenu}>
-            <Icon name="close" size={17} strokeWidth={2} />
-          </button>
-        </div>
-
-        <div className="no-scrollbar flex-1 overflow-y-auto px-6 pb-7 pt-3">
+    <dialog ref={dialogRef} id={id} className="menu-sheet" aria-label={labels.menu}>
+      <div className="menu-backdrop" onClick={onClose} aria-hidden="true" />
+      <div className="menu-panel glass relative mx-auto mt-[calc(var(--header-h)+2px)] flex max-h-[calc(100dvh-var(--header-h)-14px)] w-[calc(100%-20px)] max-w-xl flex-col overflow-hidden rounded-[30px] bg-card/80">
+        <div className="no-scrollbar flex-1 overflow-y-auto px-6 pb-7 pt-5">
           {status ? (
             <div className="menu-item" style={{ '--i': 0 }}>
               <OpenStatus {...status} />

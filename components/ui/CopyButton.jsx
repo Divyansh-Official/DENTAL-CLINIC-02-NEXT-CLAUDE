@@ -3,8 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
 
-/** Copies a number to the clipboard and confirms with an iOS-style swap. */
-export default function CopyButton({ value, label = 'Copy', copiedLabel = 'Copied', className = '' }) {
+/**
+ * Copies a number to the clipboard and confirms with an iOS-style swap.
+ *
+ *   variant  'icon' (a round icon button) or 'action' (styled by the caller,
+ *            with `visibleLabel` shown beside the icon — see ContactActions)
+ */
+export default function CopyButton({ value, label = 'Copy', copiedLabel = 'Copied', className = '', variant = 'icon', visibleLabel, iconSize = 16 }) {
   const [copied, setCopied] = useState(false);
   const timer = useRef(0);
 
@@ -37,13 +42,18 @@ export default function CopyButton({ value, label = 'Copy', copiedLabel = 'Copie
     <button
       type="button"
       onClick={copy}
-      className={`icon-btn h-10 w-10 bg-fg/[0.06] text-fg hover:bg-fg/10 ${className}`}
+      className={variant === 'action' ? className : `icon-btn h-10 w-10 bg-fg/[0.06] text-fg hover:bg-fg/10 ${className}`}
       aria-label={copied ? copiedLabel : `${label} ${value}`}
     >
       <span className="sr-only" aria-live="polite">
         {copied ? copiedLabel : ''}
       </span>
-      <Icon name={copied ? 'check' : 'copy'} size={16} strokeWidth={copied ? 2.2 : 1.6} className={copied ? 'text-[#30D158]' : ''} />
+      <Icon name={copied ? 'check' : 'copy'} size={iconSize} strokeWidth={copied ? 2.2 : 1.6} className={copied ? 'text-[#30D158]' : ''} />
+      {variant === 'action' && visibleLabel ? (
+        <span className="action-label" aria-hidden="true">
+          {copied ? copiedLabel : visibleLabel}
+        </span>
+      ) : null}
     </button>
   );
 }

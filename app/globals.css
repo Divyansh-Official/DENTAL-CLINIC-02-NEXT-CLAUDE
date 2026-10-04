@@ -501,6 +501,149 @@
     pointer-events: none;
   }
 
+  /* ---------------- contact actions (components/ui/ContactActions) ----------------
+     Laid out by the width of their container, not the screen, so they line
+     up the same in a full-width hero and in a narrow card. */
+  .contact-actions-wrap {
+    container-type: inline-size;
+  }
+
+  .contact-actions {
+    --action-h: 3.25rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .contact-actions[data-size='md'] {
+    --action-h: 2.75rem;
+  }
+
+  /* Matches .btn-lg, which tightens below 420px. */
+  @media (max-width: 419.98px) {
+    .contact-actions[data-size='lg'] {
+      --action-h: 3rem;
+    }
+  }
+
+  .contact-actions-primary {
+    width: 100%;
+    height: var(--action-h);
+  }
+
+  .contact-actions-secondary {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  /* Narrow: iOS Contacts' action tiles — icon above a short label. */
+  .action-btn {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    min-height: calc(var(--action-h) + 10px);
+    padding: 8px 6px;
+    border-radius: 18px;
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+    white-space: nowrap;
+    transition:
+      background-color 0.25s var(--ease-ios),
+      transform var(--bouncy-ms) var(--spring-bouncy);
+  }
+
+  .action-btn:active {
+    transform: scale(0.95);
+    transition-duration: 0.1s;
+  }
+
+  .action-label {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .action-light {
+    color: rgb(var(--fg));
+    background: rgb(var(--fg) / 0.06);
+  }
+
+  .action-light:hover {
+    background: rgb(var(--fg) / 0.1);
+  }
+
+  .action-dark {
+    color: rgb(var(--c-on-night));
+    background: rgb(255 255 255 / 0.12);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    backdrop-filter: blur(20px) saturate(1.6);
+    box-shadow: var(--rim-dark), 0 8px 24px -10px rgb(0 0 0 / 0.5);
+  }
+
+  .action-dark:hover {
+    background: rgb(255 255 255 / 0.2);
+  }
+
+  /* Too tight for words: icons only, still three equal buttons. */
+  @container (max-width: 239.98px) {
+    .action-btn {
+      min-height: var(--action-h);
+      padding: 0;
+      border-radius: 9999px;
+    }
+
+    .action-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+
+  /* Room for one line: call button at its own width, then round buttons. */
+  @container (min-width: 420px) {
+    .contact-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .contact-actions-primary {
+      width: auto;
+    }
+
+    .contact-actions-secondary {
+      display: flex;
+    }
+
+    .action-btn {
+      width: var(--action-h);
+      height: var(--action-h);
+      min-height: 0;
+      padding: 0;
+      border-radius: 9999px;
+    }
+
+    .action-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+
   /* ---------------- surfaces ---------------- */
 
   .tile {
@@ -755,7 +898,7 @@
     pointer-events: none;
     background:
       linear-gradient(to bottom, rgb(0 0 0 / 0.42), rgb(0 0 0 / 0) 22%),
-      linear-gradient(to top, rgb(var(--c-night) / 0.97) 0%, rgb(var(--c-night) / 0.86) 34%, rgb(var(--c-night) / 0.5) 58%, rgb(var(--c-night) / 0) 82%);
+      linear-gradient(to top, rgb(var(--c-night) / 0.97) 0%, rgb(var(--c-night) / 0.9) 30%, rgb(var(--c-night) / 0.66) 50%, rgb(var(--c-night) / 0.28) 66%, rgb(var(--c-night) / 0) 80%);
   }
 
   /* On a wide screen the text takes less of the height: more photograph. */
@@ -804,10 +947,13 @@
 
   /* ---------------- header & chrome ---------------- */
 
+  /* The header never moves, fades or re-renders between pages: it sits above
+     every page layer (the card zoom, the menu, the tab bar) and only modal
+     sheets, which belong above it, cover it. */
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 70;
+    z-index: 80;
     height: var(--header-h);
     margin-bottom: calc(-1 * var(--header-h));
     padding: 10px max(12px, calc(var(--gutter) - 12px)) 0;
@@ -844,57 +990,6 @@
     color: rgb(var(--c-ink));
     background: rgb(255 255 255 / 0.75);
     box-shadow: var(--rim-light), 0 1px 3px rgb(0 0 0 / 0.08);
-  }
-
-  /* Header glass over a dark section. Before the header has measured (first
-     paint), a page that opens on a dark hero gets dark glass straight away. */
-  .site-header .lg {
-    transition:
-      background-color 0.35s var(--ease-ios),
-      box-shadow 0.35s var(--ease-ios),
-      color 0.35s var(--ease-ios);
-  }
-
-  .site-header[data-tone='dark'] .lg,
-  html:has(main > div > section.tone-dark:first-of-type) .site-header:not([data-tone]) .lg {
-    --lg-tint: rgb(26 26 30 / 0.56) !important;
-    --lg-tint-live: rgb(26 26 30 / 0.36) !important;
-    color: rgb(var(--c-on-night));
-    box-shadow:
-      var(--rim-dark),
-      0 1px 2px rgb(0 0 0 / 0.3),
-      0 10px 28px -8px rgb(0 0 0 / 0.45);
-  }
-
-  .site-header[data-tone='dark'] .text-ink,
-  html:has(main > div > section.tone-dark:first-of-type) .site-header:not([data-tone]) .text-ink {
-    color: rgb(var(--c-on-night));
-  }
-
-  .site-header[data-tone='dark'] .text-ink-2,
-  html:has(main > div > section.tone-dark:first-of-type) .site-header:not([data-tone]) .text-ink-2 {
-    color: rgb(var(--c-on-night-2));
-  }
-
-  .site-header[data-tone='dark'] .nav-link,
-  html:has(main > div > section.tone-dark:first-of-type) .site-header:not([data-tone]) .nav-link {
-    color: rgb(255 255 255 / 0.78);
-  }
-
-  .site-header[data-tone='dark'] .nav-link:hover {
-    color: #fff;
-    background: rgb(255 255 255 / 0.1);
-  }
-
-  .site-header[data-tone='dark'] .nav-link[aria-current='page'],
-  html:has(main > div > section.tone-dark:first-of-type) .site-header:not([data-tone]) .nav-link[aria-current='page'] {
-    color: #fff;
-    background: rgb(255 255 255 / 0.16);
-    box-shadow: var(--rim-dark);
-  }
-
-  .site-header[data-tone='dark'] .hover\:bg-ink\/5:hover {
-    background: rgb(255 255 255 / 0.1);
   }
 
   .scroll-progress {
@@ -1192,7 +1287,12 @@
     }
   }
 
+  /* The phone menu opens under the header, which stays put — its button
+     turns into a close button in place. */
   dialog.menu-sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 78;
     margin: 0;
     padding: 0;
     border: 0;
@@ -1205,10 +1305,78 @@
     overflow: hidden;
   }
 
-  dialog.menu-sheet::backdrop {
+  .menu-backdrop {
+    position: absolute;
+    inset: 0;
     background: rgb(var(--c-surface) / 0.55);
     -webkit-backdrop-filter: blur(24px) saturate(1.6);
     backdrop-filter: blur(24px) saturate(1.6);
+  }
+
+  .menu-toggle-line {
+    transition: transform var(--snappy-ms) var(--spring-snappy);
+  }
+
+  [aria-expanded='true'] > span > .menu-toggle-line:first-child {
+    transform: translateY(3.375px) rotate(45deg);
+  }
+
+  [aria-expanded='true'] > span > .menu-toggle-line:last-child {
+    transform: translateY(-3.375px) rotate(-45deg);
+  }
+
+  /* ---------------- card ↔ page zoom layer (lib/morph.js) ----------------
+     Fixed beneath the header: the header and tab bar stay live above it. */
+  .morph-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+  }
+
+  .morph-dim {
+    position: absolute;
+    inset: 0;
+    background: rgb(var(--c-night));
+    opacity: 0;
+  }
+
+  .morph-surface {
+    position: fixed;
+    isolation: isolate;
+    overflow: hidden;
+    background: rgb(var(--c-night));
+    box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.55);
+  }
+
+  .morph-photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+  }
+
+  .morph-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    background:
+      linear-gradient(to bottom, rgb(0 0 0 / 0.42), rgb(0 0 0 / 0) 22%),
+      linear-gradient(to top, rgb(var(--c-night) / 0.97) 0%, rgb(var(--c-night) / 0.86) 34%, rgb(var(--c-night) / 0.5) 58%, rgb(var(--c-night) / 0) 82%);
+  }
+
+  .morph-copy {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    margin: 0 !important;
+    transform: none !important;
+    box-shadow: none !important;
   }
 
   /* ---------------- misc ---------------- */
@@ -1377,7 +1545,7 @@ dialog[open] .sheet-panel {
 }
 
 dialog.sheet[open]::backdrop,
-dialog.menu-sheet[open]::backdrop {
+dialog.menu-sheet[open] .menu-backdrop {
   animation: fade-in 0.3s ease-out both;
 }
 
@@ -1400,7 +1568,8 @@ dialog.menu-sheet[open] .menu-item {
   animation-delay: calc(80ms + var(--i, 0) * 35ms);
 }
 
-dialog.menu-sheet[data-closing] .menu-panel {
+dialog.menu-sheet[data-closing] .menu-panel,
+dialog.menu-sheet[data-closing] .menu-backdrop {
   animation: fade-out 0.22s ease-in both;
 }
 
@@ -1414,37 +1583,15 @@ html[data-filtering] [data-vt] {
   view-transition-name: var(--vt);
 }
 
-/* ---------------- card ↔ page morph (lib/morph.js) ----------------
-   The tapped card and the page's hero share the name `morph` for the length
-   of one view transition; the browser grows one into the other. */
+/* ---------------- in-page zoom (gallery lightbox, lib/morph.js) ----------------
+   The tapped tile and the lightbox photo share the name `morph` for the
+   length of one view transition; the browser grows one into the other. The
+   header is never named: it is identical in both states, so the page's
+   crossfade leaves it perfectly still. */
 
-html[data-morph='expand-in'] [data-morph-target],
-html[data-morph='collapse'] [data-morph-target],
 html[data-morph='open-in'] [data-morph-target],
 html[data-morph='close'] [data-morph-target] {
   view-transition-name: morph;
-}
-
-/* Chrome that both pages share holds still above the morph. */
-html[data-morph^='expand'] .site-header,
-html[data-morph^='collapse'] .site-header {
-  view-transition-name: site-header;
-}
-
-html[data-morph^='expand'] [data-chrome='tabbar'],
-html[data-morph^='collapse'] [data-chrome='tabbar'] {
-  view-transition-name: tab-bar;
-}
-
-html[data-morph^='expand'] [data-chrome='fab'],
-html[data-morph^='collapse'] [data-chrome='fab'] {
-  view-transition-name: fab;
-}
-
-::view-transition-group(site-header),
-::view-transition-group(tab-bar),
-::view-transition-group(fab) {
-  z-index: 3;
 }
 
 ::view-transition-group(morph) {
@@ -1453,14 +1600,12 @@ html[data-morph^='collapse'] [data-chrome='fab'] {
   animation-timing-function: var(--spring-snappy);
 }
 
-/* The surface keeps a rounded clip while it travels, so the corners ease
-   between the card's radius and the page's. */
+/* The surface keeps a rounded clip while it travels. */
 ::view-transition-image-pair(morph) {
   overflow: hidden;
   animation: morph-corners 640ms var(--spring-snappy) both;
 }
 
-html[data-morph^='collapse']::view-transition-image-pair(morph),
 html[data-morph^='close']::view-transition-image-pair(morph) {
   animation-name: morph-corners-in;
 }
@@ -1480,24 +1625,6 @@ html[data-morph^='close']::view-transition-image-pair(morph) {
   animation: vt-in 340ms 40ms var(--ease-out) both;
 }
 
-/* Opening: the page behind recedes while the card grows over it. */
-html[data-morph^='expand']::view-transition-old(root) {
-  animation: morph-recede 560ms var(--ease-ios) both;
-}
-
-html[data-morph^='expand']::view-transition-new(root) {
-  animation: vt-in 380ms 220ms var(--ease-out) both;
-}
-
-/* Closing: the page you return to comes forward as the card settles. */
-html[data-morph^='collapse']::view-transition-old(root) {
-  animation: vt-out 260ms ease-in both;
-}
-
-html[data-morph^='collapse']::view-transition-new(root) {
-  animation: morph-advance 600ms var(--ease-ios) both;
-}
-
 @keyframes morph-corners {
   from {
     border-radius: var(--r-card, 24px);
@@ -1515,20 +1642,6 @@ html[data-morph^='collapse']::view-transition-new(root) {
 
   to {
     border-radius: var(--r-card, 24px);
-  }
-}
-
-@keyframes morph-recede {
-  to {
-    opacity: 0;
-    transform: scale(0.93);
-  }
-}
-
-@keyframes morph-advance {
-  from {
-    opacity: 0;
-    transform: scale(0.94);
   }
 }
 
@@ -1577,7 +1690,7 @@ html[data-morph^='collapse']::view-transition-new(root) {
   html[data-morph-arrived]:not(.no-motion) .enter,
   html[data-morph-arrived]:not(.no-motion) .enter-fade,
   html[data-morph-arrived]:not(.no-motion) .enter-scale {
-    animation-delay: calc(var(--d, 0) * 1ms + 340ms);
+    animation-delay: calc(var(--d, 0) * 1ms + 480ms);
   }
 
   /* Scroll-driven motion. Where view timelines are unsupported (Firefox) the

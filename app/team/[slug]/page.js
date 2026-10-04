@@ -82,8 +82,11 @@ export default async function DoctorPage({ params }) {
           qualification: t('team.profile.qualification'),
           copy: t('common.copyLabel'),
           copied: t('common.copiedLabel'),
+          copyShort: t('common.copyShort'),
           whatsapp: t('common.whatsappLabel', { person: name }),
-          email: t('common.emailLabel', { person: name })
+          whatsappShort: t('common.whatsappShort'),
+          email: t('common.emailLabel', { person: name }),
+          emailShort: t('common.emailShort')
         }}
       />
 

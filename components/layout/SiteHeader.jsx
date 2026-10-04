@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useId, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import LiquidGlass from '@/components/glass/LiquidGlass';
@@ -15,50 +15,22 @@ import MobileMenu from './MobileMenu';
  * It is sticky with a negative bottom margin (see .site-header), so it takes
  * no space in the layout, sits under the announcement bar when that is on,
  * and stays pinned once the bar has scrolled away. Links show inline from
- * 1180px; below that the menu button opens a full-screen glass menu.
+ * 1180px; below that the menu button opens the menu beneath the header.
  *
- * Like Apple's glass it adapts to what is behind it: over a dark section (a
- * dentist's portrait, the numbers band, a closing banner) it turns to dark
- * glass with light text, and back again over light ones. It reads the
- * section under its centre once per scrolled frame.
+ * It lives in the root layout, so it is the same element on every page: it
+ * never re-renders, re-animates or changes look when the page changes. It
+ * sits above the card zoom and the phone menu, whose button turns into a
+ * close button in place.
  *
  * All data arrives as props from app/layout.js.
  */
 export default function SiteHeader({ brand, items = [], extra = [], cta, contact, status, labels = {}, glass = true }) {
   const pathname = usePathname() || '/';
   const [menuOpen, setMenuOpen] = useState(false);
-  const [tone, setTone] = useState(null);
-  const headerRef = useRef(null);
+  const toggleRef = useRef(null);
+  const menuId = useId();
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const isActive = (href) => (href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`));
-
-  useEffect(() => {
-    let frame = 0;
-    const probe = () => {
-      frame = 0;
-      const header = headerRef.current;
-      if (!header) return;
-      const surface = header.firstElementChild;
-      const box = surface?.getBoundingClientRect();
-      if (!box) return;
-      const below = document
-        .elementsFromPoint(window.innerWidth / 2, box.top + box.height / 2)
-        .find((element) => !header.contains(element));
-      const section = below?.closest('.tone-dark, .tone-gray, .tone-white');
-      setTone(section?.classList.contains('tone-dark') ? 'dark' : 'light');
-    };
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(probe);
-    };
-    probe();
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
-    };
-  }, [pathname]);
 
   const Surface = glass ? LiquidGlass : 'div';
   const surfaceProps = glass
@@ -66,13 +38,13 @@ export default function SiteHeader({ brand, items = [], extra = [], cta, contact
         radius: 999,
         strength: 'soft',
         elevation: 'raised',
-        style: { '--lg-tint': 'rgb(255 255 255 / 0.68)', '--lg-tint-live': 'rgb(255 255 255 / 0.52)' }
+        style: { '--lg-tint': 'rgb(255 255 255 / 0.76)', '--lg-tint-live': 'rgb(255 255 255 / 0.64)' }
       }
     : {};
 
   return (
     <>
-      <header ref={headerRef} className="site-header" data-tone={tone || undefined} data-print="hide">
+      <header className="site-header" data-print="hide">
         <Surface
           {...surfaceProps}
           className={`mx-auto flex h-[52px] w-full max-w-[calc(var(--shell-max)-16px)] items-center gap-2 rounded-full pl-2.5 pr-1.5 md:h-[58px] md:pl-3.5 md:pr-2 ${glass ? '' : 'glass'}`}
@@ -99,16 +71,18 @@ export default function SiteHeader({ brand, items = [], extra = [], cta, contact
               </Button>
             ) : null}
             <button
+              ref={toggleRef}
               type="button"
               className="icon-btn text-ink hover:bg-ink/5 nav:hidden"
-              onClick={() => setMenuOpen(true)}
-              aria-label={labels.openMenu}
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-label={menuOpen ? labels.closeMenu : labels.openMenu}
               aria-expanded={menuOpen}
+              aria-controls={menuId}
               aria-haspopup="dialog"
             >
               <span className="flex w-[18px] flex-col gap-[5px]" aria-hidden="true">
-                <span className="h-[1.75px] rounded-full bg-current" />
-                <span className="h-[1.75px] rounded-full bg-current" />
+                <span className="menu-toggle-line h-[1.75px] rounded-full bg-current" />
+                <span className="menu-toggle-line h-[1.75px] rounded-full bg-current" />
               </span>
             </button>
           </div>
@@ -116,9 +90,10 @@ export default function SiteHeader({ brand, items = [], extra = [], cta, contact
       </header>
 
       <MobileMenu
+        id={menuId}
         open={menuOpen}
         onClose={closeMenu}
-        brand={brand}
+        toggleRef={toggleRef}
         items={items}
         extra={extra}
         cta={cta}

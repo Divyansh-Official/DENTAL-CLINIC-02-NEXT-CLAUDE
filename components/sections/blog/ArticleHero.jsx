@@ -15,11 +15,11 @@ export default function ArticleHero({ post, author, date, dateTime, crumbs, labe
 
   return (
     <DetailHero image={post.image} back={back} glass={glass}>
-      <Enter delay={0}>
+      <Enter delay={0} className="hidden sm:block">
         <Breadcrumbs crumbs={crumbs} homeLabel={labels.home} label={labels.breadcrumb} align="left" />
       </Enter>
       {post.category ? (
-        <Enter as="p" delay={60} className="t-eyebrow mt-7">
+        <Enter as="p" delay={60} className="t-eyebrow sm:mt-7">
           {post.category}
         </Enter>
       ) : null}
